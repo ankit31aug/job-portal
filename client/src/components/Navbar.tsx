@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
             <Briefcase size={28} className="text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">Job<span className="text-blue-600">Portal</span></span>
+            <span className="text-xl font-bold text-gray-900">Quality Council <span className="text-blue-600">of India</span></span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6">

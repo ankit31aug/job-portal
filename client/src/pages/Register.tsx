@@ -101,7 +101,7 @@ export default function Register() {
         <div className="text-center mb-6">
           <Link to="/" className="inline-flex items-center gap-2 mb-3">
             <Briefcase size={28} className="text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">Job<span className="text-blue-600">Portal</span></span>
+            <span className="text-xl font-bold text-gray-900">Quality Council <span className="text-blue-600">of India</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Create Your Account</h1>
         </div>

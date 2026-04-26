@@ -64,7 +64,7 @@ export default function Login() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">
             <Briefcase size={32} className="text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">Job<span className="text-blue-600">Portal</span></span>
+            <span className="text-2xl font-bold text-gray-900">Quality Council <span className="text-blue-600">of India</span></span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Welcome back!</h1>
           <p className="text-gray-500 mt-1">Sign in to continue your job search</p>
