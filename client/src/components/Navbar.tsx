@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, Menu, X, User, LogOut, PlusCircle, LayoutDashboard, Search, FileText } from 'lucide-react';
+import { Briefcase, Menu, X, User, LogOut, PlusCircle, LayoutDashboard, Search, FileText, ShieldCheck } from 'lucide-react';
+import { useSettings } from '../context/SettingsContext';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { settings } = useSettings();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -21,7 +23,10 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
             <Briefcase size={28} className="text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">Quality Council <span className="text-blue-600">of India</span></span>
+            <span className="text-xl font-bold text-gray-900">
+              {settings.site_name.split(' ').slice(0, -1).join(' ')}{' '}
+              <span className="text-blue-600">{settings.site_name.split(' ').slice(-1)}</span>
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
@@ -32,6 +37,11 @@ export default function Navbar() {
             {user?.role === 'employer' && (
               <Link to="/post-job" className="text-gray-600 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
                 <PlusCircle size={16} />Post a Job
+              </Link>
+            )}
+            {user?.role === 'hr' && (
+              <Link to="/admin" className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors flex items-center gap-1">
+                <ShieldCheck size={16} />HR Panel
               </Link>
             )}
           </div>
@@ -54,10 +64,17 @@ export default function Navbar() {
                       <p className="text-sm font-semibold text-gray-900">{user.name}</p>
                       <p className="text-xs text-gray-500 capitalize">{user.role}</p>
                     </div>
-                    <Link to="/dashboard" onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                      <LayoutDashboard size={16} />Dashboard
-                    </Link>
+                    {user?.role === 'hr' ? (
+                      <Link to="/admin" onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50">
+                        <ShieldCheck size={16} />HR Admin Panel
+                      </Link>
+                    ) : (
+                      <Link to="/dashboard" onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                        <LayoutDashboard size={16} />Dashboard
+                      </Link>
+                    )}
                     <button onClick={handleLogout}
                       className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
                       <LogOut size={16} />Sign Out
@@ -85,9 +102,14 @@ export default function Navbar() {
             {user?.role === 'employer' && (
               <Link to="/post-job" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Post a Job</Link>
             )}
+            {user?.role === 'hr' && (
+              <Link to="/admin" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-emerald-700 hover:bg-emerald-50 rounded-lg font-medium">HR Admin Panel</Link>
+            )}
             {user ? (
               <>
-                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Dashboard</Link>
+                {user.role !== 'hr' && (
+                  <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Dashboard</Link>
+                )}
                 <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg">Sign Out</button>
               </>
             ) : (

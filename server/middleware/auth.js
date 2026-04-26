@@ -32,4 +32,11 @@ const requireJobseeker = (req, res, next) => {
   next();
 };
 
-module.exports = { authenticate, requireEmployer, requireJobseeker, JWT_SECRET };
+const requireHR = (req, res, next) => {
+  if (req.user.role !== 'hr') {
+    return res.status(403).json({ error: 'Only HR admins can perform this action' });
+  }
+  next();
+};
+
+module.exports = { authenticate, requireEmployer, requireJobseeker, requireHR, JWT_SECRET };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { MapPin, Briefcase, DollarSign, Users, Clock, ArrowLeft, CheckCircle, Share2 } from 'lucide-react';
+import { MapPin, Briefcase, IndianRupee, Users, Clock, ArrowLeft, CheckCircle, Share2 } from 'lucide-react';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { Job } from '../types';
@@ -93,7 +93,7 @@ export default function JobDetails() {
               {[
                 { icon: <MapPin size={16} />, label: job.location },
                 { icon: <Briefcase size={16} />, label: `${job.experience_min}-${job.experience_max} yrs exp` },
-                { icon: <DollarSign size={16} />, label: formatSalary(job.salary_min, job.salary_max) },
+                { icon: <IndianRupee size={16} />, label: formatSalary(job.salary_min, job.salary_max) },
                 { icon: <Users size={16} />, label: `${job.openings} opening${job.openings > 1 ? 's' : ''}` },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm text-gray-600">

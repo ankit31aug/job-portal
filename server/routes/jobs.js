@@ -75,7 +75,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', authenticate, requireEmployer, (req, res) => {
   const {
-    title, location, job_type, category, experience_min, experience_max,
+    title, location, job_type, category, department, experience_min, experience_max,
     salary_min, salary_max, description, requirements, skills, openings
   } = req.body;
 
@@ -86,12 +86,12 @@ router.post('/', authenticate, requireEmployer, (req, res) => {
   const employer = db.prepare('SELECT company_name FROM users WHERE id = ?').get(req.user.id);
 
   const result = db.prepare(`
-    INSERT INTO jobs (employer_id, title, company, location, job_type, category, experience_min, experience_max,
-      salary_min, salary_max, description, requirements, skills, openings)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO jobs (employer_id, title, company, location, job_type, category, department,
+      experience_min, experience_max, salary_min, salary_max, description, requirements, skills, openings)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(req.user.id, title, employer.company_name, location, job_type || 'Full-time', category,
-    experience_min || 0, experience_max || 5, salary_min || null, salary_max || null,
-    description, requirements, skills, openings || 1);
+    department || 'General', experience_min || 0, experience_max || 5,
+    salary_min || null, salary_max || null, description, requirements, skills, openings || 1);
 
   const job = db.prepare('SELECT * FROM jobs WHERE id = ?').get(result.lastInsertRowid);
   res.status(201).json(job);

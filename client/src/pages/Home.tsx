@@ -3,11 +3,13 @@ import { Search, MapPin, Filter, Briefcase, Users, TrendingUp, X } from 'lucide-
 import api from '../utils/api';
 import { Job } from '../types';
 import JobCard from '../components/JobCard';
+import { useSettings } from '../context/SettingsContext';
 
 const JOB_TYPES = ['Full-time', 'Part-time', 'Remote', 'Contract', 'Internship'];
-const CATEGORIES = ['Technology', 'Design', 'Data Science', 'Product', 'Marketing', 'Finance', 'Mobile', 'DevOps'];
+const CATEGORIES = ['Operations', 'Management', 'Technology', 'Finance', 'HR', 'Administration', 'Design', 'Legal'];
 
 export default function Home() {
+  const { settings } = useSettings();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
@@ -58,10 +60,10 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white py-16 px-4">
+      <div className="text-white py-16 px-4" style={{ background: `linear-gradient(135deg, ${settings.hero_gradient_from} 0%, ${settings.hero_gradient_to} 100%)` }}>
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Your <span className="text-yellow-300">Dream Job</span></h1>
-          <p className="text-blue-100 text-lg mb-8">Discover thousands of job opportunities with all the information you need</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{settings.hero_title}</h1>
+          <p className="text-blue-100 text-lg mb-8">{settings.hero_subtitle}</p>
 
           <form onSubmit={handleSearch} className="bg-white rounded-2xl p-2 shadow-2xl flex flex-col md:flex-row gap-2">
             <div className="flex items-center gap-2 flex-1 px-3">

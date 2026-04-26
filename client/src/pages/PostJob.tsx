@@ -6,11 +6,12 @@ import { useAuth } from '../context/AuthContext';
 import FormInput from '../components/FormInput';
 import { validators } from '../utils/validation';
 
-const CATEGORIES = ['Technology', 'Design', 'Data Science', 'Product', 'Marketing', 'Finance', 'Mobile', 'DevOps', 'Sales', 'Operations', 'HR', 'Other'];
+const CATEGORIES = ['Operations', 'Management', 'Technology', 'Finance', 'HR', 'Administration', 'Design', 'Legal', 'Other'];
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Remote', 'Hybrid'];
+const DEPARTMENTS = ['NABH', 'NABET', 'NABL', 'General'];
 
 interface JobForm {
-  title: string; location: string; job_type: string; category: string;
+  title: string; location: string; job_type: string; category: string; department: string;
   experience_min: string; experience_max: string; salary_min: string; salary_max: string;
   description: string; requirements: string; skills: string; openings: string;
 }
@@ -20,7 +21,7 @@ export default function PostJob() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState<JobForm>({
-    title: '', location: '', job_type: 'Full-time', category: 'Technology',
+    title: '', location: 'New Delhi', job_type: 'Full-time', category: 'Operations', department: 'NABH',
     experience_min: '0', experience_max: '5', salary_min: '', salary_max: '',
     description: '', requirements: '', skills: '', openings: '1'
   });
@@ -115,7 +116,7 @@ export default function PostJob() {
         <p className="text-gray-600 mb-6">Your job listing is now live and candidates can apply.</p>
         <div className="flex flex-col gap-3">
           <button onClick={() => navigate('/dashboard')} className="btn-primary py-2.5">View Applications</button>
-          <button onClick={() => { setPosted(false); setForm({ title: '', location: '', job_type: 'Full-time', category: 'Technology', experience_min: '0', experience_max: '5', salary_min: '', salary_max: '', description: '', requirements: '', skills: '', openings: '1' }); }} className="btn-secondary py-2.5">Post Another Job</button>
+          <button onClick={() => { setPosted(false); setForm({ title: '', location: 'New Delhi', job_type: 'Full-time', category: 'Operations', department: 'NABH', experience_min: '0', experience_max: '5', salary_min: '', salary_max: '', description: '', requirements: '', skills: '', openings: '1' }); }} className="btn-secondary py-2.5">Post Another Job</button>
         </div>
       </div>
     </div>
@@ -151,6 +152,12 @@ export default function PostJob() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Job Type <span className="text-red-500">*</span></label>
                 <select name="job_type" value={form.job_type} onChange={handleChange} className="input-field">
                   {JOB_TYPES.map(t => <option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Department <span className="text-red-500">*</span></label>
+                <select name="department" value={form.department} onChange={handleChange} className="input-field">
+                  {DEPARTMENTS.map(d => <option key={d}>{d}</option>)}
                 </select>
               </div>
               <div className="mb-4">

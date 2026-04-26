@@ -3,7 +3,7 @@ export interface User {
   name: string;
   email: string;
   phone?: string;
-  role: 'jobseeker' | 'employer';
+  role: 'jobseeker' | 'employer' | 'hr';
   company_name?: string;
   city?: string;
   state?: string;
@@ -28,6 +28,7 @@ export interface Job {
   skills: string;
   openings: number;
   is_active: number;
+  department?: string;
   created_at: string;
   employer_name?: string;
   application_count?: number;

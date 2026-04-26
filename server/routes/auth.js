@@ -15,6 +15,9 @@ router.post('/register', (req, res) => {
   if (!['jobseeker', 'employer'].includes(role)) {
     return res.status(400).json({ error: 'Role must be jobseeker or employer' });
   }
+  if (role === 'hr') {
+    return res.status(403).json({ error: 'HR accounts are created by the system administrator' });
+  }
   if (role === 'employer' && !company_name) {
     return res.status(400).json({ error: 'Company name is required for employers' });
   }

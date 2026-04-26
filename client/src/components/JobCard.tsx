@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Clock, Briefcase, DollarSign, Users, TrendingUp } from 'lucide-react';
+import { MapPin, Clock, Briefcase, IndianRupee, Users, TrendingUp } from 'lucide-react';
 import { Job } from '../types';
 
 interface JobCardProps {
@@ -9,14 +9,14 @@ interface JobCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  Technology: 'bg-blue-100 text-blue-700',
-  Design: 'bg-purple-100 text-purple-700',
-  Marketing: 'bg-orange-100 text-orange-700',
-  Finance: 'bg-green-100 text-green-700',
-  'Data Science': 'bg-pink-100 text-pink-700',
-  Product: 'bg-yellow-100 text-yellow-700',
-  Mobile: 'bg-indigo-100 text-indigo-700',
-  DevOps: 'bg-red-100 text-red-700',
+  Technology:     'bg-blue-100 text-blue-700',
+  Operations:     'bg-teal-100 text-teal-700',
+  Management:     'bg-indigo-100 text-indigo-700',
+  Finance:        'bg-green-100 text-green-700',
+  HR:             'bg-pink-100 text-pink-700',
+  Administration: 'bg-yellow-100 text-yellow-700',
+  Design:         'bg-purple-100 text-purple-700',
+  Legal:          'bg-orange-100 text-orange-700',
 };
 
 function formatSalary(min?: number, max?: number) {
@@ -60,7 +60,7 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
       <div className="flex flex-wrap gap-3 mb-3 text-sm text-gray-500">
         <span className="flex items-center gap-1"><MapPin size={13} />{job.location}</span>
         <span className="flex items-center gap-1"><Briefcase size={13} />{job.experience_min}-{job.experience_max} yrs</span>
-        {salary && <span className="flex items-center gap-1"><DollarSign size={13} />{salary}</span>}
+        {salary && <span className="flex items-center gap-1"><IndianRupee size={13} />{salary}</span>}
         {job.openings > 1 && <span className="flex items-center gap-1"><Users size={13} />{job.openings} openings</span>}
       </div>
 
