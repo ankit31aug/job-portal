@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Briefcase, FileText, CheckCircle, XCircle, Clock, TrendingUp, Eye, Users } from 'lucide-react';
+import { Briefcase, FileText, CheckCircle, XCircle, Clock, TrendingUp, Eye, Users, Bookmark, MapPin, IndianRupee } from 'lucide-react';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { Application, Job } from '../types';
@@ -16,7 +16,9 @@ const STATUS_CONFIG = {
 export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<'applications' | 'saved'>('applications');
   const [applications, setApplications] = useState<Application[]>([]);
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJob, setSelectedJob] = useState<number | null>(null);
   const [jobApplications, setJobApplications] = useState<Application[]>([]);
@@ -25,11 +27,22 @@ export default function Dashboard() {
   useEffect(() => {
     if (!user) { navigate('/login'); return; }
     if (user.role === 'jobseeker') {
-      api.get('/applications/my').then(({ data }) => setApplications(data)).finally(() => setLoading(false));
+      Promise.all([
+        api.get('/applications/my'),
+        api.get('/bookmarks'),
+      ]).then(([appsRes, bookmarksRes]) => {
+        setApplications(appsRes.data);
+        setSavedJobs(bookmarksRes.data);
+      }).finally(() => setLoading(false));
     } else {
       api.get('/jobs/my').then(({ data }) => setJobs(data)).finally(() => setLoading(false));
     }
   }, [user]);
+
+  const removeSaved = async (jobId: number) => {
+    await api.delete(`/bookmarks/${jobId}`);
+    setSavedJobs(prev => prev.filter(j => j.id !== jobId));
+  };
 
   const loadJobApplications = async (jobId: number) => {
     setSelectedJob(jobId);
@@ -45,7 +58,7 @@ export default function Dashboard() {
   if (loading) return <div className="text-center py-20"><div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div></div>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 dark:text-gray-100">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
@@ -65,7 +78,7 @@ export default function Dashboard() {
               { label: 'Total Applied', value: applications.length, color: 'text-blue-600' },
               { label: 'Shortlisted', value: applications.filter(a => a.status === 'shortlisted').length, color: 'text-blue-600' },
               { label: 'Interviews', value: applications.filter(a => a.status === 'interviewed').length, color: 'text-purple-600' },
-              { label: 'Hired', value: applications.filter(a => a.status === 'hired').length, color: 'text-green-600' },
+              { label: 'Saved Jobs', value: savedJobs.length, color: 'text-orange-500' },
             ].map(stat => (
               <div key={stat.label} className="card p-4 text-center">
                 <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
@@ -74,48 +87,107 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="card">
-            <div className="p-4 border-b border-gray-100">
-              <h2 className="font-semibold text-gray-800">My Applications</h2>
-            </div>
-            {applications.length === 0 ? (
-              <div className="text-center py-12">
-                <FileText size={40} className="mx-auto text-gray-300 mb-3" />
-                <p className="text-gray-500 mb-3">No applications yet</p>
-                <Link to="/" className="btn-primary text-sm">Browse Jobs</Link>
-              </div>
-            ) : (
-              <div className="divide-y divide-gray-100">
-                {applications.map(app => {
-                  const cfg = STATUS_CONFIG[app.status] || STATUS_CONFIG.pending;
-                  return (
-                    <div key={app.id} className="p-4 hover:bg-gray-50 flex items-center justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900 truncate">{app.job_title}</h3>
-                        <p className="text-sm text-gray-500">{app.company} · {app.location}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">
-                          Applied {new Date(app.applied_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3 flex-shrink-0">
-                        {app.match_score > 0 && (
-                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                            {app.match_score}% match
+          {/* Tabs */}
+          <div className="flex gap-1 mb-4 border-b border-gray-200">
+            {[
+              { key: 'applications', label: 'My Applications', icon: <FileText size={14} /> },
+              { key: 'saved', label: 'Saved Jobs', icon: <Bookmark size={14} /> },
+            ].map(tab => (
+              <button key={tab.key} onClick={() => setActiveTab(tab.key as any)}
+                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === tab.key
+                    ? 'border-blue-600 text-blue-600'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:border-gray-700'
+                }`}>
+                {tab.icon}{tab.label}
+              </button>
+            ))}
+          </div>
+
+          {activeTab === 'applications' && (
+            <div className="card">
+              {applications.length === 0 ? (
+                <div className="text-center py-12">
+                  <FileText size={40} className="mx-auto text-gray-300 mb-3" />
+                  <p className="text-gray-500 mb-3">No applications yet</p>
+                  <Link to="/browse" className="btn-primary text-sm">Browse Jobs</Link>
+                </div>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {applications.map(app => {
+                    const cfg = STATUS_CONFIG[app.status] || STATUS_CONFIG.pending;
+                    return (
+                      <div key={app.id} className="p-4 hover:bg-gray-50 flex items-center justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-medium text-gray-900 truncate">{app.job_title}</h3>
+                          <p className="text-sm text-gray-500">{app.company} · {app.location}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">
+                            Applied {new Date(app.applied_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3 flex-shrink-0">
+                          {app.match_score > 0 && (
+                            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                              {app.match_score}% match
+                            </span>
+                          )}
+                          <span className={`badge ${cfg.color} flex items-center gap-1`}>
+                            {cfg.icon}{cfg.label}
                           </span>
-                        )}
-                        <span className={`badge ${cfg.color} flex items-center gap-1`}>
-                          {cfg.icon}{cfg.label}
-                        </span>
-                        <Link to={`/jobs/${app.job_id}`} className="text-gray-400 hover:text-blue-600">
-                          <Eye size={16} />
+                          <Link to={`/jobs/${app.job_id}`} className="text-gray-400 hover:text-blue-600">
+                            <Eye size={16} />
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'saved' && (
+            <div className="card">
+              {savedJobs.length === 0 ? (
+                <div className="text-center py-12">
+                  <Bookmark size={40} className="mx-auto text-gray-300 mb-3" />
+                  <p className="text-gray-500 mb-3">No saved jobs yet</p>
+                  <Link to="/browse" className="btn-primary text-sm">Browse Jobs</Link>
+                </div>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {savedJobs.map(job => (
+                    <div key={job.id} className="p-4 hover:bg-gray-50 flex items-center justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          {job.department && job.department !== 'General' && (
+                            <span className="px-1.5 py-0.5 text-xs font-bold rounded bg-blue-100 text-blue-700">{job.department}</span>
+                          )}
+                          <h3 className="font-medium text-gray-900 truncate">{job.title}</h3>
+                        </div>
+                        <p className="text-sm text-gray-500">{job.company}</p>
+                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                          <span className="flex items-center gap-0.5"><MapPin size={10} />{job.location}</span>
+                          <span>{job.experience_min}–{job.experience_max} yrs</span>
+                          {job.salary_min && <span className="flex items-center gap-0.5"><IndianRupee size={10} />{(job.salary_min / 100000).toFixed(0)}L+</span>}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <Link to={`/jobs/${job.id}`}
+                          className="text-xs px-3 py-1.5 border border-blue-200 text-blue-600 rounded-lg hover:bg-blue-50">
+                          View
                         </Link>
+                        <button onClick={() => removeSaved(job.id)}
+                          className="text-xs px-3 py-1.5 border border-gray-200 text-gray-500 rounded-lg hover:bg-gray-50 hover:text-red-500">
+                          Remove
+                        </button>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -12,8 +12,12 @@ import Dashboard from './pages/Dashboard';
 import ResumeMatch from './pages/ResumeMatch';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import Browse from './pages/Browse';
+import Careers from './pages/Careers';
+import About from './pages/About';
 import Footer from './components/Footer';
 import { SettingsProvider } from './context/SettingsContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -36,6 +40,9 @@ function AppRoutes() {
           <Route path="/apply/:jobId" element={<ProtectedRoute><Apply /></ProtectedRoute>} />
           <Route path="/post-job" element={<ProtectedRoute><PostJob /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/browse" element={<Browse />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/about" element={<About />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -49,11 +56,13 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <SettingsProvider>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </SettingsProvider>
+      <ThemeProvider>
+        <SettingsProvider>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </SettingsProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

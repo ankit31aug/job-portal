@@ -54,6 +54,22 @@ router.get('/categories', (req, res) => {
   res.json(categories.map(c => c.category));
 });
 
+router.get('/stats', (req, res) => {
+  const byDept = db.prepare(`
+    SELECT department, COUNT(*) as job_count, SUM(openings) as total_openings
+    FROM jobs WHERE is_active = 1 GROUP BY department
+  `).all();
+  const total = db.prepare('SELECT COUNT(*) as c FROM jobs WHERE is_active = 1').get();
+  const openings = db.prepare('SELECT SUM(openings) as s FROM jobs WHERE is_active = 1').get();
+  const byDepartment = {};
+  const openingsByDept = {};
+  for (const row of byDept) {
+    byDepartment[row.department || 'General'] = row.job_count;
+    openingsByDept[row.department || 'General'] = row.total_openings || 0;
+  }
+  res.json({ byDepartment, openingsByDept, total: total.c, totalOpenings: openings.s || 0 });
+});
+
 router.get('/my', authenticate, requireEmployer, (req, res) => {
   const jobs = db.prepare(`
     SELECT j.*, (SELECT COUNT(*) FROM applications WHERE job_id = j.id) as application_count

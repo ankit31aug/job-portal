@@ -9,6 +9,7 @@ const applicationRoutes = require('./routes/applications');
 const resumeRoutes = require('./routes/resume');
 const adminRoutes = require('./routes/admin');
 const settingsRoutes = require('./routes/settings');
+const bookmarkRoutes = require('./routes/bookmarks');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +25,7 @@ app.use('/api/applications', applicationRoutes);
 app.use('/api/resume', resumeRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 

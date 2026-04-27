@@ -15,6 +15,8 @@ export interface SiteSettings {
   footer_address: string;
   footer_linkedin: string;
   footer_twitter: string;
+  footer_instagram: string;
+  footer_facebook: string;
   default_company: string;
   default_location: string;
   currency_symbol: string;
@@ -34,6 +36,8 @@ const defaults: SiteSettings = {
   footer_address: 'ITPI Building, 4th Floor, 4A Ring Road, I.P. Estate, New Delhi – 110002',
   footer_linkedin: 'https://www.linkedin.com/company/quality-council-of-india',
   footer_twitter: '',
+  footer_instagram: '',
+  footer_facebook: '',
   default_company: 'Quality Council of India',
   default_location: 'New Delhi',
   currency_symbol: '₹',

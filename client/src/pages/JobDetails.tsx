@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { MapPin, Briefcase, IndianRupee, Users, Clock, ArrowLeft, CheckCircle, Share2 } from 'lucide-react';
+import { MapPin, Briefcase, IndianRupee, Users, Clock, ArrowLeft, CheckCircle, Share2, Bookmark, BookmarkCheck } from 'lucide-react';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { Job } from '../types';
+import SkillsGapPanel from '../components/SkillsGapPanel';
+import { useBookmark } from '../hooks/useBookmark';
 
 function formatSalary(min?: number, max?: number) {
   if (!min && !max) return 'Not disclosed';
@@ -21,6 +23,7 @@ export default function JobDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [shared, setShared] = useState(false);
+  const { bookmarked, toggle: toggleBookmark } = useBookmark(job?.id ?? 0);
 
   useEffect(() => {
     api.get(`/jobs/${id}`)
@@ -136,6 +139,8 @@ export default function JobDetails() {
               ))}
             </div>
           </div>
+
+          <SkillsGapPanel jobSkills={job.skills} />
         </div>
 
         {/* Sidebar */}
@@ -152,9 +157,20 @@ export default function JobDetails() {
                   This position is no longer accepting applications
                 </div>
               )}
-              <button onClick={handleShare} className="btn-secondary w-full py-2 text-sm flex items-center justify-center gap-2">
-                {shared ? <><CheckCircle size={16} />Copied!</> : <><Share2 size={16} />Share Job</>}
-              </button>
+              <div className="flex gap-2">
+                <button onClick={handleShare} className="btn-secondary flex-1 py-2 text-sm flex items-center justify-center gap-2">
+                  {shared ? <><CheckCircle size={16} />Copied!</> : <><Share2 size={16} />Share</>}
+                </button>
+                {user && (
+                  <button onClick={toggleBookmark}
+                    className={`py-2 px-3 rounded-lg border text-sm flex items-center gap-1.5 transition-colors ${
+                      bookmarked ? 'border-blue-200 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-500 hover:border-gray-300'
+                    }`}>
+                    {bookmarked ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
+                    {bookmarked ? 'Saved' : 'Save'}
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="mt-5 pt-5 border-t border-gray-100 space-y-3">

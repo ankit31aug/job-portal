@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, Menu, X, User, LogOut, PlusCircle, LayoutDashboard, Search, FileText, ShieldCheck } from 'lucide-react';
+import { Briefcase, Menu, X, User, LogOut, PlusCircle, LayoutDashboard, Search, FileText, ShieldCheck, TrendingUp, Moon, Sun } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { settings } = useSettings();
+  const { dark, toggleDark } = useTheme();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,24 +20,28 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
             <Briefcase size={28} className="text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
               {settings.site_name.split(' ').slice(0, -1).join(' ')}{' '}
               <span className="text-blue-600">{settings.site_name.split(' ').slice(-1)}</span>
             </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Find Jobs</Link>
-            <Link to="/resume-match" className="text-gray-600 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
+            <Link to="/browse" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors">Browse Jobs</Link>
+            <Link to="/careers" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
+              <TrendingUp size={16} />Career Paths
+            </Link>
+            <Link to="/about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors">About QCI</Link>
+            <Link to="/resume-match" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
               <FileText size={16} />Resume Match
             </Link>
             {user?.role === 'employer' && (
-              <Link to="/post-job" className="text-gray-600 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
+              <Link to="/post-job" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
                 <PlusCircle size={16} />Post a Job
               </Link>
             )}
@@ -47,6 +53,10 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
+            <button onClick={toggleDark}
+              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors">
+              {dark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             {user ? (
               <div className="relative">
                 <button
@@ -59,7 +69,7 @@ export default function Navbar() {
                   <span className="text-sm font-medium text-gray-700">{user.name.split(' ')[0]}</span>
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-gray-200 py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                     <div className="px-4 py-2 border-b border-gray-100">
                       <p className="text-sm font-semibold text-gray-900">{user.name}</p>
                       <p className="text-xs text-gray-500 capitalize">{user.role}</p>
@@ -96,8 +106,10 @@ export default function Navbar() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100 space-y-2">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Find Jobs</Link>
+          <div className="md:hidden py-4 border-t border-gray-700 dark:border-gray-700 dark:bg-gray-900 space-y-2">
+            <Link to="/browse" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Browse Jobs</Link>
+            <Link to="/careers" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Career Paths</Link>
+            <Link to="/about" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">About QCI</Link>
             <Link to="/resume-match" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Resume Match</Link>
             {user?.role === 'employer' && (
               <Link to="/post-job" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Post a Job</Link>

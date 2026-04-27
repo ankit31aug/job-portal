@@ -77,6 +77,18 @@ db.exec(`
   );
 `);
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS bookmarks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    job_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, job_id),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(job_id) REFERENCES jobs(id)
+  );
+`);
+
 // Migration: add department column if not present
 try { db.exec('ALTER TABLE jobs ADD COLUMN department TEXT DEFAULT "General"'); } catch (e) { /* already exists */ }
 
@@ -104,6 +116,8 @@ const defaultSettings = [
   ['footer_address',      'ITPI Building, 4th Floor, 4A Ring Road, I.P. Estate, New Delhi – 110002', 'Address', 'footer'],
   ['footer_linkedin',     'https://www.linkedin.com/company/quality-council-of-india', 'LinkedIn URL', 'footer'],
   ['footer_twitter',      '',                                    'Twitter/X URL',               'footer'],
+  ['footer_instagram',    '',                                    'Instagram URL',               'footer'],
+  ['footer_facebook',     '',                                    'Facebook URL',                'footer'],
   ['default_company',     'Quality Council of India',           'Default Company Name',        'jobs'],
   ['default_location',    'New Delhi',                          'Default Location',            'jobs'],
   ['currency_symbol',     '₹',                                  'Currency Symbol',             'jobs'],

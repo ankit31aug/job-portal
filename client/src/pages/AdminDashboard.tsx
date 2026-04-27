@@ -375,6 +375,18 @@ export default function AdminDashboard() {
                       placeholder="https://twitter.com/..."
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Instagram URL</label>
+                    <input value={siteSettings.footer_instagram ?? ''} onChange={e => handleSettingChange('footer_instagram', e.target.value)}
+                      placeholder="https://instagram.com/..."
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Facebook URL</label>
+                    <input value={siteSettings.footer_facebook ?? ''} onChange={e => handleSettingChange('footer_facebook', e.target.value)}
+                      placeholder="https://facebook.com/..."
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                  </div>
                 </div>
               </div>
             </section>
