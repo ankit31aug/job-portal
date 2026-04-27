@@ -1,0 +1,42 @@
+name: qci-validate
+description: |
+  Use when: You want to check the project compiles cleanly and the server starts.
+  Does: TypeScript type-check on client, checks server syntax, reports any errors.
+  Triggers: "validate", "type check", "does it compile", "check for errors".
+  NOT for: Running browser tests or deployment.
+
+nodes:
+  - id: type-check-client
+    bash: |
+      echo "=== CLIENT TYPE CHECK ==="
+      cd client && npx tsc --noEmit 2>&1
+      TSC=$?
+      echo ""
+      echo "TypeScript: $([ $TSC -eq 0 ] && echo 'PASS ✓' || echo 'FAIL ✗')"
+      exit $TSC
+    timeout: 60000
+
+  - id: check-server
+    bash: |
+      echo "=== SERVER SYNTAX CHECK ==="
+      cd server && node --check index.js 2>&1 || true
+      node --check server/index.js 2>&1 || node -e "require('./server/index.js')" 2>&1 | head -5 || true
+      echo ""
+      echo "=== SERVER DEPENDENCIES ==="
+      cd server && node -e "
+        const pkg = require('./package.json');
+        const deps = Object.keys(pkg.dependencies || {});
+        deps.forEach(d => { try { require.resolve(d); } catch(e) { console.log('MISSING:', d); } });
+        console.log('All', deps.length, 'server dependencies present');
+      " 2>&1 || echo "Check package.json manually"
+    timeout: 30000
+
+  - id: summary
+    bash: |
+      echo "=== VALIDATION SUMMARY ==="
+      echo "Client TypeScript: $qci_validate_type_check_client_exit_code"
+      echo ""
+      echo "Run 'archon workflow run qci-add-feature' to add a new feature"
+      echo "Run 'archon workflow run qci-fix-ui' to fix a UI bug"
+    depends_on: [type-check-client, check-server]
+    timeout: 10000

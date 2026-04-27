@@ -1,0 +1,146 @@
+name: qci-add-feature
+description: |
+  Use when: You want to add a new feature to the QCI Job Portal end-to-end.
+  Input: Feature description in plain English.
+  Does: Plan → implement in isolated branch → TypeScript check → commit → push → PR.
+  Triggers: "add feature", "build", "implement", "new page", "add section".
+  NOT for: Bug fixes (use qci-fix-ui), quick one-liners (use qci-quick-fix).
+
+nodes:
+  # ── PHASE 1: EXPLORE ────────────────────────────────────────────
+  - id: explore
+    bash: |
+      echo "=== QCI JOB PORTAL STRUCTURE ==="
+      echo "Feature request: $ARGUMENTS"
+      echo ""
+      echo "--- client/src/pages ---"
+      ls client/src/pages/
+      echo ""
+      echo "--- client/src/components ---"
+      ls client/src/components/
+      echo ""
+      echo "--- server routes ---"
+      ls server/routes/ 2>/dev/null || find server -name "*.js" | grep -v node_modules | head -15
+      echo ""
+      echo "--- types ---"
+      cat client/src/types/index.ts 2>/dev/null || cat client/src/types.ts 2>/dev/null | head -60
+      echo ""
+      echo "--- App.tsx routes ---"
+      grep -n "Route\|import" client/src/App.tsx | head -30
+    timeout: 30000
+
+  # ── PHASE 2: PLAN ───────────────────────────────────────────────
+  - id: plan
+    prompt: |
+      You are a senior full-stack engineer planning a new feature for the QCI Job Portal.
+
+      ## Feature Request
+      $ARGUMENTS
+
+      ## Current Codebase
+      $explore.output
+
+      ## Stack
+      - Frontend: React 18 + TypeScript + Vite (port 5173) + Tailwind CSS (darkMode: 'class')
+      - Backend: Node.js + Express + better-sqlite3 (port 5000)
+      - Auth: JWT, roles: jobseeker | employer | hr
+      - Dark mode: every new component needs `dark:` variants on all text/bg classes
+
+      ## Instructions
+      1. Read the relevant existing files to understand patterns (FormInput, JobCard, api.ts, etc.)
+      2. Write a plan to `$ARTIFACTS_DIR/plan.md` with:
+         ### Files to Create
+         - path, purpose, key props/routes
+         ### Files to Modify
+         - path, what changes and why
+         ### API Endpoints (if any)
+         - method, path, request body, response shape
+         ### Ordered Task List
+         - numbered steps, each leaving the project in a compilable state
+      3. Keep it focused — only what's needed for this specific feature
+    depends_on: [explore]
+    context: fresh
+    denied_tools: [Write, Edit, Bash]
+
+  # ── PHASE 3: IMPLEMENT ──────────────────────────────────────────
+  - id: implement
+    model: claude-opus-4-6[1m]
+    prompt: |
+      You are implementing a feature for the QCI Job Portal. Follow the plan exactly.
+
+      ## Plan
+      Read `$ARTIFACTS_DIR/plan.md` carefully before starting.
+
+      ## Feature
+      $ARGUMENTS
+
+      ## Rules
+      - Follow the plan task by task in order
+      - Read each file you plan to modify BEFORE editing it
+      - Match existing code style exactly (look at similar pages/components)
+      - All new UI components MUST have `dark:` variants for every text/bg/border color
+      - After every file edit: run `cd client && npx tsc --noEmit` and fix errors immediately
+      - If adding server routes: match the pattern in existing route files
+      - Never add placeholder TODO comments — implement fully or not at all
+      - Commit after completing each task: `git add -A && git commit -m "feat: [description]"`
+    depends_on: [plan]
+    context: fresh
+    hooks:
+      PostToolUse:
+        - matcher: "Write|Edit"
+          response:
+            systemMessage: >
+              File saved. Run `cd client && npx tsc --noEmit` NOW. Fix any TypeScript
+              errors before making the next change. Do not accumulate broken state.
+
+  # ── PHASE 4: VALIDATE ───────────────────────────────────────────
+  - id: validate
+    bash: |
+      echo "=== FINAL VALIDATION ==="
+      cd client && npx tsc --noEmit 2>&1
+      TSC=$?
+      echo ""
+      if [ $TSC -eq 0 ]; then
+        echo "✓ TypeScript clean"
+        echo "VALIDATION_STATUS: PASS"
+      else
+        echo "✗ TypeScript errors"
+        echo "VALIDATION_STATUS: FAIL"
+        exit 1
+      fi
+    depends_on: [implement]
+    timeout: 60000
+
+  # ── PHASE 5: PUSH + PR ──────────────────────────────────────────
+  - id: create-pr
+    prompt: |
+      ## Validation Result
+      $validate.output
+
+      If VALIDATION_STATUS is FAIL, fix the TypeScript errors first using the error output above,
+      then re-run `cd client && npx tsc --noEmit` to confirm clean.
+
+      If VALIDATION_STATUS is PASS:
+      1. Stage any remaining changes: `git add -A`
+      2. Commit if needed: `git commit -m "feat: [summary]"`
+      3. Push: `git push -u origin HEAD`
+      4. Create PR: `gh pr create --title "feat: $ARGUMENTS" --body "$(cat <<EOF
+      ## Summary
+      $ARGUMENTS
+
+      ## Changes
+      - [list key files changed]
+
+      ## Dark Mode
+      - [ ] All new components have dark: variants
+
+      ## Test Plan
+      - [ ] Run dev server: cd client && npm run dev
+      - [ ] Test in light mode
+      - [ ] Toggle dark mode — verify no invisible text
+
+      🤖 Generated with Archon + Claude Code
+      EOF
+      )"`
+    depends_on: [validate]
+    context: fresh

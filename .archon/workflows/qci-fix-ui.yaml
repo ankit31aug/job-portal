@@ -1,0 +1,85 @@
+name: qci-fix-ui
+description: |
+  Use when: There's a UI bug, invisible text in dark mode, layout broken, or styling issue.
+  Input: Description of the visual problem (e.g. "text invisible in dark mode on Login page").
+  Does: Audits affected files → fixes styles → TypeScript check → commits.
+  Triggers: "fix dark mode", "text invisible", "layout broken", "style bug", "UI fix".
+  NOT for: New features, backend bugs, API changes.
+
+nodes:
+  # ── PHASE 1: AUDIT ──────────────────────────────────────────────
+  - id: audit
+    bash: |
+      echo "=== QCI JOB PORTAL — UI AUDIT ==="
+      echo "Issue: $ARGUMENTS"
+      echo ""
+      echo "=== PAGES (client/src/pages) ==="
+      ls client/src/pages/
+      echo ""
+      echo "=== COMPONENTS (client/src/components) ==="
+      ls client/src/components/
+      echo ""
+      echo "=== TAILWIND CONFIG ==="
+      cat client/tailwind.config.js
+      echo ""
+      echo "=== DARK MODE CSS (index.css) ==="
+      cat client/src/index.css
+      echo ""
+      echo "=== APP WRAPPER (App.tsx dark bg check) ==="
+      grep -n "dark:" client/src/App.tsx | head -20
+    timeout: 30000
+
+  # ── PHASE 2: FIX ─────────────────────────────────────────────────
+  - id: fix
+    prompt: |
+      You are a senior React/Tailwind developer fixing a UI issue in the QCI Job Portal.
+
+      ## Issue Reported
+      $ARGUMENTS
+
+      ## Project Audit
+      $audit.output
+
+      ## Stack
+      - React 18 + TypeScript + Tailwind CSS (darkMode: 'class')
+      - The `dark` class is toggled on `<html>` by ThemeContext
+      - `.dark .card`, `.dark .input-field`, `.dark .btn-secondary` are in index.css as `html.dark` rules
+      - Every page's root div needs `dark:bg-gray-900` — utility classes override @layer base
+
+      ## Rules
+      1. Read the relevant page/component file(s) FIRST before editing
+      2. Only touch files related to the reported issue
+      3. For dark mode: add `dark:` variants to EVERY hardcoded light text/bg class
+         - `text-gray-900` → add `dark:text-white`
+         - `text-gray-700/600/500` → add `dark:text-gray-300/400/400`
+         - `bg-white` → add `dark:bg-gray-900` (or `dark:bg-gray-800` inside cards)
+         - `bg-gray-50/100` → add `dark:bg-gray-800/700`
+         - `border-gray-100/200` → add `dark:border-gray-700`
+      4. After every file edit run: `cd client && npx tsc --noEmit`
+      5. Fix any TypeScript errors immediately before moving on
+      6. Commit each file with a clear message: `fix: dark mode visibility on [PageName]`
+    depends_on: [audit]
+    context: fresh
+    hooks:
+      PostToolUse:
+        - matcher: "Write|Edit"
+          response:
+            systemMessage: >
+              File edited. Run `cd client && npx tsc --noEmit` RIGHT NOW to check for
+              TypeScript errors. Fix any errors before editing the next file.
+
+  # ── PHASE 3: VALIDATE ────────────────────────────────────────────
+  - id: validate
+    bash: |
+      echo "=== FINAL TYPE CHECK ==="
+      cd client && npx tsc --noEmit 2>&1
+      TSC=$?
+      echo ""
+      if [ $TSC -eq 0 ]; then
+        echo "✓ TypeScript clean — UI fix complete"
+      else
+        echo "✗ TypeScript errors remain — see above"
+      fi
+      exit $TSC
+    depends_on: [fix]
+    timeout: 60000

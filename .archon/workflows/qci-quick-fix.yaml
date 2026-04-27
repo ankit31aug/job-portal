@@ -1,0 +1,25 @@
+name: qci-quick-fix
+description: |
+  Use when: Small targeted bug fix — typo, broken link, wrong colour, minor logic error.
+  Input: Exact description of what's wrong and where.
+  Does: Fix in place (no worktree) → TypeScript check → commit.
+  Triggers: "quick fix", "typo", "broken link", "small bug", "minor fix".
+  NOT for: Feature work, dark mode overhauls, multi-file refactors.
+
+nodes:
+  - id: fix
+    prompt: |
+      Fix this issue in the QCI Job Portal: $ARGUMENTS
+
+      Rules:
+      1. Read the file(s) involved BEFORE editing
+      2. Make the minimal change needed — do not clean up surrounding code
+      3. Run `cd client && npx tsc --noEmit` after any .tsx/.ts change
+      4. Commit: `git add -A && git commit -m "fix: [description]"`
+    hooks:
+      PostToolUse:
+        - matcher: "Write|Edit"
+          response:
+            systemMessage: >
+              Run `cd client && npx tsc --noEmit` now to verify the fix compiles.
+              Fix any TypeScript errors before committing.

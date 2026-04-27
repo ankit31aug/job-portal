@@ -1,0 +1,9 @@
+worktree:
+  baseBranch: main
+
+project:
+  name: QCI Job Portal
+  stack: React + TypeScript + Express + SQLite
+  validateCommand: cd client && npx tsc --noEmit
+  clientDir: client
+  serverDir: server

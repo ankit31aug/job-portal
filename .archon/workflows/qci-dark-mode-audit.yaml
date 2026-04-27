@@ -1,0 +1,112 @@
+name: qci-dark-mode-audit
+description: |
+  Use when: Run a full dark mode audit across ALL pages and components.
+  Does: Scans every file for missing dark: variants → fixes all → TypeScript check → commit.
+  Triggers: "dark mode audit", "fix all dark mode", "full dark mode pass", "audit dark mode".
+  NOT for: Single-page fixes (use qci-fix-ui instead).
+
+nodes:
+  # ── PHASE 1: SCAN ────────────────────────────────────────────────
+  - id: scan
+    bash: |
+      echo "=== DARK MODE SCAN — QCI JOB PORTAL ==="
+      echo ""
+      echo "=== Files with hardcoded light text (no dark: variant) ==="
+      grep -rn "text-gray-[0-9]\|text-white\b\|bg-white\b\|bg-gray-[0-9]" \
+        client/src/pages/ client/src/components/ \
+        --include="*.tsx" \
+        -l 2>/dev/null | sort
+
+      echo ""
+      echo "=== Specific patterns missing dark: pair ==="
+      for f in client/src/pages/*.tsx client/src/components/*.tsx; do
+        [ -f "$f" ] || continue
+        issues=0
+        # bg-white without dark:bg
+        grep -q 'bg-white[^/]' "$f" && ! grep -q 'dark:bg-' "$f" && { echo "$f: bg-white with no dark:bg"; issues=1; }
+        # bg-gray-50/100 without dark:bg
+        grep -q 'bg-gray-[159]0\b' "$f" && ! grep -q 'dark:bg-' "$f" && { echo "$f: bg-gray-* with no dark:bg"; issues=1; }
+        # text-gray-900 without dark:text-white
+        grep -q 'text-gray-900\b' "$f" && ! grep -q 'dark:text-white\|dark:text-gray' "$f" && { echo "$f: text-gray-900 with no dark:text"; issues=1; }
+      done
+
+      echo ""
+      echo "=== ThemeContext check ==="
+      grep -n "toggleDark\|dark\|ThemeProvider" client/src/context/ThemeContext.tsx | head -20
+
+      echo ""
+      echo "=== App.tsx dark wrapper ==="
+      grep -n "dark:" client/src/App.tsx
+    timeout: 30000
+
+  # ── PHASE 2: FIX ALL ─────────────────────────────────────────────
+  - id: fix-all
+    model: claude-opus-4-6[1m]
+    prompt: |
+      You are performing a complete dark mode audit of the QCI Job Portal.
+
+      ## Scan Results
+      $scan.output
+
+      ## Stack
+      - Tailwind CSS with `darkMode: 'class'` — `dark` class on `<html>` element
+      - `html.dark .card`, `html.dark .input-field`, `html.dark .btn-secondary` in index.css
+      - Every page root div needs `dark:bg-gray-900`
+      - Every explicit text/bg class needs a `dark:` counterpart
+
+      ## Dark Mode Mapping (apply these rules)
+      | Light class | Dark variant to add |
+      |-------------|---------------------|
+      | `text-gray-900` | `dark:text-white` |
+      | `text-gray-800` | `dark:text-white` |
+      | `text-gray-700` | `dark:text-gray-300` |
+      | `text-gray-600` | `dark:text-gray-300` |
+      | `text-gray-500` | `dark:text-gray-400` |
+      | `text-gray-400` | `dark:text-gray-500` |
+      | `bg-white` | `dark:bg-gray-900` (page root) or `dark:bg-gray-800` (inside card) |
+      | `bg-gray-50` | `dark:bg-gray-900` (page) or `dark:bg-gray-800` (section) |
+      | `bg-gray-100` | `dark:bg-gray-700` |
+      | `border-gray-100` | `dark:border-gray-700` |
+      | `border-gray-200` | `dark:border-gray-700` |
+      | `divide-gray-100` | `dark:divide-gray-700` |
+      | `hover:bg-gray-50` | `dark:hover:bg-gray-800` |
+      | `hover:bg-gray-100` | `dark:hover:bg-gray-700` |
+
+      ## Process
+      1. Work through each file identified in the scan
+      2. Read the file fully, identify ALL elements with missing dark: variants
+      3. Add dark: variants — do not remove or change any existing classes
+      4. After editing each file: `cd client && npx tsc --noEmit` — fix errors before next file
+      5. Commit each file: `git add client/src/[file] && git commit -m "fix: dark mode [filename]"`
+    depends_on: [scan]
+    context: fresh
+    hooks:
+      PostToolUse:
+        - matcher: "Write|Edit"
+          response:
+            systemMessage: >
+              Run `cd client && npx tsc --noEmit` now. Fix TypeScript errors before
+              moving to the next file. Accumulating errors makes the final fix harder.
+
+  # ── PHASE 3: VALIDATE ────────────────────────────────────────────
+  - id: validate
+    bash: |
+      echo "=== DARK MODE AUDIT COMPLETE — FINAL TYPECHECK ==="
+      cd client && npx tsc --noEmit 2>&1
+      TSC=$?
+      echo ""
+      echo "=== REMAINING ISSUES SCAN ==="
+      for f in client/src/pages/*.tsx client/src/components/*.tsx; do
+        [ -f "$f" ] || continue
+        grep -q 'bg-white[^/]' "$f" && ! grep -q 'dark:bg-' "$f" && echo "Still needs dark:bg: $f"
+        grep -q 'text-gray-900\b' "$f" && ! grep -q 'dark:text-' "$f" && echo "Still needs dark:text: $f"
+      done
+      echo ""
+      if [ $TSC -eq 0 ]; then
+        echo "✓ All clean — dark mode audit complete"
+      else
+        echo "✗ TypeScript errors need fixing"
+        exit 1
+      fi
+    depends_on: [fix-all]
+    timeout: 60000
