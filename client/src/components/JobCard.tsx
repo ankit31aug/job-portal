@@ -9,14 +9,14 @@ interface JobCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  Technology:     'bg-blue-100 text-blue-700',
-  Operations:     'bg-teal-100 text-teal-700',
-  Management:     'bg-indigo-100 text-indigo-700',
-  Finance:        'bg-green-100 text-green-700',
-  HR:             'bg-pink-100 text-pink-700',
-  Administration: 'bg-yellow-100 text-yellow-700',
-  Design:         'bg-purple-100 text-purple-700',
-  Legal:          'bg-orange-100 text-orange-700',
+  Technology:     'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
+  Operations:     'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300',
+  Management:     'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300',
+  Finance:        'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300',
+  HR:             'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300',
+  Administration: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300',
+  Design:         'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300',
+  Legal:          'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
 };
 
 function formatSalary(min?: number, max?: number) {
@@ -36,12 +36,12 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
       <div className="flex justify-between items-start mb-3">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className={`badge ${categoryColors[job.category] || 'bg-gray-100 text-gray-700'}`}>
+            <span className={`badge ${categoryColors[job.category] || 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}>
               {job.category}
             </span>
-            <span className="badge bg-gray-100 text-gray-600">{job.job_type}</span>
+            <span className="badge bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{job.job_type}</span>
             {showMatchScore && job.match_score !== undefined && job.match_score > 0 && (
-              <span className={`badge ${job.match_score >= 70 ? 'bg-green-100 text-green-700' : job.match_score >= 40 ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'} flex items-center gap-1`}>
+              <span className={`badge ${job.match_score >= 70 ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : job.match_score >= 40 ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'} flex items-center gap-1`}>
                 <TrendingUp size={10} />
                 {job.match_score}% match
               </span>
@@ -66,7 +66,7 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
 
       <div className="flex flex-wrap gap-1.5 mb-4">
         {skills.map((skill) => (
-          <span key={skill} className="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-md font-medium">
+          <span key={skill} className="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-md font-medium">
             {skill.trim()}
           </span>
         ))}
@@ -78,8 +78,8 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
       </div>
 
       {showMatchScore && job.matched_skills && job.matched_skills.length > 0 && (
-        <div className="mb-3 p-2 bg-green-50 rounded-lg">
-          <p className="text-xs text-green-700 font-medium">Matched skills: {job.matched_skills.slice(0, 5).join(', ')}</p>
+        <div className="mb-3 p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+          <p className="text-xs text-green-700 dark:text-green-300 font-medium">Matched skills: {job.matched_skills.slice(0, 5).join(', ')}</p>
         </div>
       )}
 

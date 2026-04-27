@@ -32,7 +32,7 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               {job.department && job.department !== 'General' && (
-                <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-blue-100 text-blue-700">{job.department}</span>
+                <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">{job.department}</span>
               )}
               <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{job.job_type}</span>
               <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{job.category}</span>
