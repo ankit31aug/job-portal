@@ -6,7 +6,7 @@
   body {
     @apply bg-gray-50 text-gray-900 font-sans;
   }
-  .dark body {
+  html.dark body {
     @apply bg-gray-900 text-gray-100;
   }
 }
@@ -30,13 +30,16 @@
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-  .dark .card {
+  html.dark .card {
     @apply bg-gray-800 border-gray-700 text-gray-100;
   }
-  .dark .input-field {
+  html.dark .input-field {
     @apply bg-gray-800 border-gray-600 text-gray-100 placeholder-gray-500;
   }
-  .dark .btn-secondary {
+  html.dark .btn-secondary {
     @apply bg-gray-800 border-gray-600 text-gray-200 hover:bg-gray-700;
+  }
+  html.dark select option {
+    @apply bg-gray-800 text-gray-100;
   }
 }

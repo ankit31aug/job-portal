@@ -50,7 +50,7 @@ export default function Careers() {
   }, []);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Hero */}
       <div className="bg-gradient-to-br from-slate-800 to-slate-900 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -126,9 +126,9 @@ export default function Careers() {
                   {idx < LEVELS.length - 1 && (
                     <div className="flex justify-center py-1.5">
                       <div className="flex flex-col items-center gap-0.5">
-                        <div className="w-px h-3 bg-gray-300" />
-                        <ChevronDown size={14} className="text-gray-400" />
-                        <p className="text-xs text-gray-400 font-medium">Grow</p>
+                        <div className="w-px h-3 bg-gray-300 dark:bg-gray-600" />
+                        <ChevronDown size={14} className="text-gray-400 dark:text-gray-500" />
+                        <p className="text-xs text-gray-400 dark:text-gray-500 font-medium">Grow</p>
                       </div>
                     </div>
                   )}

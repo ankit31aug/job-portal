@@ -76,12 +76,12 @@ export default function JobDetails() {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="badge bg-blue-100 text-blue-700">{job.category}</span>
-                  <span className="badge bg-gray-100 text-gray-600">{job.job_type}</span>
+                  <span className="badge bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">{job.category}</span>
+                  <span className="badge bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{job.job_type}</span>
                   {job.is_active ? (
-                    <span className="badge bg-green-100 text-green-700">Active</span>
+                    <span className="badge bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Active</span>
                   ) : (
-                    <span className="badge bg-red-100 text-red-700">Closed</span>
+                    <span className="badge bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300">Closed</span>
                   )}
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{job.title}</h1>
@@ -106,7 +106,7 @@ export default function JobDetails() {
               ))}
             </div>
 
-            <div className="flex items-center gap-1 text-xs text-gray-400">
+            <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
               <Clock size={12} />
               Posted {new Date(job.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
             </div>
@@ -133,7 +133,7 @@ export default function JobDetails() {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Required Skills</h2>
             <div className="flex flex-wrap gap-2">
               {skills.map(skill => (
-                <span key={skill} className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium border border-blue-100">
+                <span key={skill} className="px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-medium border border-blue-100 dark:border-blue-800">
                   {skill}
                 </span>
               ))}
@@ -153,7 +153,7 @@ export default function JobDetails() {
                   {user?.role === 'employer' ? 'This is your category' : 'Apply Now'}
                 </button>
               ) : (
-                <div className="w-full py-3 text-center text-gray-500 bg-gray-100 rounded-lg text-sm">
+                <div className="w-full py-3 text-center text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm">
                   This position is no longer accepting applications
                 </div>
               )}
@@ -164,7 +164,7 @@ export default function JobDetails() {
                 {user && (
                   <button onClick={toggleBookmark}
                     className={`py-2 px-3 rounded-lg border text-sm flex items-center gap-1.5 transition-colors ${
-                      bookmarked ? 'border-blue-200 bg-blue-50 text-blue-600' : 'border-gray-200 text-gray-500 hover:border-gray-300'
+                      bookmarked ? 'border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'
                     }`}>
                     {bookmarked ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
                     {bookmarked ? 'Saved' : 'Save'}
@@ -183,8 +183,8 @@ export default function JobDetails() {
                 { label: 'Salary', value: formatSalary(job.salary_min, job.salary_max) },
               ].map(item => (
                 <div key={item.label} className="flex justify-between text-sm">
-                  <span className="text-gray-500">{item.label}</span>
-                  <span className="text-gray-800 font-medium text-right max-w-[60%]">{item.value}</span>
+                  <span className="text-gray-500 dark:text-gray-400">{item.label}</span>
+                  <span className="text-gray-800 dark:text-gray-200 font-medium text-right max-w-[60%]">{item.value}</span>
                 </div>
               ))}
             </div>

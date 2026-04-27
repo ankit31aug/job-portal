@@ -34,8 +34,8 @@ export default function PostJob() {
   if (!user || user.role !== 'employer') {
     return (
       <div className="max-w-lg mx-auto px-4 py-16 text-center">
-        <h2 className="text-xl font-bold text-gray-800 mb-2">Employers Only</h2>
-        <p className="text-gray-500 mb-4">Please register as an employer to post jobs.</p>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">Employers Only</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-4">Please register as an employer to post jobs.</p>
         <button onClick={() => navigate('/register')} className="btn-primary">Register as Employer</button>
       </div>
     );
@@ -107,13 +107,13 @@ export default function PostJob() {
   };
 
   if (posted) return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
       <div className="card p-10 text-center max-w-md">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle size={40} className="text-green-600" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Job Posted!</h2>
-        <p className="text-gray-600 mb-6">Your job listing is now live and candidates can apply.</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Job Posted!</h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-6">Your job listing is now live and candidates can apply.</p>
         <div className="flex flex-col gap-3">
           <button onClick={() => navigate('/dashboard')} className="btn-primary py-2.5">View Applications</button>
           <button onClick={() => { setPosted(false); setForm({ title: '', location: 'New Delhi', job_type: 'Full-time', category: 'Operations', department: 'NABH', experience_min: '0', experience_max: '5', salary_min: '', salary_max: '', description: '', requirements: '', skills: '', openings: '1' }); }} className="btn-secondary py-2.5">Post Another Job</button>
@@ -124,10 +124,10 @@ export default function PostJob() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
         <PlusCircle size={24} className="text-blue-600" />Post a New Job
       </h1>
-      <p className="text-gray-500 mb-6">Fill in the details to attract the right candidates</p>
+      <p className="text-gray-500 dark:text-gray-400 mb-6">Fill in the details to attract the right candidates</p>
 
       {serverError && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{serverError}</div>
@@ -136,7 +136,7 @@ export default function PostJob() {
       <div className="card p-6">
         <form onSubmit={handleSubmit} noValidate>
           <section className="mb-6">
-            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-100">Basic Information</h2>
+            <h2 className="font-semibold text-gray-800 dark:text-white mb-4 pb-2 border-b border-gray-100 dark:border-gray-700">Basic Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
               <div className="md:col-span-2">
                 <FormInput label="Job Title" name="title" value={form.title}
@@ -149,19 +149,19 @@ export default function PostJob() {
                 error={errors.location} touched={touched.location}
                 placeholder="Bangalore, Karnataka (or Remote)" required />
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Job Type <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Type <span className="text-red-500">*</span></label>
                 <select name="job_type" value={form.job_type} onChange={handleChange} className="input-field">
                   {JOB_TYPES.map(t => <option key={t}>{t}</option>)}
                 </select>
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Department <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Department <span className="text-red-500">*</span></label>
                 <select name="department" value={form.department} onChange={handleChange} className="input-field">
                   {DEPARTMENTS.map(d => <option key={d}>{d}</option>)}
                 </select>
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category <span className="text-red-500">*</span></label>
                 <select name="category" value={form.category} onChange={handleChange} className="input-field">
                   {CATEGORIES.map(c => <option key={c}>{c}</option>)}
                 </select>
@@ -172,7 +172,7 @@ export default function PostJob() {
           </section>
 
           <section className="mb-6">
-            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-100">Experience & Salary</h2>
+            <h2 className="font-semibold text-gray-800 dark:text-white mb-4 pb-2 border-b border-gray-100 dark:border-gray-700">Experience & Salary</h2>
             <div className="grid grid-cols-2 gap-x-4">
               <FormInput label="Min Experience (years)" name="experience_min" type="number" value={form.experience_min}
                 onChange={handleChange} onBlur={handleBlur} placeholder="0" />
@@ -190,7 +190,7 @@ export default function PostJob() {
           </section>
 
           <section className="mb-6">
-            <h2 className="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-100">Job Details</h2>
+            <h2 className="font-semibold text-gray-800 dark:text-white mb-4 pb-2 border-b border-gray-100 dark:border-gray-700">Job Details</h2>
             <FormInput label="Job Description" name="description" as="textarea" value={form.description}
               onChange={handleChange} onBlur={handleBlur}
               error={errors.description} touched={touched.description}

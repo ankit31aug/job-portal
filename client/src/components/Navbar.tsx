@@ -61,32 +61,32 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-2 transition-colors"
+                  className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full px-3 py-2 transition-colors"
                 >
                   <div className="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-sm font-medium text-gray-700">{user.name.split(' ')[0]}</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{user.name.split(' ')[0]}</span>
                 </button>
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-sm font-semibold text-gray-900">{user.name}</p>
-                      <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">{user.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user.role}</p>
                     </div>
                     {user?.role === 'hr' ? (
                       <Link to="/admin" onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50">
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">
                         <ShieldCheck size={16} />HR Admin Panel
                       </Link>
                     ) : (
                       <Link to="/dashboard" onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
                         <LayoutDashboard size={16} />Dashboard
                       </Link>
                     )}
                     <button onClick={handleLogout}
-                      className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                      className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
                       <LogOut size={16} />Sign Out
                     </button>
                   </div>
@@ -106,28 +106,28 @@ export default function Navbar() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-700 dark:border-gray-700 dark:bg-gray-900 space-y-2">
-            <Link to="/browse" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Browse Jobs</Link>
-            <Link to="/careers" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Career Paths</Link>
-            <Link to="/about" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">About QCI</Link>
-            <Link to="/resume-match" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Resume Match</Link>
+          <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 space-y-1">
+            <Link to="/browse" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Browse Jobs</Link>
+            <Link to="/careers" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Career Paths</Link>
+            <Link to="/about" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">About QCI</Link>
+            <Link to="/resume-match" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Resume Match</Link>
             {user?.role === 'employer' && (
-              <Link to="/post-job" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Post a Job</Link>
+              <Link to="/post-job" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Post a Job</Link>
             )}
             {user?.role === 'hr' && (
-              <Link to="/admin" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-emerald-700 hover:bg-emerald-50 rounded-lg font-medium">HR Admin Panel</Link>
+              <Link to="/admin" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg font-medium">HR Admin Panel</Link>
             )}
             {user ? (
               <>
                 {user.role !== 'hr' && (
-                  <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Dashboard</Link>
+                  <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Dashboard</Link>
                 )}
-                <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg">Sign Out</button>
+                <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg">Sign Out</button>
               </>
             ) : (
               <>
-                <Link to="/login" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Sign In</Link>
-                <Link to="/register" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg font-medium">Get Started</Link>
+                <Link to="/login" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Sign In</Link>
+                <Link to="/register" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg font-medium">Get Started</Link>
               </>
             )}
           </div>
