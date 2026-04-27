@@ -3,12 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 interface Props {
-  dept: 'NABH' | 'NABET' | 'NABL';
+  dept: 'NABH' | 'NABET' | 'NABL' | 'NABCB' | 'NBQP';
   openRoles: number;
   openings: number;
 }
 
 const DEPT_META = {
+  NABCB: {
+    full: 'National Accreditation Board for Certification Bodies',
+    short: 'Accredits certification and inspection bodies under international ISO standards.',
+    from: '#1d4ed8', to: '#4f46e5',
+    icon: '🏛️',
+    tag: 'Certification',
+  },
   NABH: {
     full: 'National Accreditation Board for Hospitals & Healthcare Providers',
     short: 'Healthcare accreditation for hospitals, nursing homes & healthcare organisations.',
@@ -29,6 +36,13 @@ const DEPT_META = {
     from: '#c2410c', to: '#d97706',
     icon: '🔬',
     tag: 'Laboratories',
+  },
+  NBQP: {
+    full: 'National Board for Quality Promotion',
+    short: 'Leads nationwide quality movements, awareness campaigns, and voluntary certification.',
+    from: '#be185d', to: '#e11d48',
+    icon: '⭐',
+    tag: 'Quality Promotion',
   },
 };
 
@@ -57,11 +71,11 @@ export default function DepartmentCard({ dept, openRoles, openings }: Props) {
       </div>
 
       {/* Body */}
-      <div className="bg-white p-5">
-        <p className="text-xs font-semibold text-gray-500 mb-1">{meta.full}</p>
-        <p className="text-sm text-gray-600 leading-relaxed mb-4">{meta.short}</p>
+      <div className="bg-white dark:bg-gray-800 p-5">
+        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">{meta.full}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{meta.short}</p>
         <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-400">{openings} total opening{openings !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-gray-400 dark:text-gray-500">{openings} total opening{openings !== 1 ? 's' : ''}</span>
           <button className="flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all"
             style={{ color: meta.from }}>
             View Roles <ArrowRight size={14} />

@@ -47,17 +47,17 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
               </span>
             )}
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
             <Link to={`/jobs/${job.id}`}>{job.title}</Link>
           </h3>
-          <p className="text-gray-600 font-medium">{job.company}</p>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">{job.company}</p>
         </div>
         <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
           {job.company.charAt(0)}
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 mb-3 text-sm text-gray-500">
+      <div className="flex flex-wrap gap-3 mb-3 text-sm text-gray-500 dark:text-gray-400">
         <span className="flex items-center gap-1"><MapPin size={13} />{job.location}</span>
         <span className="flex items-center gap-1"><Briefcase size={13} />{job.experience_min}-{job.experience_max} yrs</span>
         {salary && <span className="flex items-center gap-1"><IndianRupee size={13} />{salary}</span>}
@@ -71,7 +71,7 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
           </span>
         ))}
         {job.skills.split(',').length > 4 && (
-          <span className="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded-md">
+          <span className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs rounded-md">
             +{job.skills.split(',').length - 4} more
           </span>
         )}
@@ -84,7 +84,7 @@ export default function JobCard({ job, showMatchScore }: JobCardProps) {
       )}
 
       <div className="flex items-center justify-between">
-        <span className="text-xs text-gray-400 flex items-center gap-1">
+        <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
           <Clock size={12} />
           {new Date(job.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
           {job.application_count !== undefined && ` · ${job.application_count} applicants`}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Search, ArrowRight, Briefcase, Users, Award, BookOpen, FlaskConical, TrendingUp, Star, CheckCircle } from 'lucide-react';
+import { Search, ArrowRight, Briefcase, Users, Award, BookOpen, FlaskConical, TrendingUp, Star, CheckCircle, Building2, Layers } from 'lucide-react';
 import api from '../utils/api';
 import { Job } from '../types';
 import JobCard from '../components/JobCard';
@@ -30,6 +30,12 @@ function AnimatedCounter({ target, duration = 1500 }: { target: number; duration
   }, [target, duration]);
   return <span ref={ref}>{count}</span>;
 }
+
+const DIVISIONS = [
+  { acronym: 'PADD', full: 'Project Analysis & Documentation Division', desc: 'Manages voluntary conformity assessment frameworks including IndiaGHP and Ayush Mark.', color: 'bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800', accent: 'text-blue-700 dark:text-blue-400', icon: '📋' },
+  { acronym: 'PPID', full: 'Project Planning & Implementation Division', desc: 'Executes quality projects for central and state governments across India.', color: 'bg-violet-50 dark:bg-violet-900/20 border-violet-100 dark:border-violet-800', accent: 'text-violet-700 dark:text-violet-400', icon: '🗂️' },
+  { acronym: 'NDIE', full: 'National Division for Industry Excellence', desc: 'Enhances industrial quality standards through benchmarking and best practices.', color: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800', accent: 'text-emerald-700 dark:text-emerald-400', icon: '🏭' },
+];
 
 const WHY_ITEMS = [
   { icon: <Award size={22} className="text-blue-500" />, title: 'National Impact', desc: 'Your work directly influences quality standards across India\'s hospitals, labs, and educational institutions.' },
@@ -101,36 +107,60 @@ export default function Home() {
       </section>
 
       {/* ── STATS ── */}
-      <section className="bg-white border-b border-gray-100">
+      <section className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { label: 'Active Roles', value: stats?.total ?? 0, icon: <Briefcase size={20} className="text-blue-500" /> },
             { label: 'Total Openings', value: stats?.totalOpenings ?? 0, icon: <Users size={20} className="text-emerald-500" /> },
-            { label: 'Departments', value: 3, icon: <Award size={20} className="text-purple-500" /> },
+            { label: 'Boards', value: 5, icon: <Award size={20} className="text-purple-500" /> },
             { label: 'Career Levels', value: 4, icon: <TrendingUp size={20} className="text-orange-500" /> },
           ].map(s => (
             <div key={s.label} className="flex flex-col items-center gap-1">
               {s.icon}
-              <p className="text-3xl font-black text-gray-900"><AnimatedCounter target={s.value} /></p>
-              <p className="text-sm text-gray-500">{s.label}</p>
+              <p className="text-3xl font-black text-gray-900 dark:text-white"><AnimatedCounter target={s.value} /></p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── DEPARTMENTS ── */}
-      <section className="py-16 px-4 bg-gray-50">
+      {/* ── BOARDS & DIVISIONS ── */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-6xl mx-auto">
+          {/* Boards heading */}
           <div className="text-center mb-10">
             <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-2">Where You'll Work</p>
-            <h2 className="text-3xl font-black text-gray-900 mb-3">Three Boards. One Mission.</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">QCI operates through three national accreditation boards, each shaping quality standards in a critical sector of India.</p>
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Five Boards. One Mission.</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">QCI operates through five national accreditation boards, each shaping quality standards in a critical sector of India.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(['NABH', 'NABET', 'NABL'] as const).map(dept => (
+
+          {/* 5 board cards — responsive wrap */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-4">
+            {(['NABCB', 'NABH', 'NABET', 'NABL', 'NBQP'] as const).map(dept => (
               <DepartmentCard key={dept} dept={dept}
                 openRoles={stats?.byDepartment[dept] ?? 0}
                 openings={stats?.openingsByDept[dept] ?? 0} />
+            ))}
+          </div>
+
+          {/* Divisions heading */}
+          <div className="text-center mt-14 mb-8">
+            <div className="inline-flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-4 py-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-widest mb-3">
+              <Layers size={13} /> Operating Divisions
+            </div>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Three Divisions. Where Projects Come to Life.</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm">Beyond accreditation, QCI's divisions implement quality programmes for government and industry.</p>
+          </div>
+
+          {/* 3 division cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {DIVISIONS.map(div => (
+              <div key={div.acronym} className={`rounded-2xl border p-6 ${div.color}`}>
+                <span className="text-3xl mb-3 block">{div.icon}</span>
+                <h3 className={`text-lg font-black mb-0.5 ${div.accent}`}>{div.acronym}</h3>
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">{div.full}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{div.desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -138,12 +168,12 @@ export default function Home() {
 
       {/* ── FEATURED JOBS ── */}
       {featuredJobs.length > 0 && (
-        <section className="py-16 px-4 bg-white">
+        <section className="py-16 px-4 bg-white dark:bg-gray-900">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
                 <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-1">Latest Openings</p>
-                <h2 className="text-2xl font-black text-gray-900">Highlighted Opportunities</h2>
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white">Highlighted Opportunities</h2>
               </div>
               <Link to="/browse" className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700">
                 View all jobs <ArrowRight size={14} />
@@ -163,20 +193,20 @@ export default function Home() {
       )}
 
       {/* ── WHY QCI ── */}
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-2">Why Choose QCI</p>
-            <h2 className="text-3xl font-black text-gray-900 mb-3">A Career That Means Something</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">More than a job — a mandate to improve quality standards across India's most important sectors.</p>
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">A Career That Means Something</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">More than a job — a mandate to improve quality standards across India's most important sectors.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {WHY_ITEMS.map(item => (
-              <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex gap-4">
-                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center flex-shrink-0">{item.icon}</div>
+              <div key={item.title} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow flex gap-4">
+                <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">{item.icon}</div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                  <h3 className="font-bold text-gray-900 dark:text-white mb-1">{item.title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}

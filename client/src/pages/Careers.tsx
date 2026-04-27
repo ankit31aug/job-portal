@@ -74,10 +74,10 @@ export default function Careers() {
       </div>
 
       {/* Career ladders */}
-      <div className="max-w-7xl mx-auto px-4 py-14">
+      <div className="max-w-7xl mx-auto px-4 py-14 bg-gray-50 dark:bg-gray-900">
         <div className="text-center mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Career Progression at QCI</h2>
-          <p className="text-gray-500">The same four-level ladder exists in every department — giving you the flexibility to specialise or transfer domains.</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Career Progression at QCI</h2>
+          <p className="text-gray-500 dark:text-gray-400">The same four-level ladder exists in every department — giving you the flexibility to specialise or transfer domains.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -97,15 +97,15 @@ export default function Careers() {
               {/* Level cards */}
               {LEVELS.map((level, idx) => (
                 <React.Fragment key={level.title}>
-                  <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow group">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow group">
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <div className="flex items-center gap-2 mb-0.5">
                           <span className="w-5 h-5 rounded-full text-white text-xs font-bold flex items-center justify-center flex-shrink-0"
                             style={{ background: cfg.color }}>{idx + 1}</span>
-                          <h4 className="font-bold text-gray-900">{level.title}</h4>
+                          <h4 className="font-bold text-gray-900 dark:text-white">{level.title}</h4>
                         </div>
-                        <div className="flex items-center gap-3 text-xs text-gray-500 ml-7">
+                        <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 ml-7">
                           <span className="flex items-center gap-1"><Briefcase size={10} />{level.exp}</span>
                           <span className="flex items-center gap-1"><IndianRupee size={10} />{level.salary}</span>
                         </div>
@@ -116,10 +116,10 @@ export default function Careers() {
                         View <ArrowRight size={10} />
                       </Link>
                     </div>
-                    <p className="text-xs text-gray-500 leading-relaxed ml-7 mb-2">{level.description}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed ml-7 mb-2">{level.description}</p>
                     <div className="flex flex-wrap gap-1 ml-7">
                       {level.skills.slice(0, 3).map(s => (
-                        <span key={s} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 text-gray-600">{s}</span>
+                        <span key={s} className="px-1.5 py-0.5 text-xs rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{s}</span>
                       ))}
                     </div>
                   </div>
@@ -148,30 +148,30 @@ export default function Careers() {
       </div>
 
       {/* Comparison table */}
-      <div className="max-w-5xl mx-auto px-4 pb-16">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
+      <div className="max-w-5xl mx-auto px-4 pb-16 bg-gray-50 dark:bg-gray-900">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-2">
             <TrendingUp size={18} className="text-blue-600" />
-            <h3 className="font-bold text-gray-900">Roles Comparison at a Glance</h3>
+            <h3 className="font-bold text-gray-900 dark:text-white">Roles Comparison at a Glance</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Role</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Experience</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Salary Band</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">NABH</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">NABET</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">NABL</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase">Role</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase">Experience</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase">Salary Band</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase">NABH</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase">NABET</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase">NABL</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {LEVELS.map(l => (
-                  <tr key={l.title} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">{l.title}</td>
-                    <td className="px-4 py-3 text-gray-500">{l.exp}</td>
-                    <td className="px-4 py-3 text-gray-500">{l.salary}</td>
+                  <tr key={l.title} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{l.title}</td>
+                    <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{l.exp}</td>
+                    <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{l.salary}</td>
                     {(['NABH', 'NABET', 'NABL'] as const).map(d => (
                       <td key={d} className="px-4 py-3">
                         <Link to={`/browse?department=${d}`}

@@ -21,11 +21,11 @@ export default function Footer() {
   const { settings } = useSettings();
 
   const socials = [
-    { key: 'footer_linkedin', icon: <Linkedin size={15} />, hover: 'hover:bg-blue-600', href: settings.footer_linkedin },
-    { key: 'footer_twitter', icon: <Twitter size={15} />, hover: 'hover:bg-sky-500', href: settings.footer_twitter },
-    { key: 'footer_instagram', icon: <Instagram size={15} />, hover: 'hover:bg-pink-600', href: settings.footer_instagram },
-    { key: 'footer_facebook', icon: <Facebook size={15} />, hover: 'hover:bg-blue-700', href: settings.footer_facebook },
-  ].filter(s => s.href);
+    { key: 'footer_linkedin', icon: <Linkedin size={15} />, hover: 'hover:bg-blue-600', href: settings.footer_linkedin || '#' },
+    { key: 'footer_twitter', icon: <Twitter size={15} />, hover: 'hover:bg-sky-500', href: settings.footer_twitter || '#' },
+    { key: 'footer_instagram', icon: <Instagram size={15} />, hover: 'hover:bg-pink-600', href: settings.footer_instagram || '#' },
+    { key: 'footer_facebook', icon: <Facebook size={15} />, hover: 'hover:bg-blue-700', href: settings.footer_facebook || '#' },
+  ];
 
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -46,17 +46,17 @@ export default function Footer() {
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mb-5 max-w-xs">{settings.footer_about}</p>
 
-            {/* Social icons */}
-            {socials.length > 0 && (
-              <div className="flex gap-2 mb-4">
-                {socials.map(s => (
-                  <a key={s.key} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className={`w-8 h-8 bg-gray-800 ${s.hover} rounded-lg flex items-center justify-center transition-colors`}>
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            )}
+            {/* Social icons — always visible */}
+            <div className="flex gap-2 mb-4">
+              {socials.map(s => (
+                <a key={s.key} href={s.href}
+                  target={s.href !== '#' ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className={`w-8 h-8 bg-gray-800 ${s.hover} rounded-lg flex items-center justify-center transition-colors`}>
+                  {s.icon}
+                </a>
+              ))}
+            </div>
 
             {/* Divisions */}
             <div className="mt-4">

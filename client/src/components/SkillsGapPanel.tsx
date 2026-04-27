@@ -25,11 +25,11 @@ export default function SkillsGapPanel({ jobSkills, compact = false }: Props) {
   };
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
-      <button className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 text-left"
+    <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-gray-800">
+      <button className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-700 text-left"
         onClick={() => setExpanded(!expanded)}>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-800">Your Skills Match</span>
+          <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">Your Skills Match</span>
           {hasSkills && (
             <span className={`text-sm font-bold ${scoreColor}`}>{score}%</span>
           )}
@@ -43,11 +43,11 @@ export default function SkillsGapPanel({ jobSkills, compact = false }: Props) {
             <>
               {/* Score bar */}
               <div className="mb-4">
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
+                <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
                   <span>Match score</span>
                   <span className={`font-semibold ${scoreColor}`}>{score}%</span>
                 </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-100 dark:bg-gray-600 rounded-full overflow-hidden">
                   <div className={`h-full ${barColor} rounded-full transition-all duration-500`} style={{ width: `${score}%` }} />
                 </div>
               </div>
@@ -85,7 +85,7 @@ export default function SkillsGapPanel({ jobSkills, compact = false }: Props) {
               </button>
             </>
           ) : (
-            <p className="text-sm text-gray-500 mb-3">Add your skills to see how well you match this role.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Add your skills to see how well you match this role.</p>
           )}
 
           {(editing || !hasSkills) && (
@@ -94,9 +94,9 @@ export default function SkillsGapPanel({ jobSkills, compact = false }: Props) {
                 value={userSkillsInput}
                 onChange={e => setUserSkillsInput(e.target.value)}
                 placeholder="e.g. Healthcare,Documentation,MS Office,Communication"
-                className="w-full text-xs border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-xs border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               />
-              <p className="text-xs text-gray-400 mt-1">Comma-separated. Saved locally on your device.</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Comma-separated. Saved locally on your device.</p>
               <button onClick={saveSkills}
                 className="mt-2 text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
                 Save & Analyse

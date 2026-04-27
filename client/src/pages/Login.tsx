@@ -59,15 +59,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">
             <Briefcase size={32} className="text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">Quality Council <span className="text-blue-600">of India</span></span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">Quality Council <span className="text-blue-600">of India</span></span>
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome back!</h1>
-          <p className="text-gray-500 mt-1">Sign in to continue your job search</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back!</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Sign in to continue your job search</p>
         </div>
 
         <div className="card p-8">
@@ -86,7 +86,7 @@ export default function Login() {
             />
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -115,15 +115,15 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="text-center mt-6 text-sm text-gray-600">
+          <p className="text-center mt-6 text-sm text-gray-600 dark:text-gray-400">
             Don't have an account?{' '}
             <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">Create account</Link>
           </p>
         </div>
 
-        <div className="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-100 text-sm">
-          <p className="font-medium text-blue-800 mb-2">Demo Accounts:</p>
-          <p className="text-blue-700">Employer: <code>hr@techcorp.com</code> / <code>Admin@123</code></p>
+        <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl border border-blue-100 dark:border-blue-800 text-sm">
+          <p className="font-medium text-blue-800 dark:text-blue-300 mb-2">Demo Accounts:</p>
+          <p className="text-blue-700 dark:text-blue-400">Employer: <code>hr@techcorp.com</code> / <code>Admin@123</code></p>
         </div>
       </div>
     </div>

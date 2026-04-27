@@ -64,8 +64,8 @@ export default function JobDetails() {
   const skills = job.skills.split(',').map(s => s.trim()).filter(Boolean);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <Link to="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6 text-sm">
+    <div className="max-w-4xl mx-auto px-4 py-8 dark:bg-gray-900 min-h-screen">
+      <Link to="/" className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-6 text-sm">
         <ArrowLeft size={16} />Back to Jobs
       </Link>
 
@@ -84,8 +84,8 @@ export default function JobDetails() {
                     <span className="badge bg-red-100 text-red-700">Closed</span>
                   )}
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900">{job.title}</h1>
-                <p className="text-gray-600 text-lg mt-1">{job.company}</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{job.title}</h1>
+                <p className="text-gray-600 dark:text-gray-300 text-lg mt-1">{job.company}</p>
               </div>
               <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
                 {job.company.charAt(0)}
@@ -99,7 +99,7 @@ export default function JobDetails() {
                 { icon: <IndianRupee size={16} />, label: formatSalary(job.salary_min, job.salary_max) },
                 { icon: <Users size={16} />, label: `${job.openings} opening${job.openings > 1 ? 's' : ''}` },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                <div key={i} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                   <span className="text-blue-500">{item.icon}</span>
                   <span>{item.label}</span>
                 </div>
@@ -113,15 +113,15 @@ export default function JobDetails() {
           </div>
 
           <div className="card p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Job Description</h2>
-            <div className="text-gray-700 leading-relaxed whitespace-pre-wrap text-sm">{job.description}</div>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Job Description</h2>
+            <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap text-sm">{job.description}</div>
           </div>
 
           <div className="card p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Requirements</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Requirements</h2>
             <ul className="space-y-2">
               {requirements.map((req, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
                   <CheckCircle size={16} className="text-green-500 flex-shrink-0 mt-0.5" />
                   <span>{req}</span>
                 </li>
@@ -130,7 +130,7 @@ export default function JobDetails() {
           </div>
 
           <div className="card p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Required Skills</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Required Skills</h2>
             <div className="flex flex-wrap gap-2">
               {skills.map(skill => (
                 <span key={skill} className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium border border-blue-100">
@@ -173,8 +173,8 @@ export default function JobDetails() {
               </div>
             </div>
 
-            <div className="mt-5 pt-5 border-t border-gray-100 space-y-3">
-              <h3 className="font-semibold text-gray-800 text-sm">Job Overview</h3>
+            <div className="mt-5 pt-5 border-t border-gray-100 dark:border-gray-700 space-y-3">
+              <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm">Job Overview</h3>
               {[
                 { label: 'Category', value: job.category },
                 { label: 'Job Type', value: job.job_type },
