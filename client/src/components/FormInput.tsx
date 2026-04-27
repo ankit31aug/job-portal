@@ -31,7 +31,7 @@ export default function FormInput({
 
   return (
     <div className="mb-4">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
@@ -84,7 +84,7 @@ export default function FormInput({
         )}
       </div>
       {hasError && <p className="mt-1 text-sm text-red-600 flex items-center gap-1"><AlertCircle size={12} />{error}</p>}
-      {!hasError && hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
+      {!hasError && hint && <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{hint}</p>}
     </div>
   );
 }

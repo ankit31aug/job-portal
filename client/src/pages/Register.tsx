@@ -96,14 +96,14 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
       <div className="max-w-lg mx-auto">
         <div className="text-center mb-6">
           <Link to="/" className="inline-flex items-center gap-2 mb-3">
             <Briefcase size={28} className="text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">Quality Council <span className="text-blue-600">of India</span></span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">Quality Council <span className="text-blue-600">of India</span></span>
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Create Your Account</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Your Account</h1>
         </div>
 
         <div className="card p-8">
@@ -113,12 +113,12 @@ export default function Register() {
 
           {/* Role selector */}
           <div className="mb-6">
-            <p className="text-sm font-medium text-gray-700 mb-2">I want to:</p>
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">I want to:</p>
             <div className="grid grid-cols-2 gap-3">
               {(['jobseeker', 'employer'] as const).map(role => (
                 <button key={role} type="button" onClick={() => handleRoleChange(role)}
                   className={`p-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                    form.role === role ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                    form.role === role ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300'
                   }`}>
                   {role === 'jobseeker' ? '🔍 Find a Job' : '🏢 Hire Talent'}
                 </button>
@@ -167,7 +167,7 @@ export default function Register() {
             )}
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -194,7 +194,7 @@ export default function Register() {
             </button>
           </form>
 
-          <p className="text-center mt-6 text-sm text-gray-600">
+          <p className="text-center mt-6 text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
             <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">Sign in</Link>
           </p>

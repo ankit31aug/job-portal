@@ -34,11 +34,11 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
               {job.department && job.department !== 'General' && (
                 <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-blue-100 text-blue-700">{job.department}</span>
               )}
-              <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-600">{job.job_type}</span>
-              <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-600">{job.category}</span>
+              <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{job.job_type}</span>
+              <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{job.category}</span>
             </div>
             <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{job.title}</h1>
-            <p className="text-gray-600 font-medium">{job.company}</p>
+            <p className="text-gray-600 dark:text-gray-300 font-medium">{job.company}</p>
           </div>
           <div className="flex items-center gap-2">
             {user && (
@@ -53,7 +53,7 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 mt-3 text-sm text-gray-500">
+        <div className="flex flex-wrap gap-3 mt-3 text-sm text-gray-500 dark:text-gray-400">
           <span className="flex items-center gap-1"><MapPin size={13} />{job.location}</span>
           <span className="flex items-center gap-1"><Briefcase size={13} />{job.experience_min}–{job.experience_max} yrs exp</span>
           <span className="flex items-center gap-1"><IndianRupee size={13} />{fmtSalary(job.salary_min, job.salary_max)}</span>
@@ -62,23 +62,23 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
       </div>
 
       {/* Scrollable body */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-white dark:bg-gray-900">
 
         {/* Skills gap */}
         <SkillsGapPanel jobSkills={job.skills} />
 
         {/* Description */}
         <div>
-          <h3 className="font-semibold text-gray-900 mb-2">About This Role</h3>
-          <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{job.description}</p>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">About This Role</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">{job.description}</p>
         </div>
 
         {/* Requirements */}
         <div>
-          <h3 className="font-semibold text-gray-900 mb-2">Requirements</h3>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Requirements</h3>
           <ul className="space-y-1.5">
             {job.requirements.split('\n').filter(Boolean).map((req, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+              <li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0 mt-1.5" />
                 {req}
               </li>
@@ -88,10 +88,10 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
 
         {/* Skills */}
         <div>
-          <h3 className="font-semibold text-gray-900 mb-2">Required Skills</h3>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Required Skills</h3>
           <div className="flex flex-wrap gap-2">
             {skills.map(s => (
-              <span key={s} className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-lg font-medium border border-blue-100">{s}</span>
+              <span key={s} className="px-2.5 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-lg font-medium border border-blue-100 dark:border-blue-800">{s}</span>
             ))}
           </div>
         </div>
@@ -106,7 +106,7 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
               Apply with Resume
             </Link>
             <Link to={`/jobs/${job.id}`}
-              className="px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl text-sm text-center transition-colors">
+              className="px-4 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl text-sm text-center transition-colors">
               Full Details
             </Link>
           </>
@@ -117,7 +117,7 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
               Sign In to Apply
             </Link>
             <Link to={`/jobs/${job.id}`}
-              className="px-4 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl text-sm text-center transition-colors">
+              className="px-4 py-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl text-sm text-center transition-colors">
               Full Details
             </Link>
           </>
@@ -188,7 +188,7 @@ export default function Browse() {
       {/* LEFT PANEL */}
       <div className="w-full lg:w-[420px] flex-shrink-0 flex flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
         {/* Search */}
-        <div className="p-3 border-b border-gray-100">
+        <div className="p-3 border-b border-gray-100 dark:border-gray-700">
           <form onSubmit={handleSearch} className="flex gap-2">
             <div className="flex-1 flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-xl px-3 bg-gray-50 dark:bg-gray-800">
               <Search size={15} className="text-gray-400 flex-shrink-0" />
@@ -224,7 +224,7 @@ export default function Browse() {
             {JOB_TYPES.map(t => (
               <button key={t} onClick={() => setJobType(jobType === t ? '' : t)}
                 className={`px-2.5 py-1 rounded-full text-xs border transition-colors ${
-                  jobType === t ? 'bg-indigo-600 text-white border-indigo-600' : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                  jobType === t ? 'bg-indigo-600 text-white border-indigo-600' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300'
                 }`}>
                 {t}
               </button>
@@ -232,7 +232,7 @@ export default function Browse() {
           </div>
         )}
 
-        <div className="px-3 py-1.5 border-b border-gray-100">
+        <div className="px-3 py-1.5 border-b border-gray-100 dark:border-gray-700">
           <p className="text-xs text-gray-400 dark:text-gray-400">{loading ? 'Loading…' : `${total} job${total !== 1 ? 's' : ''} found`}</p>
         </div>
 

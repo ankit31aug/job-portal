@@ -61,8 +61,8 @@ export default function Dashboard() {
     <div className="max-w-6xl mx-auto px-4 py-8 dark:text-gray-100">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 text-sm mt-1">Welcome back, {user?.name}!</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Welcome back, {user?.name}!</p>
         </div>
         {user?.role === 'employer' && (
           <Link to="/post-job" className="btn-primary flex items-center gap-2">
@@ -117,11 +117,11 @@ export default function Dashboard() {
                   {applications.map(app => {
                     const cfg = STATUS_CONFIG[app.status] || STATUS_CONFIG.pending;
                     return (
-                      <div key={app.id} className="p-4 hover:bg-gray-50 flex items-center justify-between gap-4">
+                      <div key={app.id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-between gap-4">
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-medium text-gray-900 truncate">{app.job_title}</h3>
-                          <p className="text-sm text-gray-500">{app.company} · {app.location}</p>
-                          <p className="text-xs text-gray-400 mt-0.5">
+                          <h3 className="font-medium text-gray-900 dark:text-white truncate">{app.job_title}</h3>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{app.company} · {app.location}</p>
+                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
                             Applied {new Date(app.applied_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                           </p>
                         </div>
@@ -157,16 +157,16 @@ export default function Dashboard() {
               ) : (
                 <div className="divide-y divide-gray-100">
                   {savedJobs.map(job => (
-                    <div key={job.id} className="p-4 hover:bg-gray-50 flex items-center justify-between gap-4">
+                    <div key={job.id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
                           {job.department && job.department !== 'General' && (
-                            <span className="px-1.5 py-0.5 text-xs font-bold rounded bg-blue-100 text-blue-700">{job.department}</span>
+                            <span className="px-1.5 py-0.5 text-xs font-bold rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">{job.department}</span>
                           )}
-                          <h3 className="font-medium text-gray-900 truncate">{job.title}</h3>
+                          <h3 className="font-medium text-gray-900 dark:text-white truncate">{job.title}</h3>
                         </div>
-                        <p className="text-sm text-gray-500">{job.company}</p>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{job.company}</p>
+                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400 dark:text-gray-500">
                           <span className="flex items-center gap-0.5"><MapPin size={10} />{job.location}</span>
                           <span>{job.experience_min}–{job.experience_max} yrs</span>
                           {job.salary_min && <span className="flex items-center gap-0.5"><IndianRupee size={10} />{(job.salary_min / 100000).toFixed(0)}L+</span>}
@@ -174,11 +174,11 @@ export default function Dashboard() {
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <Link to={`/jobs/${job.id}`}
-                          className="text-xs px-3 py-1.5 border border-blue-200 text-blue-600 rounded-lg hover:bg-blue-50">
+                          className="text-xs px-3 py-1.5 border border-blue-200 dark:border-blue-700 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
                           View
                         </Link>
                         <button onClick={() => removeSaved(job.id)}
-                          className="text-xs px-3 py-1.5 border border-gray-200 text-gray-500 rounded-lg hover:bg-gray-50 hover:text-red-500">
+                          className="text-xs px-3 py-1.5 border border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-red-500">
                           Remove
                         </button>
                       </div>
@@ -193,27 +193,27 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Jobs list */}
           <div className="card">
-            <div className="p-4 border-b border-gray-100">
-              <h2 className="font-semibold text-gray-800">My Job Postings ({jobs.length})</h2>
+            <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+              <h2 className="font-semibold text-gray-800 dark:text-white">My Job Postings ({jobs.length})</h2>
             </div>
             {jobs.length === 0 ? (
               <div className="text-center py-10">
-                <p className="text-gray-500 text-sm mb-3">No jobs posted yet</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">No jobs posted yet</p>
                 <Link to="/post-job" className="btn-primary text-sm">Post a Job</Link>
               </div>
             ) : (
-              <div className="divide-y divide-gray-100 overflow-y-auto max-h-[600px]">
+              <div className="divide-y divide-gray-100 dark:divide-gray-700 overflow-y-auto max-h-[600px]">
                 {jobs.map(job => (
                   <button key={job.id} onClick={() => loadJobApplications(job.id)}
-                    className={`w-full text-left p-4 hover:bg-gray-50 transition-colors ${selectedJob === job.id ? 'bg-blue-50 border-r-2 border-blue-500' : ''}`}>
+                    className={`w-full text-left p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${selectedJob === job.id ? 'bg-blue-50 dark:bg-blue-950 border-r-2 border-blue-500 dark:border-blue-400' : ''}`}>
                     <div className="flex justify-between items-start">
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900 text-sm truncate">{job.title}</h3>
-                        <p className="text-xs text-gray-500 mt-0.5">{job.location}</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white text-sm truncate">{job.title}</h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{job.location}</p>
                       </div>
                       <div className="text-right flex-shrink-0 ml-2">
                         <span className="badge bg-blue-100 text-blue-700 text-xs">{job.application_count || 0}</span>
-                        <p className="text-xs text-gray-400 mt-1">{job.is_active ? 'Active' : 'Closed'}</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{job.is_active ? 'Active' : 'Closed'}</p>
                       </div>
                     </div>
                   </button>
@@ -224,8 +224,8 @@ export default function Dashboard() {
 
           {/* Applications for selected job */}
           <div className="lg:col-span-2 card">
-            <div className="p-4 border-b border-gray-100">
-              <h2 className="font-semibold text-gray-800">
+            <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+              <h2 className="font-semibold text-gray-800 dark:text-white">
                 {selectedJob ? `Applications (${jobApplications.length})` : 'Select a job to view applications'}
               </h2>
             </div>
@@ -240,29 +240,29 @@ export default function Dashboard() {
                 <p>No applications yet for this job</p>
               </div>
             ) : (
-              <div className="divide-y divide-gray-100 overflow-y-auto max-h-[600px]">
+              <div className="divide-y divide-gray-100 dark:divide-gray-700 overflow-y-auto max-h-[600px]">
                 {jobApplications.map(app => {
                   const cfg = STATUS_CONFIG[app.status] || STATUS_CONFIG.pending;
                   return (
                     <div key={app.id} className="p-4">
                       <div className="flex justify-between items-start mb-2">
                         <div>
-                          <h3 className="font-semibold text-gray-900">{app.full_name}</h3>
-                          <p className="text-sm text-gray-500">{app.email} · {app.phone}</p>
-                          {app.current_company && <p className="text-xs text-gray-400">Currently at: {app.current_company}</p>}
+                          <h3 className="font-semibold text-gray-900 dark:text-white">{app.full_name}</h3>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{app.email} · {app.phone}</p>
+                          {app.current_company && <p className="text-xs text-gray-400 dark:text-gray-500">Currently at: {app.current_company}</p>}
                         </div>
                         <div className="text-right">
                           <span className={`badge ${cfg.color} flex items-center gap-1`}>
                             {cfg.icon}{cfg.label}
                           </span>
                           {app.match_score > 0 && (
-                            <div className={`text-xs mt-1 font-medium ${app.match_score >= 70 ? 'text-green-600' : app.match_score >= 40 ? 'text-yellow-600' : 'text-gray-500'}`}>
+                            <div className={`text-xs mt-1 font-medium ${app.match_score >= 70 ? 'text-green-600' : app.match_score >= 40 ? 'text-yellow-600' : 'text-gray-500 dark:text-gray-400'}`}>
                               {app.match_score}% match
                             </div>
                           )}
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-500 mb-3">
+                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-500 dark:text-gray-400 mb-3">
                         <span>Exp: {app.experience_years} yrs</span>
                         <span>Notice: {app.notice_period || 'N/A'}</span>
                         <span>CTC: {app.current_ctc || 'N/A'}</span>
@@ -271,7 +271,7 @@ export default function Dashboard() {
                       {app.skills && (
                         <div className="flex flex-wrap gap-1 mb-3">
                           {app.skills.split(',').slice(0, 5).map(s => (
-                            <span key={s} className="px-1.5 py-0.5 bg-blue-50 text-blue-600 text-xs rounded">{s.trim()}</span>
+                            <span key={s} className="px-1.5 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-xs rounded">{s.trim()}</span>
                           ))}
                         </div>
                       )}
@@ -282,14 +282,14 @@ export default function Dashboard() {
                             className={`text-xs px-2.5 py-1 rounded-lg border font-medium transition-colors ${
                               app.status === s
                                 ? STATUS_CONFIG[s].color + ' border-transparent'
-                                : 'border-gray-200 text-gray-600 hover:border-gray-300 bg-white'
+                                : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
                             }`}>
                             {STATUS_CONFIG[s].label}
                           </button>
                         ))}
                         {app.resume_path && (
                           <a href={`/uploads/${app.resume_path}`} target="_blank" rel="noopener noreferrer"
-                            className="text-xs px-2.5 py-1 rounded-lg border border-blue-200 text-blue-600 hover:bg-blue-50">
+                            className="text-xs px-2.5 py-1 rounded-lg border border-blue-200 dark:border-blue-700 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20">
                             View Resume
                           </a>
                         )}

@@ -62,7 +62,7 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-900">
       {/* ── HERO ── */}
       <section className="relative overflow-hidden text-white py-20 px-4"
         style={{ background: `linear-gradient(135deg, ${settings.hero_gradient_from} 0%, ${settings.hero_gradient_to} 100%)` }}>

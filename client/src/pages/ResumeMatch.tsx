@@ -48,11 +48,11 @@ export default function ResumeMatch() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-2xl mb-4">
           <TrendingUp size={32} className="text-blue-600" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Resume-Based Job Matching</h1>
-        <p className="text-gray-500 max-w-lg mx-auto">Upload your PDF resume and we'll instantly find the best matching jobs based on your skills and experience.</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Resume-Based Job Matching</h1>
+        <p className="text-gray-500 dark:text-gray-400 max-w-lg mx-auto">Upload your PDF resume and we'll instantly find the best matching jobs based on your skills and experience.</p>
       </div>
 
       <div className="card p-8 mb-8 max-w-xl mx-auto">
@@ -63,11 +63,11 @@ export default function ResumeMatch() {
             onDrop={handleDrop}
             onClick={() => document.getElementById('resume-input')?.click()}
             className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all ${
-              dragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+              dragging ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10'
             }`}
           >
             <Upload size={48} className="mx-auto mb-3 text-gray-400" />
-            <p className="text-lg font-semibold text-gray-700 mb-1">Drop your resume here</p>
+            <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">Drop your resume here</p>
             <p className="text-sm text-gray-400 mb-3">or click to upload</p>
             <p className="text-xs text-gray-400">PDF only — Max 5MB</p>
             <input id="resume-input" type="file" accept=".pdf" className="hidden"
@@ -75,11 +75,11 @@ export default function ResumeMatch() {
           </div>
         ) : (
           <div>
-            <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl mb-4">
+            <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl mb-4">
               <FileText size={24} className="text-blue-600" />
               <div className="flex-1">
-                <p className="font-medium text-gray-800">{file.name}</p>
-                <p className="text-xs text-gray-500">{(file.size / 1024).toFixed(0)} KB</p>
+                <p className="font-medium text-gray-800 dark:text-gray-200">{file.name}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{(file.size / 1024).toFixed(0)} KB</p>
               </div>
               <button onClick={() => { setFile(null); setSearched(false); setJobs([]); }}
                 className="text-sm text-red-500 hover:text-red-700">Remove</button>
@@ -105,7 +105,7 @@ export default function ResumeMatch() {
       {searched && (
         <div>
           <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-xl font-bold text-gray-900">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
               {jobs.length > 0 ? `Found ${jobs.length} matching jobs` : 'No matching jobs found'}
             </h2>
             {jobs.length > 0 && (
@@ -114,7 +114,7 @@ export default function ResumeMatch() {
           </div>
 
           {jobs.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
               <TrendingUp size={48} className="mx-auto text-gray-300 mb-3" />
               <p className="mb-2">We couldn't find matching jobs for your resume.</p>
               <p className="text-sm">Try <a href="/" className="text-blue-600 hover:underline">browsing all jobs</a> instead.</p>
