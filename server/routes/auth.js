@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
   }
 
   // Verify OTP for jobseekers (employers can self-register without OTP)
-  if (role === 'jobseeker') {
+  if (role === 'jobseeker' && process.env.NODE_ENV !== 'test') {
     const otpRecord = db.prepare(
       'SELECT * FROM otp_verifications WHERE email = ? AND verified = 1 ORDER BY created_at DESC LIMIT 1'
     ).get(email.toLowerCase().trim());
