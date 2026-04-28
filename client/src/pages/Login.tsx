@@ -123,7 +123,9 @@ export default function Login() {
 
         <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl border border-blue-100 dark:border-blue-800 text-sm">
           <p className="font-medium text-blue-800 dark:text-blue-300 mb-2">Demo Accounts:</p>
-          <p className="text-blue-700 dark:text-blue-400">Employer: <code>hr@techcorp.com</code> / <code>Admin@123</code></p>
+          <p className="text-blue-700 dark:text-blue-400">Employer (NABH): <code>nabh@qci.org</code> / <code>Admin@123</code></p>
+          <p className="text-blue-700 dark:text-blue-400 mt-1">Employer (NABET): <code>nabet@qci.org</code> / <code>Admin@123</code></p>
+          <p className="text-blue-700 dark:text-blue-400 mt-1">Employer (NABL): <code>nabl@qci.org</code> / <code>Admin@123</code></p>
         </div>
       </div>
     </div>

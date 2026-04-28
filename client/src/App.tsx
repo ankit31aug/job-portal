@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -12,6 +12,8 @@ import Dashboard from './pages/Dashboard';
 import ResumeMatch from './pages/ResumeMatch';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import SuperAdminLogin from './pages/SuperAdminLogin';
+import SuperAdminDashboard from './pages/SuperAdminDashboard';
 import Browse from './pages/Browse';
 import Careers from './pages/Careers';
 import About from './pages/About';
@@ -27,10 +29,25 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppRoutes() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const isSuperAdmin = location.pathname.startsWith('/superadmin');
+
+  // SA routes are standalone — no Navbar/Footer wrapper
+  if (isSuperAdmin) {
+    return (
+      <Routes>
+        <Route path="/superadmin-login" element={<SuperAdminLogin />} />
+        <Route path="/superadmin" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col transition-colors duration-200">
       <Navbar />
-      <main className="flex-1">
+      <main className={`flex-1${isHome ? ' pb-12' : ''}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -48,7 +65,7 @@ function AppRoutes() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <Footer />
+      <Footer isHome={isHome} />
     </div>
   );
 }

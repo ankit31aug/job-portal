@@ -109,7 +109,7 @@ export default function ResumeMatch() {
               {jobs.length > 0 ? `Found ${jobs.length} matching jobs` : 'No matching jobs found'}
             </h2>
             {jobs.length > 0 && (
-              <span className="badge bg-green-100 text-green-700">Sorted by match score</span>
+              <span className="badge bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Sorted by match score</span>
             )}
           </div>
 
@@ -136,8 +136,8 @@ export default function ResumeMatch() {
           ].map(step => (
             <div key={step.title} className="card p-5 text-center">
               <div className="text-3xl mb-3">{step.icon}</div>
-              <h3 className="font-semibold text-gray-800 mb-1">{step.title}</h3>
-              <p className="text-sm text-gray-500">{step.desc}</p>
+              <h3 className="font-semibold text-gray-800 dark:text-white mb-1">{step.title}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{step.desc}</p>
             </div>
           ))}
         </div>

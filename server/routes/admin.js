@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../db');
 const { authenticate, requireHR } = require('../middleware/auth');
+const { statusUpdateEmail, sendMail } = require('../utils/email');
 
 const router = express.Router();
 
@@ -20,13 +21,25 @@ router.get('/stats', authenticate, requireHR, (req, res) => {
 });
 
 router.get('/jobs', authenticate, requireHR, (req, res) => {
+  const { page = 1, limit = 20, search } = req.query;
+  const offset = (parseInt(page) - 1) * parseInt(limit);
+  const conditions = [];
+  const params = [];
+  if (search) {
+    conditions.push('(j.title LIKE ? OR j.company LIKE ?)');
+    params.push(`%${search}%`, `%${search}%`);
+  }
+  const where = conditions.length ? 'WHERE ' + conditions.join(' AND ') : '';
+  const total = db.prepare(`SELECT COUNT(*) as count FROM jobs j ${where}`).get(...params);
   const jobs = db.prepare(`
     SELECT j.*, u.name as employer_name,
     (SELECT COUNT(*) FROM applications WHERE job_id = j.id) as application_count
     FROM jobs j LEFT JOIN users u ON j.employer_id = u.id
+    ${where}
     ORDER BY j.created_at DESC
-  `).all();
-  res.json(jobs);
+    LIMIT ? OFFSET ?
+  `).all(...params, parseInt(limit), offset);
+  res.json({ jobs, total: total.count, page: parseInt(page), pages: Math.ceil(total.count / parseInt(limit)) });
 });
 
 router.post('/jobs', authenticate, requireHR, (req, res) => {
@@ -84,23 +97,41 @@ router.get('/applications/job/:jobId', authenticate, requireHR, (req, res) => {
   res.json(applications);
 });
 
-router.patch('/applications/:id/status', authenticate, requireHR, (req, res) => {
+router.patch('/applications/:id/status', authenticate, requireHR, async (req, res) => {
   const { status } = req.body;
   const valid = ['pending', 'shortlisted', 'interviewed', 'rejected', 'hired'];
   if (!valid.includes(status)) return res.status(400).json({ error: 'Invalid status' });
 
-  const app = db.prepare('SELECT id FROM applications WHERE id = ?').get(req.params.id);
+  const app = db.prepare(`
+    SELECT a.*, j.title as job_title FROM applications a
+    JOIN jobs j ON a.job_id = j.id
+    WHERE a.id = ?
+  `).get(req.params.id);
   if (!app) return res.status(404).json({ error: 'Application not found' });
 
   db.prepare('UPDATE applications SET status = ? WHERE id = ?').run(status, req.params.id);
+
+  if (['shortlisted', 'interviewed', 'hired', 'rejected'].includes(status)) {
+    try {
+      await sendMail({
+        to: app.email,
+        subject: `QCI Job Portal — Application Status Update`,
+        html: statusUpdateEmail(app.full_name, app.job_title, status),
+      });
+    } catch (_) {}
+  }
+
   res.json({ message: 'Status updated', status });
 });
 
 router.get('/users', authenticate, requireHR, (req, res) => {
+  const { page = 1, limit = 20 } = req.query;
+  const offset = (parseInt(page) - 1) * parseInt(limit);
+  const total = db.prepare('SELECT COUNT(*) as count FROM users').get();
   const users = db.prepare(
-    'SELECT id, name, email, role, company_name, created_at FROM users ORDER BY created_at DESC'
-  ).all();
-  res.json(users);
+    'SELECT id, name, email, role, company_name, created_at FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?'
+  ).all(parseInt(limit), offset);
+  res.json({ users, total: total.count, page: parseInt(page), pages: Math.ceil(total.count / parseInt(limit)) });
 });
 
 module.exports = router;

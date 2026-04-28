@@ -11,35 +11,35 @@ interface Props {
 const DEPT_META = {
   NABCB: {
     full: 'National Accreditation Board for Certification Bodies',
-    short: 'Accredits certification and inspection bodies under international ISO standards.',
+    short: 'Accredits certification & inspection bodies under ISO standards.',
     from: '#1d4ed8', to: '#4f46e5',
     icon: '🏛️',
     tag: 'Certification',
   },
   NABH: {
     full: 'National Accreditation Board for Hospitals & Healthcare Providers',
-    short: 'Healthcare accreditation for hospitals, nursing homes & healthcare organisations.',
+    short: 'Healthcare accreditation for hospitals and nursing homes.',
     from: '#0f766e', to: '#0891b2',
     icon: '🏥',
     tag: 'Healthcare',
   },
   NABET: {
     full: 'National Accreditation Board for Education and Training',
-    short: 'Quality certification for educational institutions and training bodies.',
-    from: '#6d28d9', to: '#4f46e5',
+    short: 'Quality certification for educational and training bodies.',
+    from: '#6d28d9', to: '#7c3aed',
     icon: '🎓',
     tag: 'Education',
   },
   NABL: {
     full: 'National Accreditation Board for Testing and Calibration Laboratories',
-    short: 'Accreditation for testing, calibration and medical labs across India.',
+    short: 'Accreditation for testing, calibration and medical labs.',
     from: '#c2410c', to: '#d97706',
     icon: '🔬',
     tag: 'Laboratories',
   },
   NBQP: {
     full: 'National Board for Quality Promotion',
-    short: 'Leads nationwide quality movements, awareness campaigns, and voluntary certification.',
+    short: 'Leads quality movements and awareness campaigns nationwide.',
     from: '#be185d', to: '#e11d48',
     icon: '⭐',
     tag: 'Quality Promotion',
@@ -51,36 +51,43 @@ export default function DepartmentCard({ dept, openRoles, openings }: Props) {
   const meta = DEPT_META[dept];
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+    <div
+      className="group relative overflow-hidden rounded-2xl cursor-pointer hover:scale-[1.03] hover:shadow-2xl transition-all duration-300"
       onClick={() => navigate(`/browse?department=${dept}`)}>
-      {/* Gradient header */}
-      <div className="h-28 flex items-center px-6 relative"
-        style={{ background: `linear-gradient(135deg, ${meta.from}, ${meta.to})` }}>
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, white 0%, transparent 60%)' }} />
-        <div>
-          <span className="text-4xl">{meta.icon}</span>
-        </div>
-        <div className="ml-4">
-          <span className="inline-block bg-white/20 text-white text-xs font-semibold px-2 py-0.5 rounded-full mb-1">{meta.tag}</span>
-          <h3 className="text-2xl font-black text-white tracking-tight">{dept}</h3>
-        </div>
-        <div className="ml-auto text-right">
-          <p className="text-3xl font-black text-white">{openRoles}</p>
-          <p className="text-white/80 text-xs">open roles</p>
-        </div>
-      </div>
+      <div
+        className="relative flex flex-col justify-between p-5 min-h-[190px]"
+        style={{ background: `linear-gradient(145deg, ${meta.from} 0%, ${meta.to} 100%)` }}>
+        {/* Glow blob */}
+        <div className="absolute inset-0 opacity-20"
+          style={{ backgroundImage: 'radial-gradient(circle at 85% 15%, white 0%, transparent 55%)' }} />
 
-      {/* Body */}
-      <div className="bg-white dark:bg-gray-800 p-5">
-        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">{meta.full}</p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{meta.short}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-400 dark:text-gray-500">{openings} total opening{openings !== 1 ? 's' : ''}</span>
-          <button className="flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all"
-            style={{ color: meta.from }}>
-            View Roles <ArrowRight size={14} />
-          </button>
+        {/* Top row: icon + open roles count */}
+        <div className="relative flex items-start justify-between">
+          <span className="text-3xl drop-shadow">{meta.icon}</span>
+          <div className="text-right">
+            <p className="text-3xl font-black text-white leading-none">{openRoles}</p>
+            <p className="text-white/70 text-[11px] font-medium">open roles</p>
+          </div>
         </div>
+
+        {/* Bottom: tag, name, full name, CTA */}
+        <div className="relative mt-4">
+          <span className="inline-block bg-white/20 text-white/90 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-2">
+            {meta.tag}
+          </span>
+          <h3 className="text-2xl font-black text-white tracking-tight leading-none mb-1">{dept}</h3>
+          <p className="text-white/65 text-[11px] leading-snug line-clamp-2 mb-3">{meta.short}</p>
+          <div className="flex items-center gap-1 text-white/80 text-xs font-semibold group-hover:gap-2 transition-all">
+            View Roles <ArrowRight size={11} />
+          </div>
+        </div>
+
+        {/* Openings pill */}
+        {openings > 0 && (
+          <div className="absolute top-3 right-3 bg-white/15 text-white/90 text-[10px] font-medium px-2 py-0.5 rounded-full">
+            {openings} opening{openings !== 1 ? 's' : ''}
+          </div>
+        )}
       </div>
     </div>
   );

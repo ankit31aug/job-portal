@@ -1,7 +1,8 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const db = new Database(path.join(__dirname, 'jobportal.db'));
+const dbPath = process.env.DB_PATH || path.join(__dirname, 'jobportal.db');
+const db = new Database(dbPath);
 
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
@@ -89,8 +90,79 @@ db.exec(`
   );
 `);
 
-// Migration: add department column if not present
-try { db.exec('ALTER TABLE jobs ADD COLUMN department TEXT DEFAULT "General"'); } catch (e) { /* already exists */ }
+// ── Migrations ──────────────────────────────────────────────────────────────
+try { db.exec('ALTER TABLE jobs ADD COLUMN department TEXT DEFAULT "General"'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN hr_role_id INTEGER'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN is_verified INTEGER DEFAULT 1'); } catch (e) {}
+
+// OTP Verifications
+db.exec(`
+  CREATE TABLE IF NOT EXISTS otp_verifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL,
+    otp TEXT NOT NULL,
+    expires_at DATETIME NOT NULL,
+    verified INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+// HR Roles (created by super admin)
+db.exec(`
+  CREATE TABLE IF NOT EXISTS hr_roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    description TEXT,
+    permissions TEXT NOT NULL DEFAULT '[]',
+    created_by INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(created_by) REFERENCES users(id)
+  );
+`);
+
+// Gallery
+db.exec(`
+  CREATE TABLE IF NOT EXISTS gallery (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    image_path TEXT,
+    category TEXT DEFAULT 'general',
+    display_order INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+// Board Configuration
+db.exec(`
+  CREATE TABLE IF NOT EXISTS board_config (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    code TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    full_name TEXT NOT NULL,
+    description TEXT,
+    image_path TEXT,
+    color TEXT DEFAULT 'blue-600',
+    display_order INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1,
+    board_type TEXT DEFAULT 'board'
+  );
+`);
+
+// Seed board config if empty
+const boardCount = db.prepare('SELECT COUNT(*) as c FROM board_config').get();
+if (boardCount.c === 0) {
+  const ib = db.prepare(`INSERT INTO board_config (code, name, full_name, description, color, display_order, board_type) VALUES (?, ?, ?, ?, ?, ?, ?)`);
+  ib.run('NABCB', 'NABCB', 'National Accreditation Board for Certification Bodies', 'Accreditation of certification and inspection bodies.', 'indigo-600', 1, 'board');
+  ib.run('NABH',  'NABH',  'National Accreditation Board for Hospitals & Healthcare Providers', 'Accreditation of hospitals and healthcare organisations.', 'teal-600', 2, 'board');
+  ib.run('NABET', 'NABET', 'National Accreditation Board for Education and Training', 'Accreditation of education and training organisations.', 'violet-600', 3, 'board');
+  ib.run('NABL',  'NABL',  'National Accreditation Board for Testing and Calibration Laboratories', 'Accreditation of testing and calibration laboratories.', 'orange-600', 4, 'board');
+  ib.run('NBQP',  'NBQP',  'National Board for Quality Promotion', 'Promoting quality culture across Indian industry.', 'rose-600', 5, 'board');
+  ib.run('PADD',  'PADD',  'Project Analysis and Documentation Division', 'Project documentation and analysis support.', 'blue-600', 6, 'division');
+  ib.run('PPID',  'PPID',  'Project Planning & Implementation Division', 'Strategic project planning and implementation.', 'emerald-600', 7, 'division');
+  ib.run('NDIE',  'NDIE',  'National Division for Industry Excellence', 'Driving excellence across Indian industry.', 'amber-600', 8, 'division');
+}
 
 // Always migrate old seed data to QCI format
 db.exec(`
@@ -130,13 +202,22 @@ for (const [key, value, label, category] of defaultSettings) {
 const QCI = 'Quality Council of India';
 const ND = 'New Delhi';
 
+// Seed Super Admin if not present
+const superAdminUser = db.prepare("SELECT id FROM users WHERE email = 'superadmin@qci.org'").get();
+if (!superAdminUser) {
+  db.prepare(`INSERT INTO users (name, email, password, role, company_name, phone, city, state, pincode, is_verified)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`)
+    .run('QCI Super Admin', 'superadmin@qci.org', bcrypt.hashSync('SuperAdmin@123', 10),
+      'super_admin', QCI, '9876500001', 'New Delhi', 'Delhi', '110001');
+}
+
 // Seed HR admin account if not present
 const hrUser = db.prepare("SELECT id FROM users WHERE email = 'hr-admin@qci.org'").get();
 let hrAdminId = hrUser ? hrUser.id : null;
 if (!hrUser) {
   const result = db.prepare(`
-    INSERT INTO users (name, email, password, role, company_name, phone, city, state, pincode)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO users (name, email, password, role, company_name, phone, city, state, pincode, is_verified)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
   `).run('QCI HR Admin', 'hr-admin@qci.org', bcrypt.hashSync('HRAdmin@123', 10),
     'hr', QCI, '9876500000', 'New Delhi', 'Delhi', '110001');
   hrAdminId = result.lastInsertRowid;
@@ -203,6 +284,64 @@ if (jobCount.count === 0) {
 
 // Seed QCI department-specific jobs if not present
 const deptJobs = [
+  // ── NABCB ─────────────────────────────────────────────────
+  {
+    title: 'Certification Assessment Coordinator', department: 'NABCB', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support NABCB in coordinating accreditation processes for certification and inspection bodies across India. Assist organisations in meeting ISO/IEC 17021, 17020, and related standards for accreditation.',
+    requirements: '1+ years in quality assurance, certification, or ISO compliance\nBasic knowledge of NABCB and ISO/IEC accreditation standards\nStrong documentation and coordination skills\nWillingness to travel for on-site assessments\nGraduate in science, engineering, or management',
+    skills: 'ISO Standards,Certification,Documentation,Quality Management,Coordination,MS Office,NABCB,Compliance',
+  },
+  {
+    title: 'Quality Analyst - Certification Bodies', department: 'NABCB', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Evaluate compliance of certification and inspection bodies against NABCB accreditation requirements. Prepare detailed technical assessment reports and support organisations through corrective action processes.',
+    requirements: '2+ years in quality systems, ISO auditing, or certification body management\nStrong knowledge of ISO/IEC 17021 or 17020 standards\nExperience conducting audits or gap assessments\nAnalytical skills and excellent technical writing\nEngineering or science graduate preferred',
+    skills: 'ISO 17021,ISO 17020,Quality Systems,Audit,Data Analysis,Technical Writing,NABCB,Accreditation',
+  },
+  {
+    title: 'Associate Manager - NABCB', department: 'NABCB', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Manage the NABCB accreditation team, overseeing assessment panels for certification and inspection bodies. Drive process excellence, manage stakeholder relations, and maintain technical rigour across all accreditation activities.',
+    requirements: '3+ years in certification body management or ISO accreditation systems\nTeam leadership with 3+ direct reports\nExpert knowledge of ISO/IEC 17000 series standards\nAbility to manage multiple assessments concurrently\nPostgraduate in quality management or engineering',
+    skills: 'Team Management,ISO 17000 Series,Accreditation,Quality Systems,Stakeholder Management,Leadership,Process Improvement',
+  },
+  {
+    title: 'Project Manager - Accreditation Programmes', department: 'NABCB', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Lead strategic NABCB accreditation programmes for certification and inspection bodies nationwide. Manage complex multi-stakeholder projects, international body relations (IAF/ILAC), and policy-level accreditation decisions.',
+    requirements: '5+ years in accreditation management or quality systems leadership\nPMP or equivalent certification preferred\nDeep expertise in ISO/IEC 17000 series and international accreditation frameworks\nExperience with IAF/ILAC interactions\nStrong executive communication and reporting skills',
+    skills: 'Project Management,PMP,ISO Accreditation,IAF,ILAC,Leadership,Risk Management,Quality Policy,Stakeholder Management',
+  },
+  // ── NBQP ──────────────────────────────────────────────────
+  {
+    title: 'Quality Promotion Coordinator', department: 'NBQP', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support NBQP in organising quality awareness campaigns, national quality movements, and voluntary certification programmes. Coordinate events, prepare outreach materials, and engage with industry and government stakeholders.',
+    requirements: '1+ years in event management, public outreach, or quality awareness programmes\nExcellent written and verbal communication skills\nStrong organisational and coordination abilities\nKnowledge of national quality frameworks and QCI programmes\nGraduate in management, communications, or related field',
+    skills: 'Event Management,Quality Awareness,Public Outreach,Coordination,Communication,MS Office,NBQP,Stakeholder Engagement',
+  },
+  {
+    title: 'Quality Awareness Analyst', department: 'NBQP', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Research and analyse quality promotion trends, evaluate effectiveness of national quality programmes, and prepare data-driven reports to improve NBQP outreach and certification initiatives across India.',
+    requirements: '2+ years in quality management, programme analysis, or awareness campaigns\nStrong analytical and research skills\nExperience with data collection and survey analysis\nGood knowledge of Indian industry quality landscape\nProficiency in MS Office and data tools',
+    skills: 'Quality Management,Research,Data Analysis,Programme Evaluation,Report Writing,Survey Analysis,Industry Engagement,Excel',
+  },
+  {
+    title: 'Associate Manager - NBQP', department: 'NBQP', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Manage NBQP\'s quality promotion programmes including CII-EXIM Bank Award for Business Excellence and National Quality Conclave. Lead a team driving quality awareness and voluntary certification across industries.',
+    requirements: '3+ years in quality promotion, industry engagement, or award programme management\nTeam leadership with 3+ direct reports\nIn-depth knowledge of business excellence models (EFQM, Malcolm Baldrige)\nStrong stakeholder and industry relationship management\nMBA or equivalent postgraduate qualification preferred',
+    skills: 'Team Management,Business Excellence,Quality Promotion,Stakeholder Management,Leadership,Award Programmes,Industry Engagement',
+  },
+  {
+    title: 'Programme Manager - Quality Promotion', department: 'NBQP', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Drive national-level quality promotion programmes, including the National Quality Awards, Quality Conclave, and sector-specific voluntary certification schemes. Lead NBQP\'s strategy for quality culture adoption across India.',
+    requirements: '5+ years in national-level programme management or quality promotion\nPMP or equivalent certification preferred\nExtensive experience with business excellence frameworks and government quality programmes\nStrong public-facing and media communication skills\nAbility to manage multi-city events and industry partnerships',
+    skills: 'Programme Management,PMP,Quality Awards,Business Excellence,Leadership,Public Communication,Industry Partnerships,Strategic Planning',
+  },
   // ── NABH ──────────────────────────────────────────────────
   {
     title: 'Hospital Accreditation Coordinator', department: 'NABH', category: 'Operations',
@@ -289,6 +428,93 @@ const deptJobs = [
     description: 'Manage large-scale NABL accreditation projects for government labs, FMCG testing labs, and industrial calibration centres. Own the full accreditation project lifecycle and drive strategic growth of NABL\'s accredited laboratory network.',
     requirements: '5+ years in laboratory management or quality systems\nPMP or equivalent certification highly preferred\nMastery of NABL standards, ISO/IEC 17025, and related regulatory requirements\nExperience managing 10+ concurrent laboratory assessments\nExcellent client-facing and executive communication skills',
     skills: 'Project Management,PMP,Laboratory,NABL,Stakeholder Management,Leadership,Risk Management,ISO 17025,Strategic Planning',
+  },
+  // ── PADD ──────────────────────────────────────────────────
+  {
+    title: 'Documentation & Compliance Coordinator', department: 'PADD', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support the Project Analysis and Documentation Division in maintaining conformity assessment frameworks including IndiaGHP and Ayush Mark. Coordinate documentation workflows, prepare compliance reports, and assist in voluntary certification programmes.',
+    requirements: '1+ years in documentation, compliance, or quality administration\nStrong proficiency in MS Office (Word, Excel, PowerPoint)\nExcellent written communication for report drafting\nAbility to manage and organise large volumes of technical documents\nGraduate in any discipline; science or commerce preferred',
+    skills: 'Documentation,Compliance,MS Office,Report Writing,Quality Management,Coordination,Technical Writing,Data Entry',
+  },
+  {
+    title: 'Project Analyst - Documentation', department: 'PADD', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Analyse project documentation for QCI voluntary certification schemes, evaluate compliance against established frameworks, and produce detailed analytical reports. Support the division in identifying process improvements and documentation gaps.',
+    requirements: '2+ years in project analysis, documentation review, or quality systems\nStrong analytical and critical thinking skills\nExperience with compliance frameworks or voluntary certification programmes\nProficiency in data analysis tools (Excel, Power BI preferred)\nAbility to manage multiple project documentation streams simultaneously',
+    skills: 'Project Analysis,Documentation,Quality Systems,Data Analysis,Excel,Compliance,Report Writing,Process Improvement',
+  },
+  {
+    title: 'Associate Manager - PADD', department: 'PADD', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Lead a team managing conformity assessment documentation projects for QCI certification schemes. Oversee documentation quality, manage stakeholder relationships, and drive process standardisation across the division.',
+    requirements: '3+ years in documentation management or conformity assessment\nTeam leadership experience with 3+ direct reports\nIn-depth understanding of voluntary certification standards and regulatory frameworks\nStrong stakeholder management and communication skills\nMaster\'s degree in management, quality, or a related field preferred',
+    skills: 'Team Management,Documentation Strategy,Quality Systems,Stakeholder Management,Leadership,Process Standardisation,Conformity Assessment',
+  },
+  {
+    title: 'Project Manager - Conformity Assessment', department: 'PADD', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Drive end-to-end management of conformity assessment documentation projects including IndiaGHP, Ayush Mark, and other voluntary certification schemes. Manage cross-functional teams, government interfaces, and programme roadmaps.',
+    requirements: '5+ years in project management within quality or government sectors\nPMP or equivalent certification preferred\nProven track record managing multi-stakeholder government documentation projects\nExpert-level knowledge of conformity assessment and voluntary certification frameworks\nExcellent written and verbal communication for policy-level reporting',
+    skills: 'Project Management,PMP,Conformity Assessment,Government Liaison,Leadership,Risk Management,Strategic Planning,Documentation',
+  },
+  // ── PPID ──────────────────────────────────────────────────
+  {
+    title: 'Project Implementation Coordinator', department: 'PPID', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support the Project Planning & Implementation Division in executing quality improvement programmes for central and state government clients. Coordinate project timelines, track deliverables, and maintain project dashboards.',
+    requirements: '1+ years in project coordination, government projects, or programme management\nStrong MS Office and project tracking skills\nAbility to work with multiple government stakeholders simultaneously\nGood communication and follow-up skills\nGraduate in management, engineering, or science',
+    skills: 'Project Coordination,Government Projects,MS Office,Stakeholder Communication,Tracking,Reporting,MS Project,Documentation',
+  },
+  {
+    title: 'Project Analyst - Implementation', department: 'PPID', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Analyse programme implementation progress, identify execution gaps, and prepare detailed status reports for government quality projects managed by PPID. Support project planning with data-driven insights and risk assessments.',
+    requirements: '2+ years in government project analysis or programme implementation\nStrong analytical skills with experience in data-driven reporting\nFamiliarity with project management methodologies (Agile, Waterfall)\nExperience working with central or state government departments\nProficiency in project management tools',
+    skills: 'Project Analysis,Programme Management,Government Projects,Risk Assessment,Data Analysis,Excel,Reporting,Agile,MS Project',
+  },
+  {
+    title: 'Associate Manager - PPID', department: 'PPID', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Manage a portfolio of quality improvement projects for state and central governments. Lead a team of project coordinators and analysts, interface with government clients, and ensure timely delivery of project milestones.',
+    requirements: '3+ years managing government-funded or public sector quality projects\nTeam leadership with experience managing 4+ members\nStrong knowledge of government project procurement and execution frameworks\nExcellent stakeholder management skills across bureaucratic and technical teams\nMBA or equivalent postgraduate qualification preferred',
+    skills: 'Team Management,Government Projects,Project Portfolio,Stakeholder Management,Leadership,Public Sector,Risk Management,Planning',
+  },
+  {
+    title: 'Senior Project Manager - Government Quality Programmes', department: 'PPID', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Lead strategic quality improvement programmes commissioned by state and central government bodies. Define project architecture, manage large cross-functional teams, and ensure high-impact delivery across India-wide quality initiatives.',
+    requirements: '5+ years leading government-contracted quality or infrastructure projects\nPMP certification strongly preferred\nExtensive experience navigating government procurement and administration\nAbility to manage project budgets exceeding ₹5 Cr\nStrong executive presence and reporting capability',
+    skills: 'Senior Project Management,PMP,Government Strategy,Leadership,Budget Management,Risk Management,Stakeholder Management,Quality Frameworks',
+  },
+  // ── NDIE ──────────────────────────────────────────────────
+  {
+    title: 'Industry Quality Coordinator', department: 'NDIE', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support the National Division for Industry Excellence in coordinating quality benchmarking programmes and industry excellence initiatives. Assist in organising industry workshops, collecting benchmarking data, and preparing progress reports.',
+    requirements: '1+ years in industry quality, manufacturing excellence, or benchmarking programmes\nGood understanding of industrial quality standards (ISO 9001 preferred)\nStrong coordination and event management skills\nWillingness to travel to industry sites across India\nEngineering or science graduate preferred',
+    skills: 'Industry Quality,Benchmarking,ISO 9001,Coordination,Documentation,MS Office,Event Management,Quality Management',
+  },
+  {
+    title: 'Industry Standards Analyst', department: 'NDIE', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Analyse industrial quality performance data, conduct benchmarking assessments against national and international standards, and prepare detailed industry excellence reports. Support NDIE in identifying best practices and areas for improvement across sectors.',
+    requirements: '2+ years in industrial quality assurance or standards compliance\nStrong knowledge of ISO 9001, manufacturing best practices, and industry benchmarking\nAnalytical skills with experience in quality data interpretation\nExperience conducting industry audits or assessments\nDegree in engineering, operations management, or related field',
+    skills: 'Industry Standards,Benchmarking,ISO 9001,Data Analysis,Quality Assurance,Audit,Report Writing,Manufacturing,Lean',
+  },
+  {
+    title: 'Associate Manager - NDIE', department: 'NDIE', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Lead NDIE\'s industry excellence programmes, managing teams that conduct benchmarking studies and quality improvement initiatives across manufacturing, services, and MSMEs. Drive partnerships with industry bodies and sector associations.',
+    requirements: '3+ years in industrial quality management, manufacturing excellence, or sector benchmarking\nTeam leadership with 3+ direct reports\nIn-depth understanding of quality frameworks (ISO 9001, Six Sigma, Lean preferred)\nStrong industry network and stakeholder management capability\nPostgraduate in industrial engineering, operations, or quality management',
+    skills: 'Team Management,Industry Quality,Benchmarking,ISO 9001,Six Sigma,Lean,Stakeholder Management,Leadership,Industry Partnerships',
+  },
+  {
+    title: 'Project Manager - Industry Excellence', department: 'NDIE', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Drive national-level industry excellence and benchmarking programmes across key sectors including manufacturing, MSMEs, and services. Own the full programme lifecycle from design to implementation, working closely with industry bodies and government departments.',
+    requirements: '5+ years in industrial quality or sector excellence programme management\nPMP or Six Sigma Black Belt certification preferred\nProven experience managing multi-sector quality improvement programmes\nStrong government and industry stakeholder management at senior levels\nExcellent presentation and executive communication skills',
+    skills: 'Project Management,PMP,Six Sigma,Industry Excellence,Benchmarking,Manufacturing Quality,Leadership,Strategic Planning,Government Liaison',
   },
 ];
 
