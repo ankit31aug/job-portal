@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   build:
-    if: ${{ secrets.DD_API_KEY && secrets.DD_APP_KEY }}
+    if: ${{ secrets.DD_API_KEY != '' && secrets.DD_APP_KEY != '' }}
     runs-on: ubuntu-latest
 
     steps:
