@@ -5,3 +5,4 @@ const path = require('path');
 process.env.DB_PATH = path.join(os.tmpdir(), `test-jobportal-${process.pid}.db`);
 process.env.JWT_SECRET = 'test_jwt_secret_for_ci';
 process.env.NODE_ENV = 'test';
+process.env.SKIP_OTP_VERIFICATION = 'true';

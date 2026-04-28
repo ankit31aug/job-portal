@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post('/register', (req, res) => {
   const { name, email, password, phone, role, company_name, city, state, pincode, otp_verified } = req.body;
+  const skipOtpVerification = process.env.SKIP_OTP_VERIFICATION === 'true';
 
   if (!name || !email || !password || !role) {
     return res.status(400).json({ error: 'Name, email, password, and role are required' });
@@ -28,7 +29,7 @@ router.post('/register', (req, res) => {
   }
 
   // Verify OTP for jobseekers (employers can self-register without OTP)
-  if (role === 'jobseeker' && process.env.NODE_ENV !== 'test') {
+  if (role === 'jobseeker' && !skipOtpVerification) {
     const otpRecord = db.prepare(
       'SELECT * FROM otp_verifications WHERE email = ? AND verified = 1 ORDER BY created_at DESC LIMIT 1'
     ).get(email.toLowerCase().trim());
