@@ -134,8 +134,8 @@ export default function Home() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">QCI operates through five national accreditation boards, each shaping quality standards in a critical sector of India.</p>
           </div>
 
-          {/* 5 board cards — responsive wrap */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-4">
+          {/* 5 board cards — all 5 in one row on large screens */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
             {(['NABCB', 'NABH', 'NABET', 'NABL', 'NBQP'] as const).map(dept => (
               <DepartmentCard key={dept} dept={dept}
                 openRoles={stats?.byDepartment[dept] ?? 0}

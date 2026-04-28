@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, MapPin, Mail, Phone, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import { Briefcase, MapPin, Mail, Phone, Linkedin, Twitter, Instagram, Facebook, Moon, Sun } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
+import { useTheme } from '../context/ThemeContext';
 
 const BOARDS = [
   { name: 'NABCB', full: 'National Accreditation Board for Certification Bodies', color: 'text-violet-400' },
@@ -19,6 +20,7 @@ const DIVISIONS = [
 
 export default function Footer({ isHome = false }: { isHome?: boolean }) {
   const { settings } = useSettings();
+  const { dark, toggleDark } = useTheme();
 
   const socials = [
     { key: 'footer_linkedin', icon: <Linkedin size={15} />, hover: 'hover:bg-blue-600', href: settings.footer_linkedin || '#' },
@@ -37,10 +39,16 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
             <Link to="/about" className="hover:text-white transition-colors">About QCI</Link>
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
           </div>
-          <Link to="/register"
-            className="bg-violet-600 hover:bg-violet-700 text-white font-semibold px-4 py-1.5 rounded-lg text-xs transition-colors">
-            Get Started
-          </Link>
+          <div className="flex items-center gap-2">
+            <button onClick={toggleDark}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+              {dark ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
+            <Link to="/register"
+              className="bg-violet-600 hover:bg-violet-700 text-white font-semibold px-4 py-1.5 rounded-lg text-xs transition-colors">
+              Get Started
+            </Link>
+          </div>
         </div>
       </footer>
     );

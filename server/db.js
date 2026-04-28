@@ -203,6 +203,64 @@ if (jobCount.count === 0) {
 
 // Seed QCI department-specific jobs if not present
 const deptJobs = [
+  // ── NABCB ─────────────────────────────────────────────────
+  {
+    title: 'Certification Assessment Coordinator', department: 'NABCB', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support NABCB in coordinating accreditation processes for certification and inspection bodies across India. Assist organisations in meeting ISO/IEC 17021, 17020, and related standards for accreditation.',
+    requirements: '1+ years in quality assurance, certification, or ISO compliance\nBasic knowledge of NABCB and ISO/IEC accreditation standards\nStrong documentation and coordination skills\nWillingness to travel for on-site assessments\nGraduate in science, engineering, or management',
+    skills: 'ISO Standards,Certification,Documentation,Quality Management,Coordination,MS Office,NABCB,Compliance',
+  },
+  {
+    title: 'Quality Analyst - Certification Bodies', department: 'NABCB', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Evaluate compliance of certification and inspection bodies against NABCB accreditation requirements. Prepare detailed technical assessment reports and support organisations through corrective action processes.',
+    requirements: '2+ years in quality systems, ISO auditing, or certification body management\nStrong knowledge of ISO/IEC 17021 or 17020 standards\nExperience conducting audits or gap assessments\nAnalytical skills and excellent technical writing\nEngineering or science graduate preferred',
+    skills: 'ISO 17021,ISO 17020,Quality Systems,Audit,Data Analysis,Technical Writing,NABCB,Accreditation',
+  },
+  {
+    title: 'Associate Manager - NABCB', department: 'NABCB', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Manage the NABCB accreditation team, overseeing assessment panels for certification and inspection bodies. Drive process excellence, manage stakeholder relations, and maintain technical rigour across all accreditation activities.',
+    requirements: '3+ years in certification body management or ISO accreditation systems\nTeam leadership with 3+ direct reports\nExpert knowledge of ISO/IEC 17000 series standards\nAbility to manage multiple assessments concurrently\nPostgraduate in quality management or engineering',
+    skills: 'Team Management,ISO 17000 Series,Accreditation,Quality Systems,Stakeholder Management,Leadership,Process Improvement',
+  },
+  {
+    title: 'Project Manager - Accreditation Programmes', department: 'NABCB', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Lead strategic NABCB accreditation programmes for certification and inspection bodies nationwide. Manage complex multi-stakeholder projects, international body relations (IAF/ILAC), and policy-level accreditation decisions.',
+    requirements: '5+ years in accreditation management or quality systems leadership\nPMP or equivalent certification preferred\nDeep expertise in ISO/IEC 17000 series and international accreditation frameworks\nExperience with IAF/ILAC interactions\nStrong executive communication and reporting skills',
+    skills: 'Project Management,PMP,ISO Accreditation,IAF,ILAC,Leadership,Risk Management,Quality Policy,Stakeholder Management',
+  },
+  // ── NBQP ──────────────────────────────────────────────────
+  {
+    title: 'Quality Promotion Coordinator', department: 'NBQP', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support NBQP in organising quality awareness campaigns, national quality movements, and voluntary certification programmes. Coordinate events, prepare outreach materials, and engage with industry and government stakeholders.',
+    requirements: '1+ years in event management, public outreach, or quality awareness programmes\nExcellent written and verbal communication skills\nStrong organisational and coordination abilities\nKnowledge of national quality frameworks and QCI programmes\nGraduate in management, communications, or related field',
+    skills: 'Event Management,Quality Awareness,Public Outreach,Coordination,Communication,MS Office,NBQP,Stakeholder Engagement',
+  },
+  {
+    title: 'Quality Awareness Analyst', department: 'NBQP', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Research and analyse quality promotion trends, evaluate effectiveness of national quality programmes, and prepare data-driven reports to improve NBQP outreach and certification initiatives across India.',
+    requirements: '2+ years in quality management, programme analysis, or awareness campaigns\nStrong analytical and research skills\nExperience with data collection and survey analysis\nGood knowledge of Indian industry quality landscape\nProficiency in MS Office and data tools',
+    skills: 'Quality Management,Research,Data Analysis,Programme Evaluation,Report Writing,Survey Analysis,Industry Engagement,Excel',
+  },
+  {
+    title: 'Associate Manager - NBQP', department: 'NBQP', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Manage NBQP\'s quality promotion programmes including CII-EXIM Bank Award for Business Excellence and National Quality Conclave. Lead a team driving quality awareness and voluntary certification across industries.',
+    requirements: '3+ years in quality promotion, industry engagement, or award programme management\nTeam leadership with 3+ direct reports\nIn-depth knowledge of business excellence models (EFQM, Malcolm Baldrige)\nStrong stakeholder and industry relationship management\nMBA or equivalent postgraduate qualification preferred',
+    skills: 'Team Management,Business Excellence,Quality Promotion,Stakeholder Management,Leadership,Award Programmes,Industry Engagement',
+  },
+  {
+    title: 'Programme Manager - Quality Promotion', department: 'NBQP', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Drive national-level quality promotion programmes, including the National Quality Awards, Quality Conclave, and sector-specific voluntary certification schemes. Lead NBQP\'s strategy for quality culture adoption across India.',
+    requirements: '5+ years in national-level programme management or quality promotion\nPMP or equivalent certification preferred\nExtensive experience with business excellence frameworks and government quality programmes\nStrong public-facing and media communication skills\nAbility to manage multi-city events and industry partnerships',
+    skills: 'Programme Management,PMP,Quality Awards,Business Excellence,Leadership,Public Communication,Industry Partnerships,Strategic Planning',
+  },
   // ── NABH ──────────────────────────────────────────────────
   {
     title: 'Hospital Accreditation Coordinator', department: 'NABH', category: 'Operations',
