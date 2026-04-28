@@ -38,10 +38,10 @@ const DIVISIONS = [
 ];
 
 const WHY_ITEMS = [
-  { icon: <Award size={22} className="text-blue-500" />, title: 'National Impact', desc: 'Your work directly influences quality standards across India\'s hospitals, labs, and educational institutions.' },
-  { icon: <TrendingUp size={22} className="text-emerald-500" />, title: 'Clear Career Growth', desc: 'Structured 4-level career ladder in every department — from Coordinator to Project Manager with defined salary bands.' },
-  { icon: <BookOpen size={22} className="text-purple-500" />, title: 'Domain Expertise', desc: 'Become a certified quality expert in NABH, NABET, or NABL — credentials respected across industry and government.' },
-  { icon: <Users size={22} className="text-orange-500" />, title: 'Collaborative Culture', desc: 'Work with multi-disciplinary teams of healthcare professionals, educators, and scientists on nation-wide quality missions.' },
+  { icon: <Award size={22} className="text-violet-500" />, title: 'National Impact', desc: 'Your work directly influences quality standards across India\'s hospitals, labs, and educational institutions.', link: '/browse', cta: 'See Open Roles' },
+  { icon: <TrendingUp size={22} className="text-emerald-500" />, title: 'Clear Career Growth', desc: 'Structured 4-level career ladder in every department — from Coordinator to Project Manager with defined salary bands.', link: '/careers', cta: 'Explore Career Paths' },
+  { icon: <BookOpen size={22} className="text-purple-500" />, title: 'Domain Expertise', desc: 'Become a certified quality expert in NABH, NABET, or NABL — credentials respected across industry and government.', link: '/careers', cta: 'View Specialisations' },
+  { icon: <Users size={22} className="text-orange-500" />, title: 'Collaborative Culture', desc: 'Work with multi-disciplinary teams of healthcare professionals, educators, and scientists on nation-wide quality missions.', link: '/about', cta: 'About QCI' },
 ];
 
 export default function Home() {
@@ -217,11 +217,16 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {WHY_ITEMS.map(item => (
-              <div key={item.title} className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow flex gap-4">
-                <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">{item.icon}</div>
-                <div>
+              <div key={item.title}
+                className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 flex gap-4 cursor-pointer group"
+                onClick={() => navigate(item.link)}>
+                <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">{item.icon}</div>
+                <div className="flex-1">
                   <h3 className="font-bold text-gray-900 dark:text-white mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{item.desc}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-3">{item.desc}</p>
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-violet-600 dark:text-violet-400 group-hover:gap-2 transition-all">
+                    {item.cta} <ArrowRight size={11} />
+                  </span>
                 </div>
               </div>
             ))}
