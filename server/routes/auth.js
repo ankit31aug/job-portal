@@ -8,7 +8,8 @@ const router = express.Router();
 
 router.post('/register', (req, res) => {
   const { name, email, password, phone, role, company_name, city, state, pincode, otp_verified } = req.body;
-  const skipOtpVerification = process.env.SKIP_OTP_VERIFICATION === 'true';
+  const skipOtpVerification =
+    process.env.SKIP_OTP_VERIFICATION === 'true' && process.env.NODE_ENV === 'test';
 
   if (!name || !email || !password || !role) {
     return res.status(400).json({ error: 'Name, email, password, and role are required' });
