@@ -97,7 +97,7 @@ export default function AdminDashboard() {
         api.get('/admin/jobs'),
       ]);
       setStats(statsRes.data);
-      setJobs(jobsRes.data);
+      setJobs(jobsRes.data.jobs ?? jobsRes.data);
     } finally {
       setLoading(false);
     }
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
         setForm({ ...emptyForm });
       }
       const jobsRes = await api.get('/admin/jobs');
-      setJobs(jobsRes.data);
+      setJobs(jobsRes.data.jobs ?? jobsRes.data);
       const statsRes = await api.get('/admin/stats');
       setStats(statsRes.data);
     } catch (err: any) {

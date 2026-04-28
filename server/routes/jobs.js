@@ -32,9 +32,15 @@ router.get('/', (req, res) => {
     conditions.push('j.location LIKE ?');
     params.push(`%${location}%`);
   }
-  if (experience !== undefined) {
-    conditions.push('j.experience_min <= ?');
-    params.push(parseInt(experience));
+  if (experience !== undefined && experience !== '') {
+    const [expMin, expMax] = String(experience).split('-').map(Number);
+    if (!isNaN(expMin) && !isNaN(expMax)) {
+      conditions.push('j.experience_min <= ? AND j.experience_max >= ?');
+      params.push(expMax, expMin);
+    } else if (!isNaN(expMin)) {
+      conditions.push('j.experience_min <= ?');
+      params.push(expMin);
+    }
   }
 
   const where = conditions.length ? 'WHERE ' + conditions.join(' AND ') : '';

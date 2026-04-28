@@ -3,7 +3,7 @@ export interface User {
   name: string;
   email: string;
   phone?: string;
-  role: 'jobseeker' | 'employer' | 'hr';
+  role: 'jobseeker' | 'employer' | 'hr' | 'super_admin';
   company_name?: string;
   city?: string;
   state?: string;

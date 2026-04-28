@@ -90,8 +90,79 @@ db.exec(`
   );
 `);
 
-// Migration: add department column if not present
-try { db.exec('ALTER TABLE jobs ADD COLUMN department TEXT DEFAULT "General"'); } catch (e) { /* already exists */ }
+// ── Migrations ──────────────────────────────────────────────────────────────
+try { db.exec('ALTER TABLE jobs ADD COLUMN department TEXT DEFAULT "General"'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN hr_role_id INTEGER'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN is_verified INTEGER DEFAULT 1'); } catch (e) {}
+
+// OTP Verifications
+db.exec(`
+  CREATE TABLE IF NOT EXISTS otp_verifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL,
+    otp TEXT NOT NULL,
+    expires_at DATETIME NOT NULL,
+    verified INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+// HR Roles (created by super admin)
+db.exec(`
+  CREATE TABLE IF NOT EXISTS hr_roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    description TEXT,
+    permissions TEXT NOT NULL DEFAULT '[]',
+    created_by INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(created_by) REFERENCES users(id)
+  );
+`);
+
+// Gallery
+db.exec(`
+  CREATE TABLE IF NOT EXISTS gallery (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    image_path TEXT,
+    category TEXT DEFAULT 'general',
+    display_order INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+// Board Configuration
+db.exec(`
+  CREATE TABLE IF NOT EXISTS board_config (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    code TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    full_name TEXT NOT NULL,
+    description TEXT,
+    image_path TEXT,
+    color TEXT DEFAULT 'blue-600',
+    display_order INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1,
+    board_type TEXT DEFAULT 'board'
+  );
+`);
+
+// Seed board config if empty
+const boardCount = db.prepare('SELECT COUNT(*) as c FROM board_config').get();
+if (boardCount.c === 0) {
+  const ib = db.prepare(`INSERT INTO board_config (code, name, full_name, description, color, display_order, board_type) VALUES (?, ?, ?, ?, ?, ?, ?)`);
+  ib.run('NABCB', 'NABCB', 'National Accreditation Board for Certification Bodies', 'Accreditation of certification and inspection bodies.', 'indigo-600', 1, 'board');
+  ib.run('NABH',  'NABH',  'National Accreditation Board for Hospitals & Healthcare Providers', 'Accreditation of hospitals and healthcare organisations.', 'teal-600', 2, 'board');
+  ib.run('NABET', 'NABET', 'National Accreditation Board for Education and Training', 'Accreditation of education and training organisations.', 'violet-600', 3, 'board');
+  ib.run('NABL',  'NABL',  'National Accreditation Board for Testing and Calibration Laboratories', 'Accreditation of testing and calibration laboratories.', 'orange-600', 4, 'board');
+  ib.run('NBQP',  'NBQP',  'National Board for Quality Promotion', 'Promoting quality culture across Indian industry.', 'rose-600', 5, 'board');
+  ib.run('PADD',  'PADD',  'Project Analysis and Documentation Division', 'Project documentation and analysis support.', 'blue-600', 6, 'division');
+  ib.run('PPID',  'PPID',  'Project Planning & Implementation Division', 'Strategic project planning and implementation.', 'emerald-600', 7, 'division');
+  ib.run('NDIE',  'NDIE',  'National Division for Industry Excellence', 'Driving excellence across Indian industry.', 'amber-600', 8, 'division');
+}
 
 // Always migrate old seed data to QCI format
 db.exec(`
@@ -131,13 +202,22 @@ for (const [key, value, label, category] of defaultSettings) {
 const QCI = 'Quality Council of India';
 const ND = 'New Delhi';
 
+// Seed Super Admin if not present
+const superAdminUser = db.prepare("SELECT id FROM users WHERE email = 'superadmin@qci.org'").get();
+if (!superAdminUser) {
+  db.prepare(`INSERT INTO users (name, email, password, role, company_name, phone, city, state, pincode, is_verified)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`)
+    .run('QCI Super Admin', 'superadmin@qci.org', bcrypt.hashSync('SuperAdmin@123', 10),
+      'super_admin', QCI, '9876500001', 'New Delhi', 'Delhi', '110001');
+}
+
 // Seed HR admin account if not present
 const hrUser = db.prepare("SELECT id FROM users WHERE email = 'hr-admin@qci.org'").get();
 let hrAdminId = hrUser ? hrUser.id : null;
 if (!hrUser) {
   const result = db.prepare(`
-    INSERT INTO users (name, email, password, role, company_name, phone, city, state, pincode)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO users (name, email, password, role, company_name, phone, city, state, pincode, is_verified)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
   `).run('QCI HR Admin', 'hr-admin@qci.org', bcrypt.hashSync('HRAdmin@123', 10),
     'hr', QCI, '9876500000', 'New Delhi', 'Delhi', '110001');
   hrAdminId = result.lastInsertRowid;

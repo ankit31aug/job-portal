@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const db = require('../db');
 const { authenticate, requireEmployer } = require('../middleware/auth');
+const { sendMail, applicationConfirmEmail, statusUpdateEmail, newApplicationAlertEmail } = require('../utils/email');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
@@ -19,7 +20,7 @@ const upload = multer({
   }
 });
 
-router = express.Router();
+const router = express.Router();
 
 router.post('/', authenticate, upload.single('resume'), (req, res) => {
   const {
@@ -39,19 +40,36 @@ router.post('/', authenticate, upload.single('resume'), (req, res) => {
   if (existing) return res.status(409).json({ error: 'You have already applied for this job' });
 
   const matchScore = calculateMatchScore(skills || '', job.skills);
+  // Auto-shortlist if match score >= 70%
+  const autoStatus = matchScore >= 70 ? 'shortlisted' : 'pending';
 
   const result = db.prepare(`
     INSERT INTO applications (job_id, applicant_id, full_name, email, phone, pincode, city, state,
       experience_years, current_company, current_ctc, expected_ctc, notice_period, cover_letter,
-      resume_path, skills, match_score)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      resume_path, skills, match_score, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(job_id, req.user.id, full_name, email, phone, pincode, city || null, state || null,
     experience_years || 0, current_company || null, current_ctc || null, expected_ctc || null,
     notice_period || null, cover_letter || null,
-    req.file ? req.file.filename : null, skills || null, matchScore);
+    req.file ? req.file.filename : null, skills || null, matchScore, autoStatus);
 
   const application = db.prepare('SELECT * FROM applications WHERE id = ?').get(result.lastInsertRowid);
-  res.status(201).json({ ...application, message: 'Application submitted successfully!' });
+
+  // Send confirmation email to applicant
+  sendMail({ to: email, subject: `Application Received — ${job.title} | QCI Job Portal`, html: applicationConfirmEmail(full_name, job.title, job.company) });
+
+  // If auto-shortlisted, send shortlist notification
+  if (autoStatus === 'shortlisted') {
+    sendMail({ to: email, subject: `🎉 You've been Shortlisted for ${job.title} | QCI`, html: statusUpdateEmail(full_name, job.title, 'shortlisted') });
+  }
+
+  // Notify employer/HR about new application
+  const employer = db.prepare('SELECT name, email FROM users WHERE id = ?').get(job.employer_id);
+  if (employer) {
+    sendMail({ to: employer.email, subject: `New Application — ${job.title} | QCI`, html: newApplicationAlertEmail(employer.name, full_name, job.title, matchScore) });
+  }
+
+  res.status(201).json({ ...application, message: 'Application submitted successfully!', auto_shortlisted: autoStatus === 'shortlisted' });
 });
 
 router.get('/my', authenticate, (req, res) => {
@@ -97,6 +115,13 @@ router.patch('/:id/status', authenticate, requireEmployer, (req, res) => {
   if (!application) return res.status(404).json({ error: 'Application not found or unauthorized' });
 
   db.prepare('UPDATE applications SET status = ? WHERE id = ?').run(status, req.params.id);
+
+  // Email applicant about status change
+  const app = db.prepare('SELECT a.full_name, a.email, j.title FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.id = ?').get(req.params.id);
+  if (app) {
+    sendMail({ to: app.email, subject: `Application Update — ${app.title} | QCI`, html: statusUpdateEmail(app.full_name, app.title, status) });
+  }
+
   res.json({ message: 'Status updated successfully', status });
 });
 
