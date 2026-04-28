@@ -24,24 +24,24 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
-            <Briefcase size={28} className="text-blue-600" />
+            <Briefcase size={28} className="text-violet-600" />
             <span className="text-xl font-bold text-gray-900 dark:text-white">
               {settings.site_name.split(' ').slice(0, -1).join(' ')}{' '}
-              <span className="text-blue-600">{settings.site_name.split(' ').slice(-1)}</span>
+              <span className="text-violet-600">{settings.site_name.split(' ').slice(-1)}</span>
             </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            <Link to="/browse" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors">Browse Jobs</Link>
-            <Link to="/careers" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
+            <Link to="/browse" className="text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-white font-medium transition-colors">Browse Jobs</Link>
+            <Link to="/careers" className="text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
               <TrendingUp size={16} />Career Paths
             </Link>
-            <Link to="/about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors">About QCI</Link>
-            <Link to="/resume-match" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
+            <Link to="/about" className="text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-white font-medium transition-colors">About QCI</Link>
+            <Link to="/resume-match" className="text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
               <FileText size={16} />Resume Match
             </Link>
             {user?.role === 'employer' && (
-              <Link to="/post-job" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
+              <Link to="/post-job" className="text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-white font-medium transition-colors flex items-center gap-1">
                 <PlusCircle size={16} />Post a Job
               </Link>
             )}
@@ -63,7 +63,7 @@ export default function Navbar() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full px-3 py-2 transition-colors"
                 >
-                  <div className="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  <div className="w-7 h-7 bg-violet-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{user.name.split(' ')[0]}</span>
@@ -127,7 +127,7 @@ export default function Navbar() {
             ) : (
               <>
                 <Link to="/login" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">Sign In</Link>
-                <Link to="/register" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg font-medium">Get Started</Link>
+                <Link to="/register" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-violet-600 hover:bg-violet-50 dark:hover:bg-violet-900/20 rounded-lg font-medium">Get Started</Link>
               </>
             )}
           </div>
