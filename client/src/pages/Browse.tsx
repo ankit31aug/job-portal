@@ -8,7 +8,18 @@ import SkillsGapPanel from '../components/SkillsGapPanel';
 import { useAuth } from '../context/AuthContext';
 import { useBookmark } from '../hooks/useBookmark';
 
-const DEPTS = ['All', 'NABH', 'NABET', 'NABL', 'General'];
+const DEPTS = ['All', 'NABCB', 'NABH', 'NABET', 'NABL', 'NBQP', 'PADD', 'PPID', 'NDIE'];
+
+const DEPT_COLORS: Record<string, string> = {
+  NABCB: 'bg-indigo-600',
+  NABH:  'bg-teal-600',
+  NABET: 'bg-violet-600',
+  NABL:  'bg-orange-600',
+  NBQP:  'bg-rose-600',
+  PADD:  'bg-blue-600',
+  PPID:  'bg-emerald-600',
+  NDIE:  'bg-amber-600',
+};
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Remote'];
 
 function fmtSalary(min?: number, max?: number) {
@@ -148,7 +159,7 @@ export default function Browse() {
     try {
       const params: Record<string, string> = { page: String(p), limit: '20' };
       if (search) params.search = search;
-      if (dept && dept !== 'All') params.category = dept;
+      if (dept && dept !== 'All') params.department = dept;
       if (jobType) params.job_type = jobType;
       const { data } = await api.get('/jobs', { params });
       setJobs(data.jobs);
@@ -162,6 +173,11 @@ export default function Browse() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const d = searchParams.get('department') || 'All';
+    if (d !== dept) setDept(d);
+  }, [searchParams]);
 
   useEffect(() => { fetchJobs(1); }, [dept, jobType]);
 
@@ -197,7 +213,7 @@ export default function Browse() {
                 className="flex-1 py-2.5 text-sm bg-transparent outline-none text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" />
               {search && <button type="button" onClick={() => { setSearch(''); fetchJobs(1); }}><X size={13} className="text-gray-400" /></button>}
             </div>
-            <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-3 rounded-xl text-sm font-medium transition-colors">
+            <button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white px-3 rounded-xl text-sm font-medium transition-colors">
               Go
             </button>
           </form>
@@ -208,7 +224,9 @@ export default function Browse() {
           {DEPTS.map(d => (
             <button key={d} onClick={() => setDept(d)}
               className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                dept === d ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200'
+                dept === d
+                  ? `${DEPT_COLORS[d] ?? 'bg-violet-600'} text-white`
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}>
               {d}
             </button>

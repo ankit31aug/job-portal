@@ -5,7 +5,7 @@ const { authenticate, requireEmployer } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const { search, category, job_type, location, experience, page = 1, limit = 10 } = req.query;
+  const { search, category, department, job_type, location, experience, page = 1, limit = 10 } = req.query;
   const offset = (parseInt(page) - 1) * parseInt(limit);
 
   let conditions = ['j.is_active = 1'];
@@ -15,6 +15,10 @@ router.get('/', (req, res) => {
     conditions.push('(j.title LIKE ? OR j.company LIKE ? OR j.skills LIKE ? OR j.description LIKE ?)');
     const s = `%${search}%`;
     params.push(s, s, s, s);
+  }
+  if (department) {
+    conditions.push('j.department = ?');
+    params.push(department);
   }
   if (category) {
     conditions.push('j.category = ?');

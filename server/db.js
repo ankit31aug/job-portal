@@ -290,6 +290,93 @@ const deptJobs = [
     requirements: '5+ years in laboratory management or quality systems\nPMP or equivalent certification highly preferred\nMastery of NABL standards, ISO/IEC 17025, and related regulatory requirements\nExperience managing 10+ concurrent laboratory assessments\nExcellent client-facing and executive communication skills',
     skills: 'Project Management,PMP,Laboratory,NABL,Stakeholder Management,Leadership,Risk Management,ISO 17025,Strategic Planning',
   },
+  // ── PADD ──────────────────────────────────────────────────
+  {
+    title: 'Documentation & Compliance Coordinator', department: 'PADD', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support the Project Analysis and Documentation Division in maintaining conformity assessment frameworks including IndiaGHP and Ayush Mark. Coordinate documentation workflows, prepare compliance reports, and assist in voluntary certification programmes.',
+    requirements: '1+ years in documentation, compliance, or quality administration\nStrong proficiency in MS Office (Word, Excel, PowerPoint)\nExcellent written communication for report drafting\nAbility to manage and organise large volumes of technical documents\nGraduate in any discipline; science or commerce preferred',
+    skills: 'Documentation,Compliance,MS Office,Report Writing,Quality Management,Coordination,Technical Writing,Data Entry',
+  },
+  {
+    title: 'Project Analyst - Documentation', department: 'PADD', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Analyse project documentation for QCI voluntary certification schemes, evaluate compliance against established frameworks, and produce detailed analytical reports. Support the division in identifying process improvements and documentation gaps.',
+    requirements: '2+ years in project analysis, documentation review, or quality systems\nStrong analytical and critical thinking skills\nExperience with compliance frameworks or voluntary certification programmes\nProficiency in data analysis tools (Excel, Power BI preferred)\nAbility to manage multiple project documentation streams simultaneously',
+    skills: 'Project Analysis,Documentation,Quality Systems,Data Analysis,Excel,Compliance,Report Writing,Process Improvement',
+  },
+  {
+    title: 'Associate Manager - PADD', department: 'PADD', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Lead a team managing conformity assessment documentation projects for QCI certification schemes. Oversee documentation quality, manage stakeholder relationships, and drive process standardisation across the division.',
+    requirements: '3+ years in documentation management or conformity assessment\nTeam leadership experience with 3+ direct reports\nIn-depth understanding of voluntary certification standards and regulatory frameworks\nStrong stakeholder management and communication skills\nMaster\'s degree in management, quality, or a related field preferred',
+    skills: 'Team Management,Documentation Strategy,Quality Systems,Stakeholder Management,Leadership,Process Standardisation,Conformity Assessment',
+  },
+  {
+    title: 'Project Manager - Conformity Assessment', department: 'PADD', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Drive end-to-end management of conformity assessment documentation projects including IndiaGHP, Ayush Mark, and other voluntary certification schemes. Manage cross-functional teams, government interfaces, and programme roadmaps.',
+    requirements: '5+ years in project management within quality or government sectors\nPMP or equivalent certification preferred\nProven track record managing multi-stakeholder government documentation projects\nExpert-level knowledge of conformity assessment and voluntary certification frameworks\nExcellent written and verbal communication for policy-level reporting',
+    skills: 'Project Management,PMP,Conformity Assessment,Government Liaison,Leadership,Risk Management,Strategic Planning,Documentation',
+  },
+  // ── PPID ──────────────────────────────────────────────────
+  {
+    title: 'Project Implementation Coordinator', department: 'PPID', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support the Project Planning & Implementation Division in executing quality improvement programmes for central and state government clients. Coordinate project timelines, track deliverables, and maintain project dashboards.',
+    requirements: '1+ years in project coordination, government projects, or programme management\nStrong MS Office and project tracking skills\nAbility to work with multiple government stakeholders simultaneously\nGood communication and follow-up skills\nGraduate in management, engineering, or science',
+    skills: 'Project Coordination,Government Projects,MS Office,Stakeholder Communication,Tracking,Reporting,MS Project,Documentation',
+  },
+  {
+    title: 'Project Analyst - Implementation', department: 'PPID', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Analyse programme implementation progress, identify execution gaps, and prepare detailed status reports for government quality projects managed by PPID. Support project planning with data-driven insights and risk assessments.',
+    requirements: '2+ years in government project analysis or programme implementation\nStrong analytical skills with experience in data-driven reporting\nFamiliarity with project management methodologies (Agile, Waterfall)\nExperience working with central or state government departments\nProficiency in project management tools',
+    skills: 'Project Analysis,Programme Management,Government Projects,Risk Assessment,Data Analysis,Excel,Reporting,Agile,MS Project',
+  },
+  {
+    title: 'Associate Manager - PPID', department: 'PPID', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Manage a portfolio of quality improvement projects for state and central governments. Lead a team of project coordinators and analysts, interface with government clients, and ensure timely delivery of project milestones.',
+    requirements: '3+ years managing government-funded or public sector quality projects\nTeam leadership with experience managing 4+ members\nStrong knowledge of government project procurement and execution frameworks\nExcellent stakeholder management skills across bureaucratic and technical teams\nMBA or equivalent postgraduate qualification preferred',
+    skills: 'Team Management,Government Projects,Project Portfolio,Stakeholder Management,Leadership,Public Sector,Risk Management,Planning',
+  },
+  {
+    title: 'Senior Project Manager - Government Quality Programmes', department: 'PPID', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Lead strategic quality improvement programmes commissioned by state and central government bodies. Define project architecture, manage large cross-functional teams, and ensure high-impact delivery across India-wide quality initiatives.',
+    requirements: '5+ years leading government-contracted quality or infrastructure projects\nPMP certification strongly preferred\nExtensive experience navigating government procurement and administration\nAbility to manage project budgets exceeding ₹5 Cr\nStrong executive presence and reporting capability',
+    skills: 'Senior Project Management,PMP,Government Strategy,Leadership,Budget Management,Risk Management,Stakeholder Management,Quality Frameworks',
+  },
+  // ── NDIE ──────────────────────────────────────────────────
+  {
+    title: 'Industry Quality Coordinator', department: 'NDIE', category: 'Operations',
+    exp_min: 1, exp_max: 3, sal_min: 400000, sal_max: 700000, openings: 3,
+    description: 'Support the National Division for Industry Excellence in coordinating quality benchmarking programmes and industry excellence initiatives. Assist in organising industry workshops, collecting benchmarking data, and preparing progress reports.',
+    requirements: '1+ years in industry quality, manufacturing excellence, or benchmarking programmes\nGood understanding of industrial quality standards (ISO 9001 preferred)\nStrong coordination and event management skills\nWillingness to travel to industry sites across India\nEngineering or science graduate preferred',
+    skills: 'Industry Quality,Benchmarking,ISO 9001,Coordination,Documentation,MS Office,Event Management,Quality Management',
+  },
+  {
+    title: 'Industry Standards Analyst', department: 'NDIE', category: 'Operations',
+    exp_min: 2, exp_max: 4, sal_min: 500000, sal_max: 900000, openings: 2,
+    description: 'Analyse industrial quality performance data, conduct benchmarking assessments against national and international standards, and prepare detailed industry excellence reports. Support NDIE in identifying best practices and areas for improvement across sectors.',
+    requirements: '2+ years in industrial quality assurance or standards compliance\nStrong knowledge of ISO 9001, manufacturing best practices, and industry benchmarking\nAnalytical skills with experience in quality data interpretation\nExperience conducting industry audits or assessments\nDegree in engineering, operations management, or related field',
+    skills: 'Industry Standards,Benchmarking,ISO 9001,Data Analysis,Quality Assurance,Audit,Report Writing,Manufacturing,Lean',
+  },
+  {
+    title: 'Associate Manager - NDIE', department: 'NDIE', category: 'Management',
+    exp_min: 3, exp_max: 6, sal_min: 800000, sal_max: 1400000, openings: 2,
+    description: 'Lead NDIE\'s industry excellence programmes, managing teams that conduct benchmarking studies and quality improvement initiatives across manufacturing, services, and MSMEs. Drive partnerships with industry bodies and sector associations.',
+    requirements: '3+ years in industrial quality management, manufacturing excellence, or sector benchmarking\nTeam leadership with 3+ direct reports\nIn-depth understanding of quality frameworks (ISO 9001, Six Sigma, Lean preferred)\nStrong industry network and stakeholder management capability\nPostgraduate in industrial engineering, operations, or quality management',
+    skills: 'Team Management,Industry Quality,Benchmarking,ISO 9001,Six Sigma,Lean,Stakeholder Management,Leadership,Industry Partnerships',
+  },
+  {
+    title: 'Project Manager - Industry Excellence', department: 'NDIE', category: 'Management',
+    exp_min: 5, exp_max: 8, sal_min: 1200000, sal_max: 2000000, openings: 1,
+    description: 'Drive national-level industry excellence and benchmarking programmes across key sectors including manufacturing, MSMEs, and services. Own the full programme lifecycle from design to implementation, working closely with industry bodies and government departments.',
+    requirements: '5+ years in industrial quality or sector excellence programme management\nPMP or Six Sigma Black Belt certification preferred\nProven experience managing multi-sector quality improvement programmes\nStrong government and industry stakeholder management at senior levels\nExcellent presentation and executive communication skills',
+    skills: 'Project Management,PMP,Six Sigma,Industry Excellence,Benchmarking,Manufacturing Quality,Leadership,Strategic Planning,Government Liaison',
+  },
 ];
 
 const ijDept = db.prepare(`

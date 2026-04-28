@@ -154,14 +154,29 @@ export default function Home() {
 
           {/* 3 division cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {DIVISIONS.map(div => (
-              <div key={div.acronym} className={`rounded-2xl border p-6 ${div.color}`}>
-                <span className="text-3xl mb-3 block">{div.icon}</span>
-                <h3 className={`text-lg font-black mb-0.5 ${div.accent}`}>{div.acronym}</h3>
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">{div.full}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{div.desc}</p>
-              </div>
-            ))}
+            {DIVISIONS.map(div => {
+              const openRoles = stats?.byDepartment[div.acronym] ?? 0;
+              return (
+                <div key={div.acronym}
+                  className={`rounded-2xl border p-6 ${div.color} cursor-pointer hover:shadow-lg transition-all duration-200 group`}
+                  onClick={() => navigate(`/browse?department=${div.acronym}`)}>
+                  <div className="flex items-start justify-between mb-3">
+                    <span className="text-3xl">{div.icon}</span>
+                    {openRoles > 0 && (
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full bg-white/60 dark:bg-gray-900/40 ${div.accent}`}>
+                        {openRoles} role{openRoles !== 1 ? 's' : ''}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className={`text-lg font-black mb-0.5 ${div.accent}`}>{div.acronym}</h3>
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">{div.full}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">{div.desc}</p>
+                  <div className={`flex items-center gap-1 text-xs font-semibold group-hover:gap-2 transition-all ${div.accent}`}>
+                    Explore Roles <ArrowRight size={12} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
