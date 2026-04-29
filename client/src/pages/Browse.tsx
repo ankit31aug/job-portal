@@ -8,21 +8,23 @@ import SkillsGapPanel from '../components/SkillsGapPanel';
 import { useAuth } from '../context/AuthContext';
 import { useBookmark } from '../hooks/useBookmark';
 
-const DEPTS = ['All', 'NABCB', 'NABH', 'NABET', 'NABL', 'NBQP', 'TCB', 'PADD', 'PPID', 'NDIE', 'SPD', 'IT', 'Media'];
+const DEPTS = ['All', 'NABCB', 'NABH', 'NABET', 'NABL', 'NBQP', 'TCB', 'PADD', 'PPID', 'NDIE', 'SPD', 'IT', 'Media', 'Finance', 'HR'];
 
 const DEPT_COLORS: Record<string, string> = {
-  NABCB: 'bg-indigo-600',
-  NABH:  'bg-teal-600',
-  NABET: 'bg-violet-600',
-  NABL:  'bg-orange-600',
-  NBQP:  'bg-rose-600',
-  TCB:   'bg-purple-600',
-  PADD:  'bg-blue-600',
-  PPID:  'bg-emerald-600',
-  NDIE:  'bg-amber-600',
-  SPD:   'bg-cyan-600',
-  IT:    'bg-sky-600',
-  Media: 'bg-pink-600',
+  NABCB:   'bg-indigo-600',
+  NABH:    'bg-teal-600',
+  NABET:   'bg-violet-600',
+  NABL:    'bg-orange-600',
+  NBQP:    'bg-rose-600',
+  TCB:     'bg-purple-600',
+  PADD:    'bg-blue-600',
+  PPID:    'bg-emerald-600',
+  NDIE:    'bg-amber-600',
+  SPD:     'bg-cyan-600',
+  IT:      'bg-sky-600',
+  Media:   'bg-pink-600',
+  Finance: 'bg-green-600',
+  HR:      'bg-orange-500',
 };
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Remote'];
 

@@ -39,6 +39,8 @@ const DIVISIONS = [
   { acronym: 'SPD', full: 'Standards & Product Division', desc: 'Develops and promotes voluntary product standards to enable global competitiveness.', color: 'bg-cyan-50 dark:bg-cyan-900/20 border-cyan-100 dark:border-cyan-800', accent: 'text-cyan-700 dark:text-cyan-400', icon: '📐' },
   { acronym: 'IT', full: 'Information Technology Division', desc: 'Drives digital quality infrastructure and IT-enabled quality management systems.', color: 'bg-sky-50 dark:bg-sky-900/20 border-sky-100 dark:border-sky-800', accent: 'text-sky-700 dark:text-sky-400', icon: '💻' },
   { acronym: 'Media', full: 'Media & Communications Division', desc: 'Leads quality awareness campaigns and knowledge dissemination through media outreach.', color: 'bg-pink-50 dark:bg-pink-900/20 border-pink-100 dark:border-pink-800', accent: 'text-pink-700 dark:text-pink-400', icon: '📡' },
+  { acronym: 'Finance', full: 'Accounts & Finance Department', desc: 'Manages QCI\'s financial operations, accounts, budgeting, and procurement functions.', color: 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-800', accent: 'text-green-700 dark:text-green-400', icon: '💰' },
+  { acronym: 'HR', full: 'HR & Admin Department', desc: 'Drives talent acquisition, employee development, administration, and compliance across QCI.', color: 'bg-orange-50 dark:bg-orange-900/20 border-orange-100 dark:border-orange-800', accent: 'text-orange-700 dark:text-orange-400', icon: '👥' },
 ];
 
 const WHY_ITEMS = [
@@ -152,7 +154,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-4 py-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-widest mb-3">
               <Layers size={13} /> Operating Divisions
             </div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Seven Divisions. Where Projects Come to Life.</h2>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Nine Divisions. Where Projects Come to Life.</h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm">Beyond accreditation, QCI's divisions implement quality programmes for government and industry.</p>
           </div>
 
@@ -185,34 +187,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── GUNVATTA GURUKUL ── */}
-      <section className="py-14 px-4 bg-white dark:bg-gray-900">
+      {/* ── SPECIAL PROGRAMMES ── */}
+      <section className="py-16 px-4 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <div className="rounded-2xl overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 60%, #7c3aed 100%)' }}>
-            <div className="p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
-              <div className="text-5xl flex-shrink-0">🎓</div>
-              <div className="flex-1 text-white">
-                <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest mb-3">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-full px-4 py-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-widest mb-3">
+              ✨ Special Programmes
+            </div>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Beyond the Office. Beyond the Ordinary.</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm">QCI's flagship initiatives that engage students, villages, and cities in the quality movement.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Gunvatta Gurukul */}
+            <div className="rounded-2xl overflow-hidden shadow-lg group">
+              <div className="p-7 h-full flex flex-col"
+                style={{ background: 'linear-gradient(145deg, #f59e0b 0%, #ef4444 100%)' }}>
+                <div className="text-4xl mb-4">🎓</div>
+                <div className="inline-flex w-fit items-center gap-1 bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white mb-3">
                   Student Programme
                 </div>
-                <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight">Gunvatta Gurukul</h2>
-                <p className="text-white/85 text-sm md:text-base leading-relaxed max-w-xl">
-                  QCI's flagship student engagement initiative — we onboard <strong className="text-white">100 students</strong> every two months
-                  for hands-on quality management training, live project experience, and mentorship from QCI experts.
+                <h3 className="text-xl font-black text-white mb-2">Gunvatta Gurukul</h3>
+                <p className="text-white/85 text-sm leading-relaxed flex-1">
+                  QCI's flagship student initiative — <strong className="text-white">100 seats</strong> every two months for hands-on quality management training and mentorship.
                 </p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {['Open to all disciplines', '100 seats per batch', 'Batch every 2 months', 'Certificate of completion'].map(tag => (
-                    <span key={tag} className="bg-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">{tag}</span>
+                <div className="flex flex-wrap gap-1.5 my-4">
+                  {['100 seats/batch', 'Every 2 months', 'Certificate'].map(t => (
+                    <span key={t} className="bg-white/20 text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-full">{t}</span>
                   ))}
                 </div>
-              </div>
-              <div className="flex-shrink-0">
                 <a href="#"
-                  className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-6 py-3.5 rounded-xl hover:bg-gray-100 transition-colors text-sm shadow-lg">
-                  Apply Now <ArrowRight size={15} />
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm w-fit">
+                  Apply Now <ArrowRight size={13} />
                 </a>
-                <p className="text-white/60 text-xs text-center mt-2">Link coming soon</p>
+                <p className="text-white/50 text-[10px] mt-1.5">Link coming soon</p>
+              </div>
+            </div>
+
+            {/* Sarpanch Samwaad */}
+            <div className="rounded-2xl overflow-hidden shadow-lg group">
+              <div className="p-7 h-full flex flex-col"
+                style={{ background: 'linear-gradient(145deg, #16a34a 0%, #0891b2 100%)' }}>
+                <div className="text-4xl mb-4">🌾</div>
+                <div className="inline-flex w-fit items-center gap-1 bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white mb-3">
+                  Rural Outreach
+                </div>
+                <h3 className="text-xl font-black text-white mb-2">Sarpanch Samwaad</h3>
+                <p className="text-white/85 text-sm leading-relaxed flex-1">
+                  A QCI initiative connecting Gram Panchayat leaders with quality frameworks to drive governance and development at the grassroot level.
+                </p>
+                <div className="flex flex-wrap gap-1.5 my-4">
+                  {['Gram Panchayats', 'Quality Governance', 'Rural Impact'].map(t => (
+                    <span key={t} className="bg-white/20 text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-full">{t}</span>
+                  ))}
+                </div>
+                <a href="https://qcin.org/sarpanch-samvaad/" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm w-fit">
+                  Learn More <ArrowRight size={13} />
+                </a>
+              </div>
+            </div>
+
+            {/* Quality City Nashik */}
+            <div className="rounded-2xl overflow-hidden shadow-lg group">
+              <div className="p-7 h-full flex flex-col"
+                style={{ background: 'linear-gradient(145deg, #7c3aed 0%, #db2777 100%)' }}>
+                <div className="text-4xl mb-4">🏙️</div>
+                <div className="inline-flex w-fit items-center gap-1 bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white mb-3">
+                  Smart City
+                </div>
+                <h3 className="text-xl font-black text-white mb-2">Quality City Nashik</h3>
+                <p className="text-white/85 text-sm leading-relaxed flex-1">
+                  Transforming Nashik into India's first Quality City — embedding quality standards across civic services, education, and industry.
+                </p>
+                <div className="flex flex-wrap gap-1.5 my-4">
+                  {['Nashik', 'Civic Quality', 'Model City'].map(t => (
+                    <span key={t} className="bg-white/20 text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-full">{t}</span>
+                  ))}
+                </div>
+                <a href="https://qcin.org/quality-city-nashik/" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm w-fit">
+                  Explore <ArrowRight size={13} />
+                </a>
               </div>
             </div>
           </div>

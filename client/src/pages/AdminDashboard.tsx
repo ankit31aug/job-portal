@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import { useSettings, SiteSettings } from '../context/SettingsContext';
 import { Job, Application } from '../types';
 
-const DEPARTMENTS = ['All', 'NABH', 'NABET', 'NABL', 'TCB', 'PADD', 'PPID', 'NDIE', 'SPD', 'IT', 'Media', 'General'];
+const DEPARTMENTS = ['All', 'NABH', 'NABET', 'NABL', 'TCB', 'PADD', 'PPID', 'NDIE', 'SPD', 'IT', 'Media', 'Finance', 'HR', 'General'];
 const CATEGORIES = ['Operations', 'Management', 'Technology', 'Finance', 'HR', 'Administration', 'Design', 'Legal', 'Other'];
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Remote', 'Hybrid'];
 
@@ -32,6 +32,8 @@ const DEPT_COLORS: Record<string, string> = {
   SPD:     'bg-cyan-100 text-cyan-700',
   IT:      'bg-sky-100 text-sky-700',
   Media:   'bg-pink-100 text-pink-700',
+  Finance: 'bg-green-100 text-green-700',
+  HR:      'bg-orange-100 text-orange-700',
   General: 'bg-gray-100 text-gray-600',
 };
 
