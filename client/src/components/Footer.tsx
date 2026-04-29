@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, MapPin, Mail, Phone, Linkedin, Twitter, Instagram, Facebook, Moon, Sun } from 'lucide-react';
+import { Briefcase, MapPin, Mail, Linkedin, Twitter, Instagram, Facebook, Moon, Sun, Clock, Users } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import { useTheme } from '../context/ThemeContext';
 
@@ -136,28 +136,49 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
           </div>
         </div>
 
-        {/* Contact row */}
-        <div className="mt-8 pt-6 border-t border-gray-800 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-          {settings.footer_address && (
-            <div className="flex items-start gap-2.5 text-gray-400">
-              <MapPin size={15} className="text-brand-400 flex-shrink-0 mt-0.5" />
-              <span className="leading-relaxed text-xs">{settings.footer_address}</span>
-            </div>
-          )}
-          {settings.footer_email && (
-            <a href={`mailto:${settings.footer_email}`}
-              className="flex items-center gap-2.5 text-gray-400 hover:text-white transition-colors">
-              <Mail size={15} className="text-brand-400 flex-shrink-0" />
-              <span className="text-xs">{settings.footer_email}</span>
-            </a>
-          )}
-          {settings.footer_phone && (
-            <a href={`tel:${settings.footer_phone}`}
-              className="flex items-center gap-2.5 text-gray-400 hover:text-white transition-colors">
-              <Phone size={15} className="text-brand-400 flex-shrink-0" />
-              <span className="text-xs">{settings.footer_phone}</span>
-            </a>
-          )}
+      </div>
+
+      {/* Get in Touch / Reach QCI */}
+      <div className="border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 py-10">
+          <div className="mb-6">
+            <p className="text-brand-400 text-xs font-semibold uppercase tracking-widest mb-1">Get in Touch</p>
+            <h3 className="text-white text-xl font-bold">Reach QCI</h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                icon: <MapPin size={16} className="text-brand-400" />,
+                label: 'Office',
+                lines: ['QCI World Trade Centre', 'J 200, Block J, Nauroji Nagar', 'New Delhi – 110029'],
+              },
+              {
+                icon: <Clock size={16} className="text-brand-400" />,
+                label: 'Working Hours',
+                lines: ['Monday – Friday', '9:00 am – 5:30 pm'],
+              },
+              {
+                icon: <Mail size={16} className="text-brand-400" />,
+                label: 'General',
+                lines: ['info@qcin.org', '011-26186680 to 83'],
+              },
+              {
+                icon: <Users size={16} className="text-brand-400" />,
+                label: 'HR & Careers',
+                lines: ['hrcareers@qcin.org', 'media@qcin.org'],
+              },
+            ].map(c => (
+              <div key={c.label} className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+                <div className="flex items-center gap-2 mb-2">
+                  {c.icon}
+                  <span className="text-xs font-semibold text-white uppercase tracking-wide">{c.label}</span>
+                </div>
+                {c.lines.map((line, i) => (
+                  <p key={i} className="text-xs text-gray-400 leading-relaxed">{line}</p>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
