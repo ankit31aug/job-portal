@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Search, ArrowRight, Briefcase, Users, Award, BookOpen, FlaskConical, TrendingUp, Star, CheckCircle, Building2, Layers } from 'lucide-react';
+import { Search, ArrowRight, Briefcase, Users, Award, BookOpen, TrendingUp, Star, Layers } from 'lucide-react';
 import api from '../utils/api';
 import { Job } from '../types';
 import JobCard from '../components/JobCard';
@@ -198,7 +198,7 @@ export default function Home() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm">QCI's flagship initiatives that engage students, villages, and cities in the quality movement.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Gunvatta Gurukul */}
             <div className="rounded-2xl overflow-hidden shadow-lg group">
               <div className="p-7 h-full flex flex-col"
@@ -267,6 +267,30 @@ export default function Home() {
                 <a href="https://qcin.org/quality-city-nashik/" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm w-fit">
                   Explore <ArrowRight size={13} />
+                </a>
+              </div>
+            </div>
+
+            {/* ZED — Zero Defect Zero Effect */}
+            <div className="rounded-2xl overflow-hidden shadow-lg group">
+              <div className="p-7 h-full flex flex-col"
+                style={{ background: 'linear-gradient(145deg, #0f766e 0%, #0369a1 100%)' }}>
+                <div className="text-4xl mb-4">🏭</div>
+                <div className="inline-flex w-fit items-center gap-1 bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white mb-3">
+                  Make in India
+                </div>
+                <h3 className="text-xl font-black text-white mb-2">ZED Certification</h3>
+                <p className="text-white/85 text-sm leading-relaxed flex-1">
+                  Zero Defect Zero Effect — QCI's flagship MSME certification programme under Make in India, targeting <strong className="text-white">1.25 million MSMEs</strong> to achieve international quality standards.
+                </p>
+                <div className="flex flex-wrap gap-1.5 my-4">
+                  {['MSMEs', 'Zero Defect', 'Make in India'].map(t => (
+                    <span key={t} className="bg-white/20 text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-full">{t}</span>
+                  ))}
+                </div>
+                <a href="https://zed.org.in/" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm w-fit">
+                  Learn More <ArrowRight size={13} />
                 </a>
               </div>
             </div>

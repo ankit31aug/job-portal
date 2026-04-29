@@ -4,6 +4,14 @@ import { ArrowRight, Award, Globe, Users, TrendingUp, FlaskConical, BookOpen, Bu
 
 const LEADERSHIP = [
   {
+    name: 'Mr. Jaxay Shah',
+    title: 'Chairman, QCI',
+    initials: 'JS',
+    gradient: 'from-brand-700 to-brand-500',
+    photo: '',
+    quote: 'Quality is the foundation on which India\'s global competitiveness will be built. QCI\'s mandate is to make quality a way of life — for every organisation, every product, every service.',
+  },
+  {
     name: 'Mr. Chakravarthy T. Kannan',
     title: 'Secretary General, QCI',
     initials: 'CK',
@@ -215,7 +223,7 @@ export default function About() {
             <span className="text-blue-400">of India</span>
           </h1>
           <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-10">
-            India's apex body for quality standards — accrediting hospitals, laboratories, educational institutions, and certification bodies to ensure every Indian has access to quality services that meet international benchmarks.
+            India's apex body for quality standards — operating through NABCB, NABH, NABET, NABL, and NBQP to accredit hospitals, laboratories, educational institutions, and certification bodies. A Government of India Public-Private Partnership ensuring every Indian has access to quality services that meet international benchmarks.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/browse"
@@ -237,7 +245,7 @@ export default function About() {
             { value: '27+', label: 'Years of Excellence', icon: <Award size={22} className="text-blue-500" /> },
             { value: '5', label: 'National Boards', icon: <Building2 size={22} className="text-teal-500" /> },
             { value: '10,000+', label: 'Accredited Entities', icon: <Globe size={22} className="text-purple-500" /> },
-            { value: '9', label: 'Operating Divisions', icon: <Users size={22} className="text-orange-500" /> },
+            { value: '39', label: 'Council Members', icon: <Users size={22} className="text-orange-500" /> },
           ].map(s => (
             <div key={s.label} className="flex flex-col items-center gap-1.5">
               {s.icon}
@@ -245,6 +253,42 @@ export default function About() {
               <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── MISSION & VISION ── */}
+      <section className="py-16 px-4 bg-white dark:bg-gray-900">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest mb-2">Who We Are</p>
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Mission & Vision</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">A Public-Private Partnership between the Government of India and India's apex industry bodies — ASSOCHAM, CII, and FICCI.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-brand-50 dark:bg-brand-900/20 rounded-2xl border border-brand-100 dark:border-brand-800 p-8">
+              <div className="w-12 h-12 bg-brand-500 rounded-xl flex items-center justify-center mb-5">
+                <TrendingUp size={24} className="text-white" />
+              </div>
+              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3">Our Mission</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                To create a Quality Mindset across all sectors and ensure quality across products and services that touch every citizen — developing accreditation standards, improving processes, and ensuring compliance to quality benchmarks for inclusive and sustainable development.
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-8">
+              <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-5">
+                <Globe size={24} className="text-white" />
+              </div>
+              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3">Our Vision</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                To enhance quality across all sectors for inclusive and sustainable development — building <strong className="text-gray-800 dark:text-white">"Quality for National Wellbeing"</strong> as a way of life for every Indian organisation, product, and service.
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center leading-relaxed">
+              QCI is a non-profit autonomous body established through a Cabinet decision in 1996 under the <strong className="text-gray-700 dark:text-gray-300">Ministry of Commerce & Industry, Government of India</strong>, and registered under the Societies Registration Act. It operates on a unique Public-Private Partnership model with equal representation from Government, Industry, and Stakeholders across 39 council members.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -257,7 +301,7 @@ export default function About() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">The people who guide QCI's mission of raising quality standards across India's most critical sectors.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {LEADERSHIP.map(leader => (
               <div key={leader.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
@@ -473,6 +517,33 @@ export default function About() {
                     ))}
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT & REACH US ── */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest mb-2">Get in Touch</p>
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Reach QCI</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">For career enquiries, accreditation questions, or general correspondence, here's how to find us.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: <MapPin size={20} className="text-brand-500" />, label: 'Office', value: 'QCI World Trade Centre, J 200, Block J, Nauroji Nagar, New Delhi – 110029' },
+              { icon: <BookOpen size={20} className="text-brand-500" />, label: 'Working Hours', value: 'Monday – Friday\n9:00 am – 5:30 pm' },
+              { icon: <Globe size={20} className="text-brand-500" />, label: 'General', value: 'info@qcin.org\n011-26186680 to 83' },
+              { icon: <Users size={20} className="text-brand-500" />, label: 'HR & Careers', value: 'hrcareers@qcin.org\nmedia@qcin.org' },
+            ].map(c => (
+              <div key={c.label} className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  {c.icon}
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">{c.label}</span>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed whitespace-pre-line">{c.value}</p>
               </div>
             ))}
           </div>
