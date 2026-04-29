@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import {
   Briefcase, MapPin, Mail, Clock, Users,
   Linkedin, Twitter, Instagram, Facebook,
-  Moon, Sun, ArrowRight, ChevronRight,
+  Moon, Sun, ChevronRight,
 } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import { useTheme } from '../context/ThemeContext';
@@ -100,20 +100,6 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
       <div className="absolute top-0 left-0 w-96 h-96 bg-brand-700/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
-      {/* ── CTA strip ── */}
-      <div className="relative border-b border-white/5 bg-gradient-to-r from-brand-700/30 via-brand-600/20 to-brand-500/10">
-        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <p className="text-white font-bold text-lg">Ready to join Quality Council of India?</p>
-            <p className="text-gray-400 text-sm mt-0.5">Explore open roles across all five boards and nine divisions.</p>
-          </div>
-          <Link to="/browse"
-            className="flex-shrink-0 inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
-            Browse Open Roles <ArrowRight size={16} />
-          </Link>
-        </div>
-      </div>
-
       {/* ── Main grid ── */}
       <div className="relative max-w-7xl mx-auto px-4 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
@@ -147,12 +133,6 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
               ))}
             </div>
 
-            {/* Theme toggle */}
-            <button onClick={toggleDark}
-              className="inline-flex items-center gap-2 text-xs text-gray-500 hover:text-gray-300 transition-colors bg-white/5 border border-white/10 rounded-lg px-3 py-2">
-              {dark ? <Sun size={13} /> : <Moon size={13} />}
-              {dark ? 'Light Mode' : 'Dark Mode'}
-            </button>
           </div>
 
           {/* Quick Links — 2 cols */}
