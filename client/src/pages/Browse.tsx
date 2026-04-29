@@ -225,11 +225,11 @@ export default function Browse() {
           </form>
         </div>
 
-        {/* Department tabs */}
-        <div className="flex gap-1 px-3 pt-2 pb-1 overflow-x-auto scrollbar-hide">
+        {/* Department tabs — wrap so all are always visible */}
+        <div className="flex flex-wrap gap-1 px-3 pt-2 pb-1">
           {DEPTS.map(d => (
             <button key={d} onClick={() => setDept(d)}
-              className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 dept === d
                   ? `${DEPT_COLORS[d] ?? 'bg-violet-600'} text-white`
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -238,7 +238,7 @@ export default function Browse() {
             </button>
           ))}
           <button onClick={() => setShowFilters(!showFilters)}
-            className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs text-gray-500 hover:bg-gray-100 ml-auto">
+            className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs text-gray-500 hover:bg-gray-100">
             <Filter size={12} />Filters
           </button>
         </div>
