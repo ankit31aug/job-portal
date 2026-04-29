@@ -216,11 +216,10 @@ export default function Home() {
                     <span key={t} className="bg-white/20 text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-full">{t}</span>
                   ))}
                 </div>
-                <a href="#"
+                <a href="https://gunvattagurukul.qcin.org/" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm w-fit">
                   Apply Now <ArrowRight size={13} />
                 </a>
-                <p className="text-white/50 text-[10px] mt-1.5">Link coming soon</p>
               </div>
             </div>
 
