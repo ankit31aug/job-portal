@@ -1,0 +1,17 @@
+{
+  "sqltools.connections": [
+    {
+      "name": "QCI Portal (PostgreSQL)",
+      "driver": "PostgreSQL",
+      "server": "localhost",
+      "port": 5432,
+      "database": "qci_portal",
+      "username": "itinfrakblock",
+      "password": "",
+      "previewLimit": 50,
+      "ssl": false
+    }
+  ],
+  "sqltools.autoOpenSessionFiles": false,
+  "sqltools.results.limit": 100
+}

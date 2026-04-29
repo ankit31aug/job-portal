@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const pdfParse = require('pdf-parse');
-const db = require('../db');
+const { query } = require('../db-pg');
 const { authenticate } = require('../middleware/auth');
 
 const router = express.Router();
@@ -54,7 +54,7 @@ router.post('/match', authenticate, upload.single('resume'), async (req, res) =>
 
     fs.unlinkSync(filePath);
 
-    const jobs = db.prepare('SELECT * FROM jobs WHERE is_active = 1').all();
+    const { rows: jobs } = await query('SELECT * FROM jobs WHERE is_active = 1', []);
 
     const scoredJobs = jobs.map(job => {
       const jobSkills = job.skills.toLowerCase().split(',').map(s => s.trim());

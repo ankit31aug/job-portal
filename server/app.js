@@ -49,10 +49,18 @@ app.use('/api/job-alerts', jobAlertRoutes);
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 
 // Public gallery endpoint — no auth required
-const db = require('./db');
-app.get('/api/gallery', (req, res) => {
-  const items = db.prepare('SELECT * FROM gallery WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC').all();
-  res.json(items);
+const { query } = require('./db-pg');
+app.get('/api/gallery', async (req, res) => {
+  try {
+    const { rows } = await query(
+      'SELECT * FROM gallery WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC',
+      []
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error('GET /api/gallery error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // Serve React build whenever it exists (production always, dev as fallback if built)
