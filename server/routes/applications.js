@@ -179,6 +179,10 @@ router.patch('/:id/status', authenticate, requireEmployer, async (req, res) => {
       'UPDATE applications SET status = $1 WHERE id = $2',
       [status, req.params.id]
     );
+    await query(
+      'INSERT INTO application_status_history (application_id, status) VALUES ($1, $2)',
+      [req.params.id, status]
+    );
 
     // Email applicant about status change
     const app = (await query(

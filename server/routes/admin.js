@@ -197,6 +197,10 @@ router.patch('/applications/:id/status', authenticate, requireHR, async (req, re
     if (!app) return res.status(404).json({ error: 'Application not found' });
 
     await query('UPDATE applications SET status = $1 WHERE id = $2', [status, req.params.id]);
+    await query(
+      'INSERT INTO application_status_history (application_id, status) VALUES ($1, $2)',
+      [req.params.id, status]
+    );
 
     if (['shortlisted', 'interviewed', 'hired', 'rejected'].includes(status)) {
       try {
