@@ -89,6 +89,54 @@ const DIVISIONS = [
     color: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-700',
     accentColor: 'text-emerald-700 dark:text-emerald-400',
   },
+  {
+    acronym: 'TCB',
+    full: 'Training Certification Board (under NABET)',
+    desc: 'Certifies training organisations and individual trainers across industry and academia, ensuring quality in skill delivery.',
+    icon: '🎯',
+    color: 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700',
+    accentColor: 'text-purple-700 dark:text-purple-400',
+  },
+  {
+    acronym: 'SPD',
+    full: 'Standards & Product Division',
+    desc: 'Develops and promotes voluntary product standards to enable global competitiveness and consumer confidence.',
+    icon: '📐',
+    color: 'bg-cyan-50 dark:bg-cyan-900/20 border-cyan-200 dark:border-cyan-700',
+    accentColor: 'text-cyan-700 dark:text-cyan-400',
+  },
+  {
+    acronym: 'IT',
+    full: 'Information Technology Division',
+    desc: 'Drives digital quality infrastructure and IT-enabled quality management systems across QCI and its boards.',
+    icon: '💻',
+    color: 'bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-700',
+    accentColor: 'text-sky-700 dark:text-sky-400',
+  },
+  {
+    acronym: 'Media',
+    full: 'Media & Communications Division',
+    desc: 'Leads quality awareness campaigns and knowledge dissemination through media outreach and public communications.',
+    icon: '📡',
+    color: 'bg-pink-50 dark:bg-pink-900/20 border-pink-200 dark:border-pink-700',
+    accentColor: 'text-pink-700 dark:text-pink-400',
+  },
+  {
+    acronym: 'Finance',
+    full: 'Accounts & Finance Department',
+    desc: 'Manages QCI\'s financial operations, accounts, budgeting, and procurement functions ensuring fiscal discipline.',
+    icon: '💰',
+    color: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700',
+    accentColor: 'text-green-700 dark:text-green-400',
+  },
+  {
+    acronym: 'HR',
+    full: 'HR & Admin Department',
+    desc: 'Drives talent acquisition, employee development, administration, and compliance across QCI and its constituent bodies.',
+    icon: '👥',
+    color: 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-700',
+    accentColor: 'text-orange-700 dark:text-orange-400',
+  },
 ];
 
 const MILESTONES = [
@@ -189,7 +237,7 @@ export default function About() {
             { value: '27+', label: 'Years of Excellence', icon: <Award size={22} className="text-blue-500" /> },
             { value: '5', label: 'National Boards', icon: <Building2 size={22} className="text-teal-500" /> },
             { value: '10,000+', label: 'Accredited Entities', icon: <Globe size={22} className="text-purple-500" /> },
-            { value: '3', label: 'Operating Divisions', icon: <Users size={22} className="text-orange-500" /> },
+            { value: '9', label: 'Operating Divisions', icon: <Users size={22} className="text-orange-500" /> },
           ].map(s => (
             <div key={s.label} className="flex flex-col items-center gap-1.5">
               {s.icon}
@@ -214,10 +262,10 @@ export default function About() {
               <div key={leader.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
                 {/* Photo or gradient fallback */}
-                <div className={`h-48 bg-gradient-to-br ${leader.gradient} flex items-center justify-center relative overflow-hidden`}>
+                <div className={`h-64 bg-gradient-to-br ${leader.gradient} flex items-center justify-center relative overflow-hidden`}>
                   {leader.photo ? (
                     <img src={leader.photo} alt={leader.name}
-                      className="w-full h-full object-cover object-top" />
+                      className="w-full h-full object-cover object-center" />
                   ) : (
                     <div className="w-24 h-24 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-4xl font-black">
                       {leader.initials}
@@ -287,7 +335,7 @@ export default function About() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Beyond accreditation, QCI's divisions implement quality improvement programmes for government, industry, and consumers.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {DIVISIONS.map(div => (
               <div key={div.acronym}
                 className={`rounded-2xl border p-6 ${div.color}`}>
@@ -376,6 +424,9 @@ export default function About() {
           {lightbox && (
             <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
               onClick={() => setLightbox(null)}>
+              {/* Close button — fixed to viewport corner */}
+              <button onClick={() => setLightbox(null)}
+                className="fixed top-5 right-6 text-white/70 hover:text-white text-4xl font-light leading-none z-50">×</button>
               <div className="max-w-3xl w-full" onClick={e => e.stopPropagation()}>
                 {lightbox.image_path && (
                   <img src={lightbox.image_path} alt={lightbox.title}
@@ -385,8 +436,6 @@ export default function About() {
                   <p className="text-white font-bold text-lg">{lightbox.title}</p>
                   {lightbox.description && <p className="text-white/70 text-sm mt-1">{lightbox.description}</p>}
                 </div>
-                <button onClick={() => setLightbox(null)}
-                  className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-light leading-none">×</button>
               </div>
             </div>
           )}
@@ -434,7 +483,7 @@ export default function About() {
       <section className="py-14 px-4 bg-gradient-to-r from-blue-600 to-indigo-700">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-black text-white mb-3">Be Part of Quality India</h2>
-          <p className="text-white/80 text-lg mb-8">Join the organisation that sets the standard for standards. Open roles across all five boards and three divisions.</p>
+          <p className="text-white/80 text-lg mb-8">Join the organisation that sets the standard for standards. Open roles across all five boards and nine divisions.</p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/browse"
               className="bg-white text-blue-700 font-bold px-7 py-3.5 rounded-xl hover:bg-blue-50 transition-colors inline-flex items-center gap-2">
