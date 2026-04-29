@@ -108,6 +108,15 @@ router.post('/users/create-hr', authenticate, requireSuperAdmin, (req, res) => {
   res.status(201).json(user);
 });
 
+router.put('/users/:id/password', authenticate, requireSuperAdmin, (req, res) => {
+  const { password } = req.body;
+  if (!password || password.length < 6) return res.status(400).json({ error: 'Password must be at least 6 characters' });
+  const user = db.prepare('SELECT id, role FROM users WHERE id = ?').get(req.params.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  db.prepare('UPDATE users SET password = ? WHERE id = ?').run(bcrypt.hashSync(password, 10), req.params.id);
+  res.json({ message: 'Password updated successfully' });
+});
+
 router.delete('/users/:id', authenticate, requireSuperAdmin, (req, res) => {
   const user = db.prepare('SELECT role FROM users WHERE id = ?').get(req.params.id);
   if (!user) return res.status(404).json({ error: 'User not found' });

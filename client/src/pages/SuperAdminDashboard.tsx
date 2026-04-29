@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Crown, Users, Briefcase, FileText, Settings, Image, LayoutGrid, ShieldCheck, Plus, Edit2, Trash2, ToggleLeft, ToggleRight, LogOut, ChevronUp, ChevronDown, Eye, EyeOff, X, Check, Sun, Moon } from 'lucide-react';
+import { Crown, Users, Briefcase, FileText, Settings, Image, LayoutGrid, ShieldCheck, Plus, Edit2, Trash2, ToggleLeft, ToggleRight, LogOut, ChevronUp, ChevronDown, Eye, EyeOff, X, Check, Sun, Moon, KeyRound, Copy, Table2 } from 'lucide-react';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -42,6 +42,13 @@ export default function SuperAdminDashboard() {
   const [userSearch, setUserSearch] = useState('');
   const [userFilter, setUserFilter] = useState('');
   const [userTotal, setUserTotal] = useState(0);
+  const [usersView, setUsersView] = useState<'list' | 'credentials'>('list');
+
+  // Set Password
+  const [pwUserId, setPwUserId] = useState<number | null>(null);
+  const [pwValue, setPwValue] = useState('');
+  const [showPwValue, setShowPwValue] = useState(false);
+  const [pwSaving, setPwSaving] = useState(false);
 
   // HR Roles
   const [hrRoles, setHrRoles] = useState<any[]>([]);
@@ -156,6 +163,20 @@ export default function SuperAdminDashboard() {
     if (!confirm('Permanently delete this user?')) return;
     try { await api.delete(`/superadmin/users/${id}`); loadUsers(); flash('User deleted'); }
     catch (e: any) { flash(e.response?.data?.error || 'Cannot delete', true); }
+  };
+
+  const saveUserPassword = async () => {
+    if (!pwUserId || !pwValue) return;
+    setPwSaving(true);
+    try {
+      await api.put(`/superadmin/users/${pwUserId}/password`, { password: pwValue });
+      setPwUserId(null); setPwValue(''); flash('Password updated');
+    } catch (e: any) { flash(e.response?.data?.error || 'Failed to update password', true); }
+    finally { setPwSaving(false); }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => flash('Copied to clipboard'));
   };
 
   // ── Gallery Actions ────────────────────────────────────────────────────
@@ -369,11 +390,11 @@ export default function SuperAdminDashboard() {
           {/* ── USERS ───────────────────────────────────────────────────── */}
           {tab === 'users' && (
             <div>
-              <div className="flex gap-3 mb-4">
+              {/* Toolbar */}
+              <div className="flex gap-3 mb-4 flex-wrap">
                 <input value={userSearch} onChange={e => setUserSearch(e.target.value)} onKeyDown={e => e.key === 'Enter' && loadUsers()}
-                  placeholder="Search users..." className={`flex-1 ${input}`} />
-                <select value={userFilter} onChange={e => setUserFilter(e.target.value)}
-                  className={input}>
+                  placeholder="Search users..." className={`flex-1 min-w-40 ${input}`} />
+                <select value={userFilter} onChange={e => setUserFilter(e.target.value)} className={input}>
                   <option value="">All Roles</option>
                   {['jobseeker','employer','hr','super_admin'].map(r => <option key={r} value={r}>{r}</option>)}
                 </select>
@@ -381,8 +402,20 @@ export default function SuperAdminDashboard() {
                 <button onClick={() => setShowCreateHR(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-1">
                   <Plus size={14} /> Create HR
                 </button>
+                {/* View toggle */}
+                <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700">
+                  <button onClick={() => setUsersView('list')}
+                    className={`px-3 py-1.5 text-xs flex items-center gap-1 ${usersView === 'list' ? 'bg-violet-600 text-white' : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+                    <Users size={12} /> List
+                  </button>
+                  <button onClick={() => setUsersView('credentials')}
+                    className={`px-3 py-1.5 text-xs flex items-center gap-1 ${usersView === 'credentials' ? 'bg-violet-600 text-white' : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+                    <KeyRound size={12} /> Credentials
+                  </button>
+                </div>
               </div>
 
+              {/* Create HR form */}
               {showCreateHR && (
                 <div className={`${card} border-emerald-300 dark:border-emerald-700/40 p-5 mb-4`}>
                   <h3 className={`${title} mb-3`}>Create HR User</h3>
@@ -407,30 +440,135 @@ export default function SuperAdminDashboard() {
               )}
 
               <p className={`${muted} text-sm mb-3`}>{userTotal} total users</p>
-              <div className="space-y-2">
-                {users.map(u => (
-                  <div key={u.id} className={`${card} p-4 flex items-center gap-4`}>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="text-gray-900 dark:text-white font-medium">{u.name}</p>
-                        <span className={`text-xs px-1.5 py-0.5 rounded-full ${u.role === 'super_admin' ? 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400' : u.role === 'hr' ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400' : u.role === 'employer' ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'}`}>{u.role}</span>
-                        {u.hr_role_name && <span className="text-xs text-violet-500">({u.hr_role_name})</span>}
+
+              {/* ── LIST VIEW ── */}
+              {usersView === 'list' && (
+                <div className="space-y-2">
+                  {users.map(u => (
+                    <div key={u.id} className={`${card} p-4 flex items-center gap-4`}>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="text-gray-900 dark:text-white font-medium">{u.name}</p>
+                          <span className={`text-xs px-1.5 py-0.5 rounded-full ${u.role === 'super_admin' ? 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400' : u.role === 'hr' ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400' : u.role === 'employer' ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'}`}>{u.role}</span>
+                          {u.hr_role_name && <span className="text-xs text-violet-500">({u.hr_role_name})</span>}
+                        </div>
+                        <p className={`${muted} text-xs`}>{u.email} · {u.city || 'No city'}</p>
                       </div>
-                      <p className={`${muted} text-xs`}>{u.email} · {u.city || 'No city'}</p>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        {u.role === 'hr' && (
+                          <select defaultValue={u.hr_role_id || ''} onChange={e => updateUserRole(u.id, 'hr', parseInt(e.target.value) || undefined)}
+                            className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-gray-900 dark:text-white text-xs">
+                            <option value="">No Role</option>
+                            {hrRoles.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+                          </select>
+                        )}
+                        <button onClick={() => { setPwUserId(u.id); setPwValue(''); setShowPwValue(false); }}
+                          className="p-1.5 text-amber-500 hover:bg-amber-100 dark:hover:bg-amber-900/20 rounded-lg" title="Set Password">
+                          <KeyRound size={14} />
+                        </button>
+                        {u.role !== 'super_admin' && (
+                          <button onClick={() => deleteUser(u.id)} className="p-1.5 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-lg"><Trash2 size={15} /></button>
+                        )}
+                      </div>
                     </div>
-                    {u.role === 'hr' && (
-                      <select defaultValue={u.hr_role_id || ''} onChange={e => updateUserRole(u.id, 'hr', parseInt(e.target.value) || undefined)}
-                        className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-gray-900 dark:text-white text-xs">
-                        <option value="">No Role</option>
-                        {hrRoles.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
-                      </select>
-                    )}
-                    {u.role !== 'super_admin' && (
-                      <button onClick={() => deleteUser(u.id)} className="text-red-500 hover:text-red-400 p-1 rounded"><Trash2 size={15} /></button>
-                    )}
+                  ))}
+                </div>
+              )}
+
+              {/* ── CREDENTIALS VIEW ── */}
+              {usersView === 'credentials' && (
+                <div className={`${card} overflow-hidden`}>
+                  <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800/40 flex items-center gap-2">
+                    <KeyRound size={14} className="text-amber-600 dark:text-amber-400" />
+                    <span className="text-amber-700 dark:text-amber-300 text-xs font-medium">Credentials are sensitive — do not share this view. Passwords shown here are set values; stored passwords are encrypted.</span>
                   </div>
-                ))}
-              </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+                          <th className="text-left px-4 py-2.5 text-gray-500 dark:text-gray-400 font-medium text-xs">ID</th>
+                          <th className="text-left px-4 py-2.5 text-gray-500 dark:text-gray-400 font-medium text-xs">Name</th>
+                          <th className="text-left px-4 py-2.5 text-gray-500 dark:text-gray-400 font-medium text-xs">Login Email</th>
+                          <th className="text-left px-4 py-2.5 text-gray-500 dark:text-gray-400 font-medium text-xs">Role</th>
+                          <th className="text-left px-4 py-2.5 text-gray-500 dark:text-gray-400 font-medium text-xs">HR Role</th>
+                          <th className="text-left px-4 py-2.5 text-gray-500 dark:text-gray-400 font-medium text-xs">Set Password</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                        {users.map(u => (
+                          <tr key={u.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/40">
+                            <td className="px-4 py-2.5 text-gray-500 dark:text-gray-500 text-xs font-mono">#{u.id}</td>
+                            <td className="px-4 py-2.5">
+                              <p className="text-gray-900 dark:text-white font-medium text-sm">{u.name}</p>
+                            </td>
+                            <td className="px-4 py-2.5">
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-mono text-xs text-gray-700 dark:text-gray-300">{u.email}</span>
+                                <button onClick={() => copyToClipboard(u.email)} className="text-gray-400 hover:text-violet-500 transition-colors">
+                                  <Copy size={11} />
+                                </button>
+                              </div>
+                            </td>
+                            <td className="px-4 py-2.5">
+                              <span className={`text-xs px-1.5 py-0.5 rounded-full ${u.role === 'super_admin' ? 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400' : u.role === 'hr' ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400' : u.role === 'employer' ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'}`}>{u.role}</span>
+                            </td>
+                            <td className="px-4 py-2.5 text-xs text-violet-500">{u.hr_role_name || '—'}</td>
+                            <td className="px-4 py-2.5">
+                              {pwUserId === u.id ? (
+                                <div className="flex items-center gap-1">
+                                  <div className="relative">
+                                    <input type={showPwValue ? 'text' : 'password'} value={pwValue}
+                                      onChange={e => setPwValue(e.target.value)}
+                                      placeholder="New password"
+                                      className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-xs w-32 pr-6 text-gray-900 dark:text-white" />
+                                    <button type="button" onClick={() => setShowPwValue(v => !v)} className="absolute right-1.5 top-1.5 text-gray-400">
+                                      {showPwValue ? <EyeOff size={11} /> : <Eye size={11} />}
+                                    </button>
+                                  </div>
+                                  <button onClick={saveUserPassword} disabled={pwSaving || !pwValue}
+                                    className="bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white px-2 py-1 rounded text-xs">
+                                    {pwSaving ? '…' : 'Set'}
+                                  </button>
+                                  <button onClick={() => setPwUserId(null)} className="text-gray-400 hover:text-gray-600 p-1"><X size={12} /></button>
+                                </div>
+                              ) : (
+                                <button onClick={() => { setPwUserId(u.id); setPwValue(''); setShowPwValue(false); }}
+                                  className="text-xs flex items-center gap-1 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300">
+                                  <KeyRound size={11} /> Set Password
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* Inline set-password panel (List view) */}
+              {pwUserId !== null && usersView === 'list' && (
+                <div className={`${card} border-amber-300 dark:border-amber-700/40 p-4 mt-3 flex items-center gap-3`}>
+                  <KeyRound size={16} className="text-amber-500 flex-shrink-0" />
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Set new password for <strong>{users.find(u => u.id === pwUserId)?.name}</strong>
+                  </p>
+                  <div className="relative flex-1 max-w-xs">
+                    <input type={showPwValue ? 'text' : 'password'} value={pwValue}
+                      onChange={e => setPwValue(e.target.value)}
+                      placeholder="New password (min 6 chars)"
+                      className={`w-full pr-8 ${input}`} />
+                    <button type="button" onClick={() => setShowPwValue(v => !v)} className="absolute right-2 top-2 text-gray-400">
+                      {showPwValue ? <EyeOff size={15} /> : <Eye size={15} />}
+                    </button>
+                  </div>
+                  <button onClick={saveUserPassword} disabled={pwSaving || !pwValue}
+                    className="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm">
+                    {pwSaving ? 'Saving…' : 'Update'}
+                  </button>
+                  <button onClick={() => { setPwUserId(null); setPwValue(''); }} className="text-gray-400 hover:text-gray-600"><X size={16} /></button>
+                </div>
+              )}
             </div>
           )}
 
