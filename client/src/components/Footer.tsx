@@ -138,13 +138,9 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
 
       </div>
 
-      {/* Get in Touch / Reach QCI */}
+      {/* Contact cards */}
       <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-10">
-          <div className="mb-6">
-            <p className="text-brand-400 text-xs font-semibold uppercase tracking-widest mb-1">Get in Touch</p>
-            <h3 className="text-white text-xl font-bold">Reach QCI</h3>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
