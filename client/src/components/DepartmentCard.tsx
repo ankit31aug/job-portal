@@ -61,12 +61,15 @@ export default function DepartmentCard({ dept, openRoles, openings }: Props) {
         <div className="absolute inset-0 opacity-20"
           style={{ backgroundImage: 'radial-gradient(circle at 85% 15%, white 0%, transparent 55%)' }} />
 
-        {/* Top row: icon + open roles count */}
+        {/* Top row: icon + open roles + openings */}
         <div className="relative flex items-start justify-between">
           <span className="text-3xl drop-shadow">{meta.icon}</span>
           <div className="text-right">
             <p className="text-3xl font-black text-white leading-none">{openRoles}</p>
             <p className="text-white/70 text-[11px] font-medium">open roles</p>
+            {openings > 0 && (
+              <p className="text-white/60 text-[10px] mt-0.5">{openings} opening{openings !== 1 ? 's' : ''}</p>
+            )}
           </div>
         </div>
 
@@ -81,13 +84,6 @@ export default function DepartmentCard({ dept, openRoles, openings }: Props) {
             View Roles <ArrowRight size={11} />
           </div>
         </div>
-
-        {/* Openings pill */}
-        {openings > 0 && (
-          <div className="absolute top-3 right-3 bg-white/15 text-white/90 text-[10px] font-medium px-2 py-0.5 rounded-full">
-            {openings} opening{openings !== 1 ? 's' : ''}
-          </div>
-        )}
       </div>
     </div>
   );

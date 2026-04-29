@@ -35,6 +35,10 @@ const DIVISIONS = [
   { acronym: 'PADD', full: 'Project Analysis & Documentation Division', desc: 'Manages voluntary conformity assessment frameworks including IndiaGHP and Ayush Mark.', color: 'bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800', accent: 'text-blue-700 dark:text-blue-400', icon: '📋' },
   { acronym: 'PPID', full: 'Project Planning & Implementation Division', desc: 'Executes quality projects for central and state governments across India.', color: 'bg-violet-50 dark:bg-violet-900/20 border-violet-100 dark:border-violet-800', accent: 'text-violet-700 dark:text-violet-400', icon: '🗂️' },
   { acronym: 'NDIE', full: 'National Division for Industry Excellence', desc: 'Enhances industrial quality standards through benchmarking and best practices.', color: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800', accent: 'text-emerald-700 dark:text-emerald-400', icon: '🏭' },
+  { acronym: 'TCB', full: 'Training Certification Board (under NABET)', desc: 'Certifies training organisations and individual trainers across industry and academia.', color: 'bg-purple-50 dark:bg-purple-900/20 border-purple-100 dark:border-purple-800', accent: 'text-purple-700 dark:text-purple-400', icon: '🎯' },
+  { acronym: 'SPD', full: 'Standards & Product Division', desc: 'Develops and promotes voluntary product standards to enable global competitiveness.', color: 'bg-cyan-50 dark:bg-cyan-900/20 border-cyan-100 dark:border-cyan-800', accent: 'text-cyan-700 dark:text-cyan-400', icon: '📐' },
+  { acronym: 'IT', full: 'Information Technology Division', desc: 'Drives digital quality infrastructure and IT-enabled quality management systems.', color: 'bg-sky-50 dark:bg-sky-900/20 border-sky-100 dark:border-sky-800', accent: 'text-sky-700 dark:text-sky-400', icon: '💻' },
+  { acronym: 'Media', full: 'Media & Communications Division', desc: 'Leads quality awareness campaigns and knowledge dissemination through media outreach.', color: 'bg-pink-50 dark:bg-pink-900/20 border-pink-100 dark:border-pink-800', accent: 'text-pink-700 dark:text-pink-400', icon: '📡' },
 ];
 
 const WHY_ITEMS = [
@@ -148,12 +152,12 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-gray-200 dark:bg-gray-700 rounded-full px-4 py-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-widest mb-3">
               <Layers size={13} /> Operating Divisions
             </div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Three Divisions. Where Projects Come to Life.</h2>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Seven Divisions. Where Projects Come to Life.</h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm">Beyond accreditation, QCI's divisions implement quality programmes for government and industry.</p>
           </div>
 
-          {/* 3 division cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Division cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {DIVISIONS.map(div => {
               const openRoles = stats?.byDepartment[div.acronym] ?? 0;
               return (
@@ -177,6 +181,40 @@ export default function Home() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── GUNVATTA GURUKUL ── */}
+      <section className="py-14 px-4 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <div className="rounded-2xl overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 60%, #7c3aed 100%)' }}>
+            <div className="p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
+              <div className="text-5xl flex-shrink-0">🎓</div>
+              <div className="flex-1 text-white">
+                <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest mb-3">
+                  Student Programme
+                </div>
+                <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight">Gunvatta Gurukul</h2>
+                <p className="text-white/85 text-sm md:text-base leading-relaxed max-w-xl">
+                  QCI's flagship student engagement initiative — we onboard <strong className="text-white">100 students</strong> every two months
+                  for hands-on quality management training, live project experience, and mentorship from QCI experts.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['Open to all disciplines', '100 seats per batch', 'Batch every 2 months', 'Certificate of completion'].map(tag => (
+                    <span key={tag} className="bg-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <a href="#"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-6 py-3.5 rounded-xl hover:bg-gray-100 transition-colors text-sm shadow-lg">
+                  Apply Now <ArrowRight size={15} />
+                </a>
+                <p className="text-white/60 text-xs text-center mt-2">Link coming soon</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
