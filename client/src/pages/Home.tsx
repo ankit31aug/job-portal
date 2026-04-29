@@ -44,7 +44,7 @@ const DIVISIONS = [
 ];
 
 const WHY_ITEMS = [
-  { icon: <Award size={22} className="text-violet-500" />, title: 'National Impact', desc: 'Your work directly influences quality standards across India\'s hospitals, labs, and educational institutions.', link: '/browse', cta: 'See Open Roles' },
+  { icon: <Award size={22} className="text-brand-500" />, title: 'National Impact', desc: 'Your work directly influences quality standards across India\'s hospitals, labs, and educational institutions.', link: '/browse', cta: 'See Open Roles' },
   { icon: <TrendingUp size={22} className="text-emerald-500" />, title: 'Clear Career Growth', desc: 'Structured 4-level career ladder in every department — from Coordinator to Project Manager with defined salary bands.', link: '/careers', cta: 'Explore Career Paths' },
   { icon: <BookOpen size={22} className="text-purple-500" />, title: 'Domain Expertise', desc: 'Become a certified quality expert in NABH, NABET, or NABL — credentials respected across industry and government.', link: '/careers', cta: 'View Specialisations' },
   { icon: <Users size={22} className="text-orange-500" />, title: 'Collaborative Culture', desc: 'Work with multi-disciplinary teams of healthcare professionals, educators, and scientists on nation-wide quality missions.', link: '/about', cta: 'About QCI' },
@@ -71,7 +71,7 @@ export default function Home() {
     <div className="bg-white dark:bg-gray-900">
       {/* ── HERO ── */}
       <section className="relative overflow-hidden text-white py-20 px-4"
-        style={{ background: 'linear-gradient(135deg, #4c1d95 0%, #7c3aed 60%, #c026d3 100%)' }}>
+        style={{ background: 'linear-gradient(135deg, #01417C 0%, #0a5da6 60%, #3791E5 100%)' }}>
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5"
           style={{ backgroundImage: 'radial-gradient(circle at 25% 50%, white 0%, transparent 50%), radial-gradient(circle at 75% 20%, white 0%, transparent 40%)' }} />
@@ -116,7 +116,7 @@ export default function Home() {
       <section className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { label: 'Active Roles', value: stats?.total ?? 0, icon: <Briefcase size={20} className="text-violet-500" /> },
+            { label: 'Active Roles', value: stats?.total ?? 0, icon: <Briefcase size={20} className="text-brand-500" /> },
             { label: 'Total Openings', value: stats?.totalOpenings ?? 0, icon: <Users size={20} className="text-emerald-500" /> },
             { label: 'Boards', value: 5, icon: <Award size={20} className="text-purple-500" /> },
             { label: 'Career Levels', value: 4, icon: <TrendingUp size={20} className="text-orange-500" /> },
@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           {/* Boards heading */}
           <div className="text-center mb-10">
-            <p className="text-violet-600 text-sm font-semibold uppercase tracking-widest mb-2">Where You'll Work</p>
+            <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest mb-2">Where You'll Work</p>
             <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Five Boards. One Mission.</h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">QCI operates through five national accreditation boards, each shaping quality standards in a critical sector of India.</p>
           </div>
@@ -281,10 +281,10 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <p className="text-violet-600 text-sm font-semibold uppercase tracking-widest mb-1">Latest Openings</p>
+                <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest mb-1">Latest Openings</p>
                 <h2 className="text-2xl font-black text-gray-900 dark:text-white">Highlighted Opportunities</h2>
               </div>
-              <Link to="/browse" className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-violet-600 hover:text-violet-700">
+              <Link to="/browse" className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-brand-500 hover:text-brand-700">
                 View all jobs <ArrowRight size={14} />
               </Link>
             </div>
@@ -293,7 +293,7 @@ export default function Home() {
             </div>
             <div className="text-center mt-8">
               <Link to="/browse"
-                className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-semibold px-7 py-3 rounded-xl transition-colors">
+                className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold px-7 py-3 rounded-xl transition-colors">
                 Browse All Jobs <ArrowRight size={16} />
               </Link>
             </div>
@@ -305,7 +305,7 @@ export default function Home() {
       <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <p className="text-violet-600 text-sm font-semibold uppercase tracking-widest mb-2">Why Choose QCI</p>
+            <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest mb-2">Why Choose QCI</p>
             <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">A Career That Means Something</h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">More than a job — a mandate to improve quality standards across India's most important sectors.</p>
           </div>
@@ -318,7 +318,7 @@ export default function Home() {
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900 dark:text-white mb-1">{item.title}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-3">{item.desc}</p>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-violet-600 dark:text-violet-400 group-hover:gap-2 transition-all">
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-brand-500 dark:text-brand-300 group-hover:gap-2 transition-all">
                     {item.cta} <ArrowRight size={11} />
                   </span>
                 </div>

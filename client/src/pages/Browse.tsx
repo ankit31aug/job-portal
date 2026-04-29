@@ -119,7 +119,7 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
         {user ? (
           <>
             <Link to={`/apply/${job.id}`}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm text-center transition-colors">
+              className="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 rounded-xl text-sm text-center transition-colors">
               Apply with Resume
             </Link>
             <Link to={`/jobs/${job.id}`}
@@ -130,7 +130,7 @@ function JobDetailPanel({ job, onApply }: { job: Job; onApply: () => void }) {
         ) : (
           <>
             <Link to={`/login`}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm text-center transition-colors">
+              className="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 rounded-xl text-sm text-center transition-colors">
               Sign In to Apply
             </Link>
             <Link to={`/jobs/${job.id}`}
@@ -219,7 +219,7 @@ export default function Browse() {
                 className="flex-1 py-2.5 text-sm bg-transparent outline-none text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" />
               {search && <button type="button" onClick={() => { setSearch(''); fetchJobs(1); }}><X size={13} className="text-gray-400" /></button>}
             </div>
-            <button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white px-3 rounded-xl text-sm font-medium transition-colors">
+            <button type="submit" className="bg-brand-500 hover:bg-brand-600 text-white px-3 rounded-xl text-sm font-medium transition-colors">
               Go
             </button>
           </form>
@@ -231,7 +231,7 @@ export default function Browse() {
             <button key={d} onClick={() => setDept(d)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 dept === d
-                  ? `${DEPT_COLORS[d] ?? 'bg-violet-600'} text-white`
+                  ? `${DEPT_COLORS[d] ?? 'bg-brand-500'} text-white`
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}>
               {d}
@@ -248,7 +248,7 @@ export default function Browse() {
             {JOB_TYPES.map(t => (
               <button key={t} onClick={() => setJobType(jobType === t ? '' : t)}
                 className={`px-2.5 py-1 rounded-full text-xs border transition-colors ${
-                  jobType === t ? 'bg-indigo-600 text-white border-indigo-600' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300'
+                  jobType === t ? 'bg-brand-500 text-white border-brand-500' : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300'
                 }`}>
                 {t}
               </button>
