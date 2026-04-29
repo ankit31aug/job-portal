@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Ensure upload directories exist on startup
-['uploads', 'uploads/gallery', 'uploads/boards'].forEach(dir => {
+['uploads', 'uploads/gallery', 'uploads/boards', 'uploads/resumes'].forEach(dir => {
   const p = path.join(__dirname, dir);
   if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true });
 });
@@ -20,6 +20,7 @@ const bookmarkRoutes = require('./routes/bookmarks');
 const otpRoutes = require('./routes/otp');
 const superadminRoutes = require('./routes/superadmin');
 const boardRoutes = require('./routes/boards');
+const jobAlertRoutes = require('./routes/job-alerts');
 
 const app = express();
 const IS_PROD = process.env.NODE_ENV === 'production';
@@ -43,6 +44,7 @@ app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/otp', otpRoutes);
 app.use('/api/superadmin', superadminRoutes);
 app.use('/api/boards', boardRoutes);
+app.use('/api/job-alerts', jobAlertRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 

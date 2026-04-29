@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Briefcase, FileText, CheckCircle, XCircle, Clock, TrendingUp, Eye, Users, Bookmark, MapPin, IndianRupee } from 'lucide-react';
+import { Briefcase, FileText, CheckCircle, XCircle, Clock, TrendingUp, Eye, Users, Bookmark, MapPin, IndianRupee, Bell, Plus, Trash2, ToggleLeft, ToggleRight, UserCircle } from 'lucide-react';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
-import { Application, Job } from '../types';
+import { Application, Job, JobAlert } from '../types';
 
 const STATUS_CONFIG = {
   pending: { label: 'Pending', color: 'bg-yellow-100 text-yellow-700', icon: <Clock size={14} /> },
@@ -13,16 +13,28 @@ const STATUS_CONFIG = {
   rejected: { label: 'Rejected', color: 'bg-red-100 text-red-700', icon: <XCircle size={14} /> },
 };
 
+const JOB_CATEGORIES = ['Operations', 'Management', 'Technology', 'Finance', 'HR', 'Administration', 'Design', 'Legal', 'Other'];
+
+const emptyAlertForm = { label: '', keywords: '', location: '', category: '', experience_min: '', experience_max: '' };
+
 export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'applications' | 'saved'>('applications');
+  const [activeTab, setActiveTab] = useState<'applications' | 'saved' | 'alerts'>('applications');
   const [applications, setApplications] = useState<Application[]>([]);
   const [savedJobs, setSavedJobs] = useState<Job[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJob, setSelectedJob] = useState<number | null>(null);
   const [jobApplications, setJobApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Job Alerts state
+  const [alerts, setAlerts] = useState<JobAlert[]>([]);
+  const [alertsLoading, setAlertsLoading] = useState(false);
+  const [showAlertForm, setShowAlertForm] = useState(false);
+  const [alertForm, setAlertForm] = useState({ ...emptyAlertForm });
+  const [alertSaving, setAlertSaving] = useState(false);
+  const [alertError, setAlertError] = useState('');
 
   useEffect(() => {
     if (!user) { navigate('/login'); return; }
@@ -38,6 +50,57 @@ export default function Dashboard() {
       api.get('/jobs/my').then(({ data }) => setJobs(data)).finally(() => setLoading(false));
     }
   }, [user]);
+
+  useEffect(() => {
+    if (activeTab === 'alerts' && user?.role === 'jobseeker') loadAlerts();
+  }, [activeTab]);
+
+  const loadAlerts = async () => {
+    setAlertsLoading(true);
+    try {
+      const { data } = await api.get('/job-alerts');
+      setAlerts(data);
+    } catch (_) {}
+    setAlertsLoading(false);
+  };
+
+  const createAlert = async () => {
+    if (!alertForm.label.trim()) { setAlertError('Alert name is required'); return; }
+    setAlertSaving(true);
+    setAlertError('');
+    try {
+      await api.post('/job-alerts', {
+        label: alertForm.label,
+        keywords: alertForm.keywords || undefined,
+        location: alertForm.location || undefined,
+        category: alertForm.category || undefined,
+        experience_min: alertForm.experience_min ? parseInt(alertForm.experience_min) : undefined,
+        experience_max: alertForm.experience_max ? parseInt(alertForm.experience_max) : undefined,
+      });
+      setAlertForm({ ...emptyAlertForm });
+      setShowAlertForm(false);
+      loadAlerts();
+    } catch (err: any) {
+      setAlertError(err.response?.data?.error || 'Failed to create alert');
+    } finally {
+      setAlertSaving(false);
+    }
+  };
+
+  const toggleAlert = async (id: number) => {
+    try {
+      await api.patch(`/job-alerts/${id}/toggle`);
+      setAlerts(prev => prev.map(a => a.id === id ? { ...a, is_active: a.is_active ? 0 : 1 } : a));
+    } catch (_) {}
+  };
+
+  const deleteAlert = async (id: number) => {
+    if (!confirm('Delete this job alert?')) return;
+    try {
+      await api.delete(`/job-alerts/${id}`);
+      setAlerts(prev => prev.filter(a => a.id !== id));
+    } catch (_) {}
+  };
 
   const removeSaved = async (jobId: number) => {
     await api.delete(`/bookmarks/${jobId}`);
@@ -64,11 +127,18 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Welcome back, {user?.name}!</p>
         </div>
-        {user?.role === 'employer' && (
-          <Link to="/post-job" className="btn-primary flex items-center gap-2">
-            <Briefcase size={16} />Post New Job
-          </Link>
-        )}
+        <div className="flex items-center gap-2">
+          {user?.role === 'jobseeker' && (
+            <Link to="/profile" className="flex items-center gap-1.5 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm transition-colors">
+              <UserCircle size={15} /> Edit Profile
+            </Link>
+          )}
+          {user?.role === 'employer' && (
+            <Link to="/post-job" className="btn-primary flex items-center gap-2">
+              <Briefcase size={16} />Post New Job
+            </Link>
+          )}
+        </div>
       </div>
 
       {user?.role === 'jobseeker' ? (
@@ -88,10 +158,11 @@ export default function Dashboard() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-1 mb-4 border-b border-gray-200">
+          <div className="flex gap-1 mb-4 border-b border-gray-200 dark:border-gray-700">
             {[
               { key: 'applications', label: 'My Applications', icon: <FileText size={14} /> },
               { key: 'saved', label: 'Saved Jobs', icon: <Bookmark size={14} /> },
+              { key: 'alerts', label: 'Job Alerts', icon: <Bell size={14} /> },
             ].map(tab => (
               <button key={tab.key} onClick={() => setActiveTab(tab.key as any)}
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
@@ -180,6 +251,119 @@ export default function Dashboard() {
                         <button onClick={() => removeSaved(job.id)}
                           className="text-xs px-3 py-1.5 border border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-red-500">
                           Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'alerts' && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-sm text-gray-500 dark:text-gray-400">{alerts.length} alert{alerts.length !== 1 ? 's' : ''} configured</p>
+                <button onClick={() => { setShowAlertForm(true); setAlertError(''); }}
+                  className="btn-primary text-sm flex items-center gap-1.5 py-2">
+                  <Plus size={14} /> New Alert
+                </button>
+              </div>
+
+              {showAlertForm && (
+                <div className="card p-5 mb-4 border-blue-200 dark:border-blue-800">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Create Job Alert</h3>
+                  {alertError && <p className="text-red-600 text-sm mb-3">{alertError}</p>}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div className="md:col-span-2">
+                      <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">Alert Name <span className="text-red-500">*</span></label>
+                      <input value={alertForm.label} onChange={e => setAlertForm(p => ({ ...p, label: e.target.value }))}
+                        placeholder="e.g. Quality Manager roles in Delhi" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">Keywords</label>
+                      <input value={alertForm.keywords} onChange={e => setAlertForm(p => ({ ...p, keywords: e.target.value }))}
+                        placeholder="e.g. ISO 9001, Quality" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">Location</label>
+                      <input value={alertForm.location} onChange={e => setAlertForm(p => ({ ...p, location: e.target.value }))}
+                        placeholder="e.g. New Delhi" className="input-field" />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">Category</label>
+                      <select value={alertForm.category} onChange={e => setAlertForm(p => ({ ...p, category: e.target.value }))} className="input-field">
+                        <option value="">Any category</option>
+                        {JOB_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">Min Exp (yrs)</label>
+                        <input type="number" min="0" max="60" value={alertForm.experience_min}
+                          onChange={e => setAlertForm(p => ({ ...p, experience_min: e.target.value }))}
+                          placeholder="0" className="input-field" />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">Max Exp (yrs)</label>
+                        <input type="number" min="0" max="60" value={alertForm.experience_max}
+                          onChange={e => setAlertForm(p => ({ ...p, experience_max: e.target.value }))}
+                          placeholder="10" className="input-field" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button onClick={createAlert} disabled={alertSaving} className="btn-primary text-sm py-2">
+                      {alertSaving ? 'Creating...' : 'Create Alert'}
+                    </button>
+                    <button onClick={() => { setShowAlertForm(false); setAlertForm({ ...emptyAlertForm }); setAlertError(''); }}
+                      className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {alertsLoading ? (
+                <div className="text-center py-8"><div className="animate-spin w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div></div>
+              ) : alerts.length === 0 ? (
+                <div className="card text-center py-12">
+                  <Bell size={40} className="mx-auto text-gray-300 mb-3" />
+                  <p className="text-gray-500 mb-1">No job alerts yet</p>
+                  <p className="text-gray-400 text-sm">Create an alert to be notified when matching jobs are posted</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {alerts.map(alert => (
+                    <div key={alert.id} className={`card p-4 flex items-start gap-3 ${!alert.is_active ? 'opacity-60' : ''}`}>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-medium text-gray-900 dark:text-white">{alert.label}</h3>
+                          <span className={`text-xs px-1.5 py-0.5 rounded-full ${alert.is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-500'}`}>
+                            {alert.is_active ? 'Active' : 'Paused'}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400">
+                          {alert.keywords && <span>Keywords: <span className="text-gray-700 dark:text-gray-300">{alert.keywords}</span></span>}
+                          {alert.location && <span>Location: <span className="text-gray-700 dark:text-gray-300">{alert.location}</span></span>}
+                          {alert.category && <span>Category: <span className="text-gray-700 dark:text-gray-300">{alert.category}</span></span>}
+                          {(alert.experience_min != null || alert.experience_max != null) && (
+                            <span>Exp: <span className="text-gray-700 dark:text-gray-300">{alert.experience_min ?? 0}–{alert.experience_max ?? '∞'} yrs</span></span>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Created {new Date(alert.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        <button onClick={() => toggleAlert(alert.id)}
+                          className={`p-1.5 rounded-lg transition-colors ${alert.is_active ? 'text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/20' : 'text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                          title={alert.is_active ? 'Pause alert' : 'Activate alert'}>
+                          {alert.is_active ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
+                        </button>
+                        <button onClick={() => deleteAlert(alert.id)}
+                          className="p-1.5 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                          <Trash2 size={15} />
                         </button>
                       </div>
                     </div>

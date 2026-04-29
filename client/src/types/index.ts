@@ -8,6 +8,24 @@ export interface User {
   city?: string;
   state?: string;
   pincode?: string;
+  bio?: string;
+  skills?: string;
+  experience_years?: number;
+  current_company?: string;
+  profile_resume_path?: string;
+  created_at: string;
+}
+
+export interface JobAlert {
+  id: number;
+  user_id: number;
+  label: string;
+  keywords?: string;
+  location?: string;
+  category?: string;
+  experience_min?: number;
+  experience_max?: number;
+  is_active: number;
   created_at: string;
 }
 

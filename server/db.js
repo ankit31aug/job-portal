@@ -94,6 +94,11 @@ db.exec(`
 try { db.exec('ALTER TABLE jobs ADD COLUMN department TEXT DEFAULT "General"'); } catch (e) {}
 try { db.exec('ALTER TABLE users ADD COLUMN hr_role_id INTEGER'); } catch (e) {}
 try { db.exec('ALTER TABLE users ADD COLUMN is_verified INTEGER DEFAULT 1'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN bio TEXT'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN skills TEXT'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN experience_years INTEGER DEFAULT 0'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN current_company TEXT'); } catch (e) {}
+try { db.exec('ALTER TABLE users ADD COLUMN profile_resume_path TEXT'); } catch (e) {}
 
 // OTP Verifications
 db.exec(`
@@ -531,5 +536,41 @@ for (const j of deptJobs) {
       j.exp_min, j.exp_max, j.sal_min, j.sal_max, j.description, j.requirements, j.skills, j.openings);
   }
 }
+
+// ── New Feature Tables ───────────────────────────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS password_reset_tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
+    expires_at TEXT NOT NULL,
+    used INTEGER DEFAULT 0,
+    created_at TEXT DEFAULT (datetime('now'))
+  );
+
+  CREATE TABLE IF NOT EXISTS application_status_history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    application_id INTEGER NOT NULL,
+    status TEXT NOT NULL,
+    note TEXT,
+    changed_by INTEGER,
+    created_at TEXT DEFAULT (datetime('now')),
+    FOREIGN KEY (application_id) REFERENCES applications(id)
+  );
+
+  CREATE TABLE IF NOT EXISTS job_alerts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    label TEXT,
+    keywords TEXT,
+    location TEXT,
+    category TEXT,
+    experience_min INTEGER,
+    experience_max INTEGER,
+    is_active INTEGER DEFAULT 1,
+    created_at TEXT DEFAULT (datetime('now')),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+`);
 
 module.exports = db;

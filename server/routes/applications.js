@@ -53,7 +53,11 @@ router.post('/', authenticate, upload.single('resume'), (req, res) => {
     notice_period || null, cover_letter || null,
     req.file ? req.file.filename : null, skills || null, matchScore, autoStatus);
 
-  const application = db.prepare('SELECT * FROM applications WHERE id = ?').get(result.lastInsertRowid);
+  const appId = result.lastInsertRowid;
+  // Log initial status history
+  db.prepare('INSERT INTO application_status_history (application_id, status) VALUES (?, ?)').run(appId, autoStatus);
+
+  const application = db.prepare('SELECT * FROM applications WHERE id = ?').get(appId);
 
   // Send confirmation email to applicant
   sendMail({ to: email, subject: `Application Received — ${job.title} | QCI Job Portal`, html: applicationConfirmEmail(full_name, job.title, job.company) });
