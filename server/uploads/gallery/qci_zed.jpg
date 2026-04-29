@@ -1,0 +1,838 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="UTF-8">
+
+<!-- Set the viewport width to device width for mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="pingback" href="https://qcistaging.qci.org.in/xmlrpc.php" />
+
+<title>Page not found &#8211; QCI</title>
+<meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+<link rel="alternate" type="application/rss+xml" title="QCI &raquo; Feed" href="https://qcistaging.qci.org.in/feed/" />
+<link rel="alternate" type="application/rss+xml" title="QCI &raquo; Comments Feed" href="https://qcistaging.qci.org.in/comments/feed/" />
+<style id='wp-img-auto-sizes-contain-inline-css' type='text/css'>
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='https://qcistaging.qci.org.in/wp-includes/css/dist/block-library/style.min.css?ver=6.9' type='text/css' media='all' />
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+<link rel='stylesheet' id='contact-form-7-css' href='https://qcistaging.qci.org.in/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=6.1.4' type='text/css' media='all' />
+<link rel='stylesheet' id='eleslider-style-css' href='https://qcistaging.qci.org.in/wp-content/plugins/eleslider/assets/eleslider.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='ep_general_styles-css' href='https://qcistaging.qci.org.in/wp-content/plugins/elasticpress/dist/css/general-styles.css?ver=66295efe92a630617c00' type='text/css' media='all' />
+<link rel='stylesheet' id='citygov-style-css' href='https://qcistaging.qci.org.in/wp-content/themes/citygov/style.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='fontawesome-css' href='https://qcistaging.qci.org.in/wp-content/themes/citygov/styles/fontawesome.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='citygov-mobile-css' href='https://qcistaging.qci.org.in/wp-content/themes/citygov/style-mobile.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='magazine_style-css' href='https://qcistaging.qci.org.in/wp-content/themes/citygov/css/style-magazine.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap_style-css' href='https://qcistaging.qci.org.in/wp-content/themes/citygov/assets/bootstrap/dist/css/bootstrap.min.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='swiper_style-css' href='https://qcistaging.qci.org.in/wp-content/themes/citygov/assets/swiper/swiper-bundle.css?ver=6.9' type='text/css' media='all' />
+<link rel='stylesheet' id='tablepress-default-css' href='https://qcistaging.qci.org.in/wp-content/plugins/tablepress/css/build/default.css?ver=3.2.5' type='text/css' media='all' />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Nunito%20Sans:200,300,400,500,600,700,800,900,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic%7CPoppins:600,400,700,500&#038;subset=latin&#038;display=swap&#038;ver=1765626917" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito%20Sans:200,300,400,500,600,700,800,900,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic%7CPoppins:600,400,700,500&#038;subset=latin&#038;display=swap&#038;ver=1765626917" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito%20Sans:200,300,400,500,600,700,800,900,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic%7CPoppins:600,400,700,500&#038;subset=latin&#038;display=swap&#038;ver=1765626917" /></noscript><script type="text/javascript" id="jquery-core-js-extra">
+/* <![CDATA[ */
+var magazine_ajax_url = {"url":"https://qcistaging.qci.org.in/ajax-handler/"};
+//# sourceURL=jquery-core-js-extra
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-content/themes/citygov/assets/bootstrap/dist/js/bootstrap.min.js?ver=6.9" id="bootstrap_script-js"></script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=GT-KFHHXVZJ" id="google_gtagjs-js" async></script>
+<script type="text/javascript" id="google_gtagjs-js-after">
+/* <![CDATA[ */
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["qcistaging.qci.org.in"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "GT-KFHHXVZJ");
+//# sourceURL=google_gtagjs-js-after
+/* ]]> */
+</script>
+<link rel="https://api.w.org/" href="https://qcistaging.qci.org.in/wp-json/" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://qcistaging.qci.org.in/xmlrpc.php?rsd" />
+<meta name="generator" content="Redux 4.5.9" /><meta name="generator" content="Site Kit by Google 1.167.0" /><meta name="generator" content="Elementor 3.33.3; features: additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
+			<style>
+				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
+				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
+					background-image: none !important;
+				}
+				@media screen and (max-height: 1024px) {
+					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload),
+					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
+						background-image: none !important;
+					}
+				}
+				@media screen and (max-height: 640px) {
+					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload),
+					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
+						background-image: none !important;
+					}
+				}
+			</style>
+					<style type="text/css" id="wp-custom-css">
+			.gunvatta-qci-rel{
+	position:relative;
+    z-index: 1 !important;
+}
+.gunvatta-qci-abs{
+position: absolute;
+    left: 35%;
+    background: #fff;
+    border-radius: 20px;
+    top: 50%;
+    padding: 15px;
+    transform: translate(-65%, -53%);
+}
+
+.magazine-box .box-image{
+	box-shadow:none;
+}
+
+.magazine-main h3 {
+    color: #000000;
+    font-size: 26px;
+}
+
+.slide-magazine img{
+	padding:30px;
+}
+
+.Magazine-sec .boxes{
+	min-height: 345px;
+}
+		</style>
+		<style id="themnific_redux-dynamic-css" title="dynamic-css" class="redux-options-output">.site_wrapper{background-color:#f7f7f7;}body,input,button,select,#wpmem_reg fieldset,#wpmem_login fieldset,fieldset .give-final-total-amount{font-family:"Nunito Sans";font-weight:400;font-style:normal;color:#232323;font-size:18px;}.wrapper,.postbar{background-color:#fff;}.ghost,.single .give-goal-progress,.sidebar_item,#comments .navigation a,a.page-numbers,.page-numbers.dots{background-color:#f7f7f7;}a,.events-table h3 a{color:#000000;}a:hover,.events-table h3 a:hover{color:#C95D5D;}a:active,.events-table h3 a:active{color:#000;}.entry a,.events-table h3 a:hover{color:#E8816E;}.events-table h3 a:hover{border-color:#E8816E;}.entry p a:hover{background-color:#C95D5D;}.p-border,.sidebar_item,.give-goal-progress,.meta,h3#reply-title,.tagcloud a,.taggs a,.page-numbers,input,textarea,select,.nav_item a,.tp_recent_tweets ul li,.page-link a span,.post-pagination>p a{border-color:#eaeaea;}#sidebar,.post-pagination span{color:#333333;}.widgetable a{color:#000000;}.container_head,.header_fullwidth #header,.header_transparent #header.scrolled{background-color:#ffffff;}#titles,.header_fullwidth #titles::before,#bottombar .social-menu a:hover{background-color:#ffffff;}#header h1 a,#bottombar .social-menu a:hover{color:#ffffff;}.nav>li>a,.bottomnav p{font-family:Poppins;font-weight:600;font-style:normal;color:#0a0808;font-size:13px;}.nav li.current-menu-item>a,.nav >li>a:hover{border-color:#0066cc;}.nav li ul{background-color:#ffffff;}.nav>li>ul:after,.nav > li.mega:hover::after{border-left-color:#ffffff;}body.rtl .nav>li>ul:after,body.rtl .nav > li.mega:hover::after{border-right-color:#ffffff;}.nav ul li>a,.topnav .menu_label,.topnav .social-menu span{font-family:Poppins;font-weight:400;font-style:normal;color:#0a0808;font-size:14px;}#main-nav>li.special>a{background-color:#cc4433;}#main-nav>li.special>a,#main-nav .special a i{color:#ffffff;}#bottombar,#bottombar::after{background-color:#001949;}#bottombar p,#bottombar a,#bottombar span,#bottombar a:hover{color:#ffffff;}#titles,p.menu_label{width:200px;}#titles .logo,.header_fix{margin-top:0px;margin-bottom:0px;}#navigation{padding-top:4px;padding-bottom:5px;}#footer,#footer .searchform input.s,.footop-right{background-color:#14759f;}#footer p,#footer{color:#ffffff;}#footer a,#footer h2,#footer h3,#footer h4,#footer .meta,#footer .meta a,#footer .searchform input.s{color:#ffffff;}#footer a:hover{color:#cc4433;}#footer li.cat-item,.footer-logo,#copyright,#footer .tagcloud a,#footer .tp_recent_tweets ul li,#footer .p-border,#footer .searchform input.s,#footer input,#footer .landing-section{border-color:#40535b;}.footop{background-color:#082c45;}#footop h2,#footop a,#foo-spec{color:#ffffff;}h1.entry-title,h1.archiv,.eleslideinside h1,.eleslideinside h2{font-family:Poppins;font-weight:700;font-style:normal;color:#222;font-size:60px;}h2.posttitle{font-family:Poppins;font-weight:700;font-style:normal;color:#222;font-size:40px;}.tptn_posts_widget li::before,.sidebar_item .menu>li>a{font-family:Poppins;font-weight:700;font-style:normal;color:#222;font-size:17px;}a.mainbutton,.comment-author cite,.tab-post h4,.tptn_title,.submit,.nav-previous a,#comments .reply a,.post-pagination,.mc4wp-form input,.woocommerce #respond input#submit, .woocommerce a.button,.woocommerce button.button, .woocommerce input.button,.tmnf_events_widget a,.post-nav-text,a.event_button,.give-btn{font-family:Poppins;font-weight:600;font-style:normal;color:#000;font-size:15px;}h1{font-family:Poppins;font-weight:700;font-style:normal;color:#000;font-size:24px;}h2{font-family:Poppins;font-weight:700;font-style:normal;color:#222;font-size:22px;}h3,.format-quote .teaser,#wpmem_reg legend, #wpmem_login legend,.give-goal-progress{font-family:Poppins;font-weight:700;font-style:normal;color:#222;font-size:22px;}h4{font-family:Poppins;font-weight:700;font-style:normal;color:#222;font-size:17px;}h5{font-family:Poppins;font-weight:600;font-style:normal;color:#000;font-size:15px;}h6,.su-button span,.owl-nav>div,.awesome-weather-wrap{font-family:Poppins;font-weight:500;font-style:normal;color:#000;font-size:11px;}.meta,.meta a,.crumb{font-family:Poppins;font-weight:500;font-style:normal;color:#686868;font-size:11px;}a.mainbutton.inv{background-color:#f93822;}a.mainbutton.inv{color:#fff;}a.searchSubmit,.ribbon,.cat_nr,.woocommerce #respond input#submit,.woocommerce a.button,.woocommerce button.button.alt,.woocommerce input.button.alt,.woocommerce a.button.alt,.woocommerce button.button, .woocommerce input.button,#respond #submit,.page-numbers.current,a.mainbutton,#submit,#comments .navigation a,.tagssingle a,.contact-form .submit,a.comment-reply-link,.dekoline:before,.eleslideinside h2:before,.item_inn:before,.meta_more a,.owl-nav > div,.page-link>span,.button_div input,button.give-btn-reveal,.give-btn-modal,.give-submit.give-btn,.give-progress-bar > span{background-color:#3b3f4a;}input.button,button.submit,#sidebar ul.menu a:hover,#sidebar ul.menu .current-menu-item>a,.page-link>span{border-color:#3b3f4a;}.main-breadcrumbs span:after{color:#3b3f4a;}a.searchSubmit,.ribbon,.ribbon a,.ribbon p,#footer .ribbon,.cat_nr,.woocommerce #respond input#submit,.woocommerce a.button.alt,.woocommerce input.button.alt,.woocommerce a.button,.woocommerce button.button.alt, .woocommerce button.button, .woocommerce input.button,#comments .reply a,#respond #submit,#footer a.mainbutton,.tmnf_icon,a.mainbutton,#submit,#comments .navigation a,.tagssingle a,.mc4wp-form input[type="submit"],a.comment-reply-link,.page-numbers.current,.meta_more a,.owl-next:before,.owl-prev:before,.page-link>span,.button_div input,button.give-btn-reveal,.give-btn-modal,.give-submit.give-btn{color:#ffffff;}a.searchSubmit:hover,.ribbon:hover,a.mainbutton:hover,.entry a.ribbon:hover,.woocommerce #respond input#submit:hover,.woocommerce a.button.alt:hover,.woocommerce a.button:hover, .woocommerce button.button:hover,.woocommerce input.button.alt:hover,.woocommerce input.button:hover,.meta_more a:hover,.owl-nav>div:hover,#main-nav>li.special>a:hover,button.give-btn-reveal:hover,.give-btn-modal:hover,.give-submit.give-btn:hover,.wpcf7-submit,.give-btn.give-default-level{background-color:#003356;}input.button:hover,button.submit:hover{border-color:#003356;}#footer a.mainbutton:hover,.ribbon:hover,.ribbon:hover a,.ribbon a:hover,.entry a.ribbon:hover,a.mainbutton:hover,.woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover,.meta_more a:hover,.owl-next:hover:before,.owl-prev:hover:before,#main-nav>li.special>a:hover,button.give-btn-reveal:hover,.give-btn-modal:hover,.give-submit.give-btn:hover,.wpcf7-submit,.give-btn.give-default-level{color:#ffffff;}.imgwrap,.post-nav-image,.page-header{background-color:#1E1E1E;}.page-header,.page-header a,.page-header h1,.page-header h2,.main-breadcrumbs span{color:#ffffff;}</style>
+</head>
+
+     
+<body class="error404 wp-embed-responsive wp-theme-citygov elementor-default elementor-kit-6">
+
+<div class="site_wrapper upper tmnf_width_wide tmnf-sidebar-active header_fullwidth">
+    <header>
+    <div class="header_fix"></div>
+    <div id="header" class="tranz" itemscope itemtype="http://schema.org/WPHeader">
+    
+    	<div class="container_head">
+            
+            <a class="screen-reader-text ribbon skip-link" href="#content_start">Skip to content</a>
+    
+            <div class="clearfix"></div>
+            
+            <div id="titles" class="tranz2">
+            
+                                        
+                <a class="logo" href="https://qcistaging.qci.org.in/">
+                
+                    <img class="tranz b-logo" src="https://qcistaging.qci.org.in/wp-content/uploads/2023/09/QCI-Logo-with-Hindi.png" alt="QCI"/>
+                    <img class="tranz n-logo" src="https://qcin.org/wp-content/uploads/2023/06/qci-logo-updated.png" alt="QCI logo small"/>   
+                </a>
+                
+                            
+            </div><!-- end #titles  -->
+            
+            <div class="header-right for-menu">
+                <input type="checkbox" id="showmenu" aria-label="Open Menu">
+                <label for="showmenu" class="show-menu ribbon" tabindex="0"><i class="fas fa-bars"></i> <span>Menu</span></label>
+               
+                <nav id="navigation" class="rad tranz" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation" aria-label="Main Menu" style="width:auto;"> 
+                    
+                    <ul id="main-nav" class="nav" role="menubar"><li id="menu-item-7992" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-7992"><a href="https://qcistaging.qci.org.in/"><i aria-hidden="true" class="fas fa-home"></i></a></li>
+<li id="menu-item-8709" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-8709" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Who We Are</a>
+<ul class="sub-menu">
+	<li id="menu-item-6723" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6723" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/about-qci">About QCI</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6728" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6728"><a href="https://qcistaging.qci.org.in/History/">History</a></li>
+		<li id="menu-item-6729" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6729"><a href="https://qcistaging.qci.org.in/mission/">Mission</a></li>
+		<li id="menu-item-6730" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6730"><a href="https://qcistaging.qci.org.in/vision/">Vision</a></li>
+		<li id="menu-item-6731" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6731"><a href="https://qcistaging.qci.org.in/moa/">MOA</a></li>
+		<li id="menu-item-6732" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6732"><a href="https://qcistaging.qci.org.in/rules-and-regulations/">Rules And Regulations</a></li>
+		<li id="menu-item-6733" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6733"><a href="https://qcistaging.qci.org.in/key-objectives/">Key Objectives</a></li>
+	</ul>
+</li>
+	<li id="menu-item-8710" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-8710" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Our People</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6734" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6734" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Our Leadership</a>
+		<ul class="sub-menu">
+			<li id="menu-item-6736" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6736"><a href="https://qcistaging.qci.org.in/chairperson/">Chairperson</a></li>
+			<li id="menu-item-6737" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6737"><a href="https://qcistaging.qci.org.in/secretary-general/">Secretary General</a></li>
+			<li id="menu-item-6738" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6738"><a href="https://qcistaging.qci.org.in/leadership-boards-divisions/">Leadership &#8211; Boards/Divisions</a></li>
+		</ul>
+</li>
+		<li id="menu-item-6735" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6735"><a href="https://qcistaging.qci.org.in/members/">Members</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-6745" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6745" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/the-organisation/">The Organisation</a>
+<ul class="sub-menu">
+	<li id="menu-item-6746" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6746"><a href="https://qcistaging.qci.org.in/the-organisation#governance">Governance Structure</a></li>
+	<li id="menu-item-6748" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6748"><a href="https://qcistaging.qci.org.in/the-organisation#administration">Administrative Structure</a></li>
+	<li id="menu-item-6752" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6752" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/the-organisation#bodies">Bodies of QCI</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6757" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6757"><a href="https://qcistaging.qci.org.in/the-organisation#bodies">The Governing Council</a></li>
+		<li id="menu-item-6761" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6761"><a href="https://qcistaging.qci.org.in/the-organisation#bodies">The Governing Body</a></li>
+		<li id="menu-item-6762" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6762"><a href="https://qcistaging.qci.org.in/the-organisation#bodies">Finance Committee</a></li>
+		<li id="menu-item-6763" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6763"><a href="https://qcistaging.qci.org.in/the-organisation#bodies">Boards</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6756" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6756" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/qci-secretariat/">QCI Secretariat</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6797" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6797"><a href="https://qcistaging.qci.org.in/qci-secretariat#splgroups">Special Projects Groups</a></li>
+		<li id="menu-item-6801" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6801" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/hr-administration/">HR &#038; Administration</a>
+		<ul class="sub-menu">
+			<li id="menu-item-6802" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6802"><a href="https://qcistaging.qci.org.in/hr-administration#hrdocs">Service and finance Manual</a></li>
+			<li id="menu-item-6803" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6803"><a href="https://qcistaging.qci.org.in/hr-administration#hrdocs">Manual on Ethical Practices</a></li>
+			<li id="menu-item-6804" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6804"><a href="https://qcistaging.qci.org.in/hr-administration#hrdocs">Weeding out Policy / Retention Policy</a></li>
+			<li id="menu-item-6805" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6805"><a href="https://qcistaging.qci.org.in/hr-administration#hrdocs">Categories of Documents</a></li>
+			<li id="menu-item-6806" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6806"><a href="https://qcistaging.qci.org.in/hr-administration#circulars">Office Orders / Internal Circulars</a></li>
+		</ul>
+</li>
+		<li id="menu-item-6788" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6788"><a href="https://qcistaging.qci.org.in/qci-secretariat#finance">Finance and Accounts</a></li>
+		<li id="menu-item-6792" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6792"><a href="https://qcistaging.qci.org.in/qci-secretariat#rticell">RTI Cell</a></li>
+		<li id="menu-item-6793" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6793"><a href="https://qcistaging.qci.org.in/qci-secretariat#ethics">Ethics Cell</a></li>
+		<li id="menu-item-6794" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6794"><a href="https://qcistaging.qci.org.in/qci-secretariat#hindi">Hindi Section</a></li>
+		<li id="menu-item-19610" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19610"><a href="https://qcistaging.qci.org.in/sexual-harassment/">Icc for sexual Harassment</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-6595" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6595" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">What We Do</a>
+<ul class="sub-menu">
+	<li id="menu-item-6599" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6599" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/schemes/">Schemes</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6679" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6679"><a href="https://padd.qci.org.in/">PADD Schemes</a></li>
+		<li id="menu-item-6680" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6680"><a href="https://qcistaging.qci.org.in/wash-schemes/">WASH Schemes</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6658" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6658" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/project/">Projects</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6681" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6681"><a href="https://qcistaging.qci.org.in/project/#PPIDprojects">PPID Projects</a></li>
+		<li id="menu-item-6682" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6682"><a href="https://qcistaging.qci.org.in/project/#PADDprojects">PADD Projects</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6666" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6666"><a href="https://qcistaging.qci.org.in/accreditations/">Accreditations</a></li>
+	<li id="menu-item-6668" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6668"><a href="https://qcistaging.qci.org.in/what-we-do#learning">Learning</a></li>
+	<li id="menu-item-6669" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6669"><a href="https://qcistaging.qci.org.in/what-we-do#awards">Awards</a></li>
+	<li id="menu-item-6670" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6670"><a href="https://pgportal.gov.in/">CPGRAMS</a></li>
+	<li id="menu-item-6675" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6675"><a href="https://indiapss.qci.org.in/">India PSS Platform</a></li>
+</ul>
+</li>
+<li id="menu-item-6648" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6648" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Media</a>
+<ul class="sub-menu">
+	<li id="menu-item-6652" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6652" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Publications</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6687" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6687"><a href="https://qcistaging.qci.org.in/qci-in-news/">QCI in news</a></li>
+		<li id="menu-item-16743" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16743"><a href="https://qcistaging.qci.org.in/qci-magazines/">QCI magazines</a></li>
+		<li id="menu-item-6690" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6690"><a href="https://qcistaging.qci.org.in/quality-best-practices/">Quality Best Practices</a></li>
+		<li id="menu-item-6691" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6691"><a href="https://qcistaging.qci.org.in/editorials/">Editorials</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6653" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6653" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Gallery</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6695" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6695"><a href="https://qcistaging.qci.org.in/gallery/">Image Gallery</a></li>
+		<li id="menu-item-6696" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6696"><a href="https://qcistaging.qci.org.in/video-gallery/">Video Gallery</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6657" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6657"><a href="https://qcistaging.qci.org.in/important-notices/">Important Notices/Circulars</a></li>
+	<li id="menu-item-6640" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6640"><a href="https://qcistaging.qci.org.in/achievements/">Achievements</a></li>
+	<li id="menu-item-6642" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6642"><a href="https://qcistaging.qci.org.in/updates-alerts/">Updates &#038; Alerts</a></li>
+	<li id="menu-item-6643" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6643"><a href="https://qcistaging.qci.org.in/media-communications/">Media Communications</a></li>
+</ul>
+</li>
+<li id="menu-item-6703" class="mega menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6703" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="#">Connect With US</a>
+<ul class="sub-menu">
+	<li id="menu-item-6704" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6704" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/work-with-us">Work With US</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6710" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6710"><a href="https://qcistaging.qci.org.in/work-with-us#careers">Careers</a></li>
+		<li id="menu-item-6711" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6711"><a href="https://qcistaging.qci.org.in/work-with-us#tenders">Tenders</a></li>
+		<li id="menu-item-6712" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6712"><a href="https://qcistaging.qci.org.in/work-with-us#pastTenders">Archived Tenders</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6705" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6705" aria-haspopup="true" role="menuitem" aria-expanded="false" tabindex="0"><a href="https://qcistaging.qci.org.in/reach-us">Reach US</a>
+	<ul class="sub-menu">
+		<li id="menu-item-6714" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6714"><a href="https://qcistaging.qci.org.in/reach-us#contacts">Important Contact</a></li>
+		<li id="menu-item-6716" class="closeMenu menu-item menu-item-type-custom menu-item-object-custom menu-item-6716"><a href="https://qcistaging.qci.org.in/faq-2/">FAQs</a></li>
+		<li id="menu-item-17840" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17840"><a href="https://qcistaging.qci.org.in/qmitra/">QMitra</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6709" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6709"><a href="https://pgportal.gov.in/">Grievances-CPGRAMS</a></li>
+</ul>
+</li>
+<li id="menu-item-18337" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-18337"><a href="https://gunvattagurukul.qcin.org/">Gunvatta Gurukul</a></li>
+<li class="menu-item menu-item-gtranslate menu-item-has-children notranslate"><a href="#" data-gt-lang="en" class="gt-current-wrapper notranslate">EN</a><ul class="dropdown-menu sub-menu"><li class="menu-item menu-item-gtranslate-child"><a href="#" data-gt-lang="en" class="gt-current-lang notranslate">EN</a></li><li class="menu-item menu-item-gtranslate-child"><a href="#" data-gt-lang="hi" class="notranslate">HI</a></li></ul></li></ul>                
+                </nav>
+				
+                <!-- <ul class="rightLogo">
+                    <li><a href="#"><img style="height:50px;" src="https://qcin.org/wp-content/uploads/2023/09/G20.png" /></a></li>
+                    <li><a href="#"><img style="height:50px;" src="https://qcin.org/wp-content/uploads/2023/09/75 Azadi.png" /></a></li>
+                </ul> -->
+				
+            
+            </div><!-- end .header-right  -->
+            
+            <div class="clearfix"></div>
+        
+        </div><!-- end .container  -->
+        <div class="clearfix"></div>
+
+        <div id="bottombar" class="bottomnav tranz" role="navigation" aria-label="Quick Links">
+            
+                					<p class="menu_label">NIES</p>
+				                
+                <div class="header-right tranz">
+                
+                                        
+                    			<!-- Font Awesome 6.5.1 (Free CDN) -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+                        <ul class="social-menu tranz">
+            
+                        
+                        <li class="sprite-facebook"><a class="mk-social-facebook" href="https://www.facebook.com/QualityCouncilofIndia"><i class="fab fa-facebook"></i><span>Facebook</span></a></li>            
+                        <li class="sprite-twitter"><a class="mk-social-twitter-alt" href="https://twitter.com/qualitycouncil"><i class="fa-brands fa-x-twitter"></i><span>Twitter</span></a></li>            
+                        
+                        
+                        
+                        <li class="sprite-instagram"><a class="mk-social-photobucket" href="https://instagram.com/qualitycouncilofindia?igshid=g8fy7zpychy0"><i class="fab fa-instagram"></i><span>Instagram</span></a></li>            
+                        
+                        <li class="sprite-youtube"><a class="mk-social-youtube" href="https://www.youtube.com/@qualitycouncilofindia6247"><i class="fab fa-youtube"></i><span>YouTube</span></a></li>            
+                        
+                        
+                        <li class="sprite-linkedin"><a class="mk-social-linkedin" title="LinkedIn" href="https://www.linkedin.com/company/quality-council-of-india-qci-/"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span></a></li>            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+
+            <li class="search-item">
+            
+            	<a class="searchOpen" href="" aria-label="Open Search Window"><i class="fas fa-search"></i><span class="screen-reader-text">Open Search Window</span></a></li>
+            
+            </ul>                
+                </div>
+            
+            </div><!-- end #bottombar  -->
+
+            <div class="clearfix"></div>
+    
+    </div><!-- end #header  -->
+
+    </header>
+    <div class="bottomStripe">
+        <ul>
+            <li><a style="color: #0094ca;" href="https://qualitysetu.qci.org.in/" target="_blank">Quality Setu:</a></li>
+            <li>
+				<form action="https://qualitysetu.qcin.org/search" id="searchForm">
+                <div class="search-input"><input type="text" placeholder="Looking for something?" id="search_text" name="search_text" /><span><i class="fas fa-search" onclick="searchForm()" ></i></span></div>
+                <a href="#" onclick="searchForm()" class="search-text"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
+					</form>
+				
+        <script>
+            function searchForm() {
+                document.getElementById("searchForm").submit();
+            }
+        </script>
+            </li>
+            <li><a href="https://qualitysetu.qcin.org/portal/en/newticket" target="_blank"><i class="fas fa-question"></i> Raise a Query</a></li>
+            <li><a href="https://qualitysetu.qcin.org/" target="_blank"><i class="far fa-comments"></i> Chat with us</a></li>
+            <li><a href="https://qualitysetu.qcin.org/faq" target="_blank"><i class="fa fa-question" aria-hidden="true"></i> FAQ's</a></li>
+        </ul>
+    </div>
+
+
+<div class="wrapper p-border"  role="main">	
+<div class="page-header">
+
+	      
+    <div class="container">
+        
+        <div class="error-titles cntr">
+        
+            <h1 class="entry-title" style="font-size: 40px;">What you are looking for is currently not available </h1>
+        
+            <p>&nbsp;
+            But we are working very hard to bring it back for you.</p>
+        <div style="padding: 20px;">
+			<a  style="background: #0094CA;padding: 20px;" href="/">
+						Visit Website</a>
+		</div>
+				
+            	<!--<p>&nbsp;
+            	Try a search below...</p>
+                    
+                <div class="cntr error-search"><form role="search" class="searchform" method="get" action="https://qcistaging.qci.org.in/">
+	<label for="search-form-69f1b1d9c0893">
+		<span class="screen-reader-text">Search for:</span>
+	</label>
+<input id="search-form-69f1b1d9c0893"  type="text" name="s" class="s p-border" size="30" value="I am looking for..." onfocus="if (this.value = '') {this.value = '';}" onblur="if (this.value == '') {this.value = 'I am looking for...';}" />
+<button class='searchSubmit ribbon' >Search</button>
+</form></div>-->
+
+<div class="clearfix"></div>
+            
+        
+        </div>
+    
+    </div>
+    
+</div>
+
+</div>
+    
+<div class="clearfix"></div>
+
+    <div id="footer" role="contentinfo">
+        
+        <div class="container_alt container_vis"> 
+        
+			
+        
+		    
+            <div class="foocol first"> 
+            
+            	<div class="footer-logo">
+    
+					                                     
+                            <a class="logo" href="https://qcistaging.qci.org.in/">
+                            
+                                <img class="tranz" src="https://qcistaging.qci.org.in/wp-content/uploads/2023/06/qci-logo-updated.png" alt="QCI"/>
+                                    
+                            </a>
+                            
+                                            
+                </div><div class="clearfix"></div> 
+            
+                			<div class="textwidget"><p><strong class="footer-title" style="color: #cedcdd;">Quality Council of India</strong><br />
+World Trade Centre, J 200, Block J, Nauroji Nagar, New Delhi-110029<br />
+Phone No. : <span class="fabric-text-color-mark" data-renderer-mark="true" data-text-custom-color="#172b4d">011 &#8211; 26186680, 011-26186681 ,011-26186682, 011-26186683</span><br />
+Email: info[at]qcin[dot]org</p>
+</div>
+		<div class="textwidget custom-html-widget"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.04359147859!2d77.1920275!3d28.568453700000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d000b694667%3A0xb2a74e14024834bf!2sQuality%20Council%20of%20India!5e0!3m2!1sen!2sin!4v1751257554352!5m2!1sen!2sin" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><form role="search" class="searchform" method="get" action="https://qcistaging.qci.org.in/">
+	<label for="search-form-69f1b1d9c120c">
+		<span class="screen-reader-text">Search for:</span>
+	</label>
+<input id="search-form-69f1b1d9c120c"  type="text" name="s" class="s p-border" size="30" value="I am looking for..." onfocus="if (this.value = '') {this.value = '';}" onblur="if (this.value == '') {this.value = 'I am looking for...';}" />
+<button class='searchSubmit ribbon' >Search</button>
+</form>                
+            </div>
+        
+        		
+		    
+            <div class="foocol sec"> 
+            
+                <h3 class="widget dekoline dekoline_small">IMPORTANT LINKS</h3>			<div class="textwidget"><ul>
+<li style="list-style-type: none;">
+<ul>
+<li><a href="https://qcistaging.qci.org.in/about-qci#about">About QCI</a></li>
+<li><a href="https://qcistaging.qci.org.in/hr-administration/">HR &amp; Administration</a></li>
+<li><a href="https://qcistaging.qci.org.in/media#circulars">Important Notices / Circulars</a></li>
+<li><a href="https://qcistaging.qci.org.in/work-with-us#careers">Careers</a></li>
+<li><a href="https://qcistaging.qci.org.in/work-with-us#tenders">Tenders</a></li>
+<li><a href="https://qcistaging.qci.org.in/qci-secretariat#rticell">RTI</a></li>
+<li><a href="https://qcistaging.qci.org.in/qci-secretariat#ethics">Ethics Cell</a></li>
+<li><a href="https://qcistaging.qci.org.in/archives/">Archives</a></li>
+<li><a href="https://qcistaging.qci.org.in/reach-us#faq">FAQs</a></li>
+<li><a href="https://qcistaging.qci.org.in/website-declaration/">Website Declaration</a></li>
+<li><a href="https://qcistaging.qci.org.in/disclaimer/">Disclaimer</a></li>
+<li><a href="https://pgportal.gov.in/">CPGRAMS</a></li>
+<li><a href="https://qcistaging.qci.org.in/wp-content/uploads/2023/08/VC_link_for_Grievance_Issues.pdf" target="_blank" rel="noopener">VC Link for Grievance</a></li>
+<li><a href="https://qcistaging.qci.org.in/sitemap/" rel="noopener">Sitemap</a></li>
+</ul>
+</li>
+</ul>
+</div>
+		                
+            </div>
+        
+                
+        
+                
+            <div class="foocol">
+            
+                <h3 class="widget dekoline dekoline_small">BOARDS AND DIVISIONS</h3>			<div class="textwidget"><ul>
+<li><a href="https://nabcb.qci.org.in/">NABCB</a></li>
+<li><a href="https://nabet.qci.org.in/">NABET</a></li>
+<li><a href="https://nabl-india.org">NABL</a></li>
+<li><a href="https://nabh.co/">NABH</a></li>
+<li><a href="https://nbqp.qci.org.in/">NBQP</a></li>
+<li><a href="https://ppid.qcin.org/">PPID</a></li>
+<li><a href="https://padd.qci.org.in/">PADD</a></li>
+<li><a href="#">NDIE</a></li>
+</ul>
+</div>
+		                
+            </div>
+        
+                
+        
+                
+            <div id="foo-spec" class="foocol last"> 
+            
+                <h3 class="widget dekoline dekoline_small">Visitor Count</h3><div class="textwidget custom-html-widget"><div id="visitorCount"></div>
+<script type="application/javascript">
+jQuery(document).ready(function(){
+ jQuery.post("https://qualitysetu.qci.org.in/api/visitors",
+  {
+    site: "qci",
+    ip: "123"
+  },
+  function(data, status){
+	 
+	counter=pad (data.count,10); 
+	innerHtml='';
+	 for (var i = 0; i < 10; i++) {
+		 innerHtml=innerHtml+'<div class="counter-item">'+counter[i]+'</div>';
+	 }
+       
+    jQuery('#visitorCount').html(innerHtml);
+  });
+});
+function pad (str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
+}
+	
+</script>
+
+    <style>
+        #visitorCount {
+            background: #f8a421;
+            display: flex;
+            float: left;
+            padding: 2px;
+
+
+        }
+
+        .counter-item {
+            background: linear-gradient(180deg, rgba(120, 125, 133, 1) 50%, rgba(0, 0, 0, 1) 50%);
+            padding: 5px;
+            color: #fff;
+            font-size: 20px;
+            margin: 2px;
+            border-radius: 3px;
+        }
+			
+    </style>
+<div class="update" style="font-size: 14px;">
+Last Updated on: February 16, 2026</div></div><div class="textwidget custom-html-widget"></div>                
+            </div>
+        
+                    
+        </div> 
+        
+        <div class="clearfix"></div> 
+        
+        <div class="container_vis">
+        
+        	<div id="footop" class="footop populated">
+                        
+            	<div class="footop-right">
+
+        						<!-- Font Awesome 6.5.1 (Free CDN) -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+                        <ul class="social-menu tranz">
+            
+                        
+                        <li class="sprite-facebook"><a class="mk-social-facebook" href="https://www.facebook.com/QualityCouncilofIndia"><i class="fab fa-facebook"></i><span>Facebook</span></a></li>            
+                        <li class="sprite-twitter"><a class="mk-social-twitter-alt" href="https://twitter.com/qualitycouncil"><i class="fa-brands fa-x-twitter"></i><span>Twitter</span></a></li>            
+                        
+                        
+                        
+                        <li class="sprite-instagram"><a class="mk-social-photobucket" href="https://instagram.com/qualitycouncilofindia?igshid=g8fy7zpychy0"><i class="fab fa-instagram"></i><span>Instagram</span></a></li>            
+                        
+                        <li class="sprite-youtube"><a class="mk-social-youtube" href="https://www.youtube.com/@qualitycouncilofindia6247"><i class="fab fa-youtube"></i><span>YouTube</span></a></li>            
+                        
+                        
+                        <li class="sprite-linkedin"><a class="mk-social-linkedin" title="LinkedIn" href="https://www.linkedin.com/company/quality-council-of-india-qci-/"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span></a></li>            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+
+            <li class="search-item">
+            
+            	<a class="searchOpen" href="" aria-label="Open Search Window"><i class="fas fa-search"></i><span class="screen-reader-text">Open Search Window</span></a></li>
+            
+            </ul>   
+                    
+                </div>
+            
+                <h2 class="footer_text">Creating an Ecosystem for Quality</h2>   
+        
+        	</div><!-- end #footop -->
+            
+        </div>  <!-- end .container_vis --> 
+        
+        <div class="clearfix"></div> 
+
+		<div class="footer-menu">
+        
+			<div class="container">
+                
+            	                
+                <div class="footer_credits">Copyright © 2023</div>                <p style="margin-bottom:50px;text-align: center;font-size: 10px;margin-top: -20px;letter-spacing: 0.3px;">Build No:qcin.2.10.12.2023.secAssess-1.03 Release Date 5 Jan 2024</p>
+            </div>   
+            
+		</div><!-- end #footer-logo -->
+        
+		<div class="clearfix"></div> 
+            
+    </div><!-- /#footer  -->
+    
+<div id="curtain" class="tranz">
+	
+	<form role="search" class="searchform" method="get" action="https://qcistaging.qci.org.in/">
+	<label for="search-form-69f1b1d9c2a6c">
+		<span class="screen-reader-text">Search for:</span>
+	</label>
+<input id="search-form-69f1b1d9c2a6c"  type="text" name="s" class="s p-border" size="30" value="I am looking for..." onfocus="if (this.value = '') {this.value = '';}" onblur="if (this.value == '') {this.value = 'I am looking for...';}" />
+<button class='searchSubmit ribbon' >Search</button>
+</form>    
+    <a class='curtainclose' href="" ><i class="fa fa-times"></i><span class="screen-reader-text">Close Search Window</span></a>
+    
+</div>
+    
+<div class="scrollTo_top ribbon">
+
+    <a title="Scroll to top" class="rad" href="">&uarr;</a>
+    
+</div>
+</div><!-- /.upper class  -->
+</div><!-- /.wrapper  -->
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/citygov/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+  <script>
+(function(){
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a');
+    if(!a) return;
+    if(a.target !== '_blank') return; // only when set to open in new tab
+    const href = a.href;
+    if(!href) return;
+
+    try {
+      const url = new URL(href, location.href);
+      if(url.hostname === location.hostname) return; // skip same-site
+    } catch (err) {
+      return; // invalid URL, ignore
+    }
+
+    e.preventDefault();
+    const msg = 'You are about to open an external website in a new tab. Continue?';
+    if(confirm(msg)){
+      const newWin = window.open();
+      if (newWin) {
+        newWin.opener = null;
+        newWin.location = href;
+      } else {
+        window.open(href, '_blank');
+      }
+    }
+  });
+})();
+</script>
+<!-- same hostname but want to show alert  -->
+<script>
+(function(){
+  function openInNewTab(url) {
+    // try to open a blank window first (popup should be allowed since we're in a user event)
+    var w = window.open('', '_blank');
+    if (w) {
+      try { w.opener = null; } catch(e) {}
+      w.location = url;
+    } else {
+      // fallback
+      window.open(url, '_blank');
+    }
+  }
+
+  document.addEventListener('click', function(e){
+    // get the element clicked
+    var clicked = e.target;
+
+    // find nearest element that has our marker class (could be wrapper or the link itself)
+    var marker = clicked.closest('.show-alert');
+
+    // find the nearest anchor (if any)
+    var anchor = clicked.closest('a');
+
+    // if no marker on clicked element, check if anchor itself has show-alert
+    if(!marker && anchor && anchor.classList.contains('show-alert')) {
+      marker = anchor;
+    }
+
+    // if we have a marker but no anchor, try to find an anchor inside the marker
+    if(marker && !anchor) {
+      anchor = marker.querySelector('a');
+    }
+
+    // If there is no marker anywhere, do nothing (we only act on marked items)
+    if(!marker) return;
+
+    // extract href (prefer anchor href; if anchor missing, try data-href on marker)
+    var href = (anchor && anchor.getAttribute('href')) || marker.getAttribute('data-href') || marker.dataset.href;
+
+    if(!href || href === '#' || href.indexOf('javascript:') === 0) {
+      // nothing meaningful to open
+      return;
+    }
+
+    // OPTIONAL: If you only want to warn for new-tab links, uncomment:
+    // if (anchor && anchor.target !== '_blank') return;
+
+    // prevent normal navigation and show confirmation
+    e.preventDefault();
+    e.stopPropagation();
+
+    var message = marker.dataset.confirmMsg || 'You are about to open this link in a new tab. Continue?';
+    if (confirm(message)) {
+      openInNewTab(href);
+    }
+    // else do nothing (user cancelled)
+  }, false);
+})();
+</script>
+
+
+			<script>
+				const lazyloadRunObserver = () => {
+					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
+					const lazyloadBackgroundObserver = new IntersectionObserver( ( entries ) => {
+						entries.forEach( ( entry ) => {
+							if ( entry.isIntersecting ) {
+								let lazyloadBackground = entry.target;
+								if( lazyloadBackground ) {
+									lazyloadBackground.classList.add( 'e-lazyloaded' );
+								}
+								lazyloadBackgroundObserver.unobserve( entry.target );
+							}
+						});
+					}, { rootMargin: '200px 0px 200px 0px' } );
+					lazyloadBackgrounds.forEach( ( lazyloadBackground ) => {
+						lazyloadBackgroundObserver.observe( lazyloadBackground );
+					} );
+				};
+				const events = [
+					'DOMContentLoaded',
+					'elementor/lazyload/observe',
+				];
+				events.forEach( ( event ) => {
+					document.addEventListener( event, lazyloadRunObserver );
+				} );
+			</script>
+			<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-includes/js/dist/hooks.min.js?ver=dd5603f07f9220ed27f1" id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-includes/js/dist/i18n.min.js?ver=c26c3dc7bed366793375" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+//# sourceURL=wp-i18n-js-after
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=6.1.4" id="swv-js"></script>
+<script type="text/javascript" id="contact-form-7-js-before">
+/* <![CDATA[ */
+var wpcf7 = {
+    "api": {
+        "root": "https:\/\/qcistaging.qci.org.in\/wp-json\/",
+        "namespace": "contact-form-7\/v1"
+    },
+    "cached": 1
+};
+//# sourceURL=contact-form-7-js-before
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-content/plugins/contact-form-7/includes/js/index.js?ver=6.1.4" id="contact-form-7-js"></script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-content/themes/citygov/js/ownScript.js?ver=6.9" id="citygov-ownscript-js"></script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-content/themes/citygov/js/magazine.js?ver=1.0" id="magazine_js-js"></script>
+<script type="text/javascript" src="https://qcistaging.qci.org.in/wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js?ver=8.4.5" id="swiper-js"></script>
+<script type="text/javascript" id="gt_widget_script_27095313-js-before">
+/* <![CDATA[ */
+window.gtranslateSettings = /* document.write */ window.gtranslateSettings || {};window.gtranslateSettings['27095313'] = {"default_language":"en","languages":["en","hi"],"url_structure":"sub_directory","flag_style":"2d","flag_size":24,"alt_flags":{"en":"usa"},"flags_location":"\/wp-content\/plugins\/gtranslate\/flags\/"};
+//# sourceURL=gt_widget_script_27095313-js-before
+/* ]]> */
+</script><script src="https://qcistaging.qci.org.in/wp-content/plugins/gtranslate/js/base.js?ver=6.9" data-no-optimize="1" data-no-minify="1" data-gt-orig-url="/wp-content/uploads/2024/03/zed.jpg" data-gt-orig-domain="qcistaging.qci.org.in" data-gt-widget-id="27095313" defer></script><script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://qcistaging.qci.org.in/wp-includes/js/wp-emoji-release.min.js?ver=6.9"}}
+</script>
+<script type="module">
+/* <![CDATA[ */
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://qcistaging.qci.org.in/wp-includes/js/wp-emoji-loader.min.js
+/* ]]> */
+</script>
+<script>
+jQuery('.closeMenu').click(function(){jQuery('.show-menu').click();});
+</script>
+<script>
+    var allsrc = Array.from(document.querySelectorAll('.swiper-slide a figure .swiper-slide-image')).map(function(el) {
+            return el.getAttribute('src');
+        });
+        if (allsrc.length > 0) {
+            document.querySelectorAll('.elementor-image-carousel .swiper-slide a figure .swiper-slide-image').forEach(function(el) {
+                var src = el.getAttribute('src');
+                var parentLink = el.closest('a');
+                if (src === 'https://qcin.org/wp-content/uploads/2024/09/GWOu_nKbMAA72Ik.jpeg') {
+                    parentLink.setAttribute('href', 'https://pledge.mygov.in/qualitybharat/');
+                }
+                else {
+                    parentLink.setAttribute('href', 'javascript:void(0)');
+                }
+            });
+        }
+</script>
+</body>
+</html>
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/?utm_source=w3tc&utm_medium=footer_comment&utm_campaign=free_plugin
+
+Page Caching using Disk: Enhanced (Page is 404) 
+
+Served from: qcistaging.qci.org.in @ 2026-04-29 12:53:05 by W3 Total Cache
+-->
