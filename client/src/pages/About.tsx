@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Award, Globe, Users, TrendingUp, FlaskConical, BookOpen, Building2, Star, Quote, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, Award, Globe, Users, TrendingUp, Building2, Star, Quote } from 'lucide-react';
 
 const LEADERSHIP = [
   {
@@ -195,7 +195,6 @@ const TESTIMONIALS = [
 
 
 export default function About() {
-  const [expandedMilestone, setExpandedMilestone] = useState<number | null>(null);
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
   const [lightbox, setLightbox] = useState<any | null>(null);
 
@@ -517,33 +516,6 @@ export default function About() {
                     ))}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTACT & REACH US ── */}
-      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <p className="text-brand-500 text-sm font-semibold uppercase tracking-widest mb-2">Get in Touch</p>
-            <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">Reach QCI</h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">For career enquiries, accreditation questions, or general correspondence, here's how to find us.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { icon: <MapPin size={20} className="text-brand-500" />, label: 'Office', value: 'QCI World Trade Centre, J 200, Block J, Nauroji Nagar, New Delhi – 110029' },
-              { icon: <BookOpen size={20} className="text-brand-500" />, label: 'Working Hours', value: 'Monday – Friday\n9:00 am – 5:30 pm' },
-              { icon: <Globe size={20} className="text-brand-500" />, label: 'General', value: 'info@qcin.org\n011-26186680 to 83' },
-              { icon: <Users size={20} className="text-brand-500" />, label: 'HR & Careers', value: 'hrcareers@qcin.org\nmedia@qcin.org' },
-            ].map(c => (
-              <div key={c.label} className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  {c.icon}
-                  <span className="text-sm font-semibold text-gray-900 dark:text-white">{c.label}</span>
-                </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed whitespace-pre-line">{c.value}</p>
               </div>
             ))}
           </div>
