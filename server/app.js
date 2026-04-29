@@ -48,8 +48,9 @@ app.use('/api/job-alerts', jobAlertRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 
-if (IS_PROD) {
-  const clientBuild = path.join(__dirname, '../client/dist');
+// Serve React build whenever it exists (production always, dev as fallback if built)
+const clientBuild = path.join(__dirname, '../client/dist');
+if (fs.existsSync(clientBuild)) {
   app.use(express.static(clientBuild));
   app.get('*', (req, res) => {
     res.sendFile(path.join(clientBuild, 'index.html'));
