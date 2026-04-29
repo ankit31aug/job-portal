@@ -1,35 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award, Globe, Users, TrendingUp, FlaskConical, BookOpen, Building2, Star, Quote, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 
 const LEADERSHIP = [
   {
-    name: 'Shri Jaxay Shah',
-    title: 'Chairperson',
-    initials: 'JS',
+    name: 'Mr. Chakravarthy T. Kannan',
+    title: 'Secretary General, QCI',
+    initials: 'CK',
     gradient: 'from-blue-600 to-indigo-700',
+    photo: 'https://nabh-portal-live.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/05/19163957/kannan-1-qmxcridtevpbu1xfiic557imy3kwve58q4nxm4jlug-e1758280197345.jpg',
     quote: 'Quality is not an abstract ideal — it is a measurable, manageable, and improvable reality. QCI exists to make that reality universal across India.',
   },
   {
-    name: 'Shri Ravi P. Singh',
-    title: 'Chief Executive Officer',
-    initials: 'RS',
+    name: 'Mr. Rizwan Koita',
+    title: 'Chairperson, NABH',
+    initials: 'RK',
     gradient: 'from-teal-600 to-cyan-700',
+    photo: 'https://nabh-portal-live.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/06/19164032/chairperson-1-e1758280232152.jpg',
     quote: 'We are building institutions that outlast individuals. Every accreditation QCI grants is a promise to the public that standards will be upheld.',
-  },
-  {
-    name: 'Dr. Anil Jauhary',
-    title: 'Principal Advisor',
-    initials: 'AJ',
-    gradient: 'from-purple-600 to-violet-700',
-    quote: 'Policy without implementation is fiction. Our role is to bridge the gap between what India aspires to and what its institutions actually deliver.',
-  },
-  {
-    name: 'CA Priya Kapoor',
-    title: 'Chief Financial Officer',
-    initials: 'PK',
-    gradient: 'from-orange-500 to-amber-600',
-    quote: 'Financial integrity is the backbone of institutional credibility. At QCI, every resource is a stewardship — not an expenditure.',
   },
 ];
 
@@ -149,17 +137,18 @@ const TESTIMONIALS = [
   },
 ];
 
-const GALLERY = [
-  { label: 'National Quality Conclave 2023', tag: 'Event', gradient: 'from-blue-600 to-indigo-700' },
-  { label: 'QCI Accreditation Excellence Awards', tag: 'Awards', gradient: 'from-teal-600 to-cyan-600' },
-  { label: 'ISO Training Programme — New Delhi', tag: 'Training', gradient: 'from-violet-600 to-purple-700' },
-  { label: 'State Government MoU Signing — UP', tag: 'Partnership', gradient: 'from-orange-500 to-amber-600' },
-  { label: 'COVID Lab Accreditation Drive 2020', tag: 'Mission', gradient: 'from-rose-600 to-pink-600' },
-  { label: 'QCI Leadership Meet 2024', tag: 'Leadership', gradient: 'from-slate-600 to-gray-700' },
-];
 
 export default function About() {
   const [expandedMilestone, setExpandedMilestone] = useState<number | null>(null);
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [lightbox, setLightbox] = useState<any | null>(null);
+
+  useEffect(() => {
+    fetch('/api/gallery')
+      .then(r => r.json())
+      .then(data => setGalleryItems(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="bg-white dark:bg-gray-900">
@@ -220,15 +209,20 @@ export default function About() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">The people who guide QCI's mission of raising quality standards across India's most critical sectors.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {LEADERSHIP.map(leader => (
               <div key={leader.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
-                {/* Avatar */}
-                <div className={`h-36 bg-gradient-to-br ${leader.gradient} flex items-center justify-center relative`}>
-                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-3xl font-black">
-                    {leader.initials}
-                  </div>
+                {/* Photo or gradient fallback */}
+                <div className={`h-48 bg-gradient-to-br ${leader.gradient} flex items-center justify-center relative overflow-hidden`}>
+                  {leader.photo ? (
+                    <img src={leader.photo} alt={leader.name}
+                      className="w-full h-full object-cover object-top" />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-4xl font-black">
+                      {leader.initials}
+                    </div>
+                  )}
                 </div>
                 {/* Info */}
                 <div className="p-5">
@@ -343,38 +337,61 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── PHOTO GALLERY / MEMORIES ── */}
-      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-2">Memories & Events</p>
-            <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">QCI in Action</h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Highlights from conclaves, partnerships, award ceremonies, and field programmes across the country.</p>
+      {/* ── PHOTO GALLERY ── */}
+      {galleryItems.length > 0 && (
+        <section className="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-2">Memories & Events</p>
+              <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-3">QCI in Action</h2>
+              <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Highlights from conclaves, partnerships, award ceremonies, and field programmes across the country.</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {galleryItems.map(item => (
+                <div key={item.id}
+                  className="relative rounded-2xl overflow-hidden h-48 bg-gray-200 dark:bg-gray-700 group cursor-pointer"
+                  onClick={() => setLightbox(item)}>
+                  {item.image_path ? (
+                    <img src={item.image_path} alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                      </svg>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+                    <span className="text-white/60 text-[10px] font-medium uppercase tracking-wide">{item.category}</span>
+                    <p className="text-white text-xs font-semibold leading-tight line-clamp-2">{item.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {GALLERY.map((item, i) => (
-              <div key={i}
-                className={`relative rounded-2xl overflow-hidden h-44 bg-gradient-to-br ${item.gradient} group cursor-pointer`}>
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-300" />
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
-                  <span className="text-white/60 text-xs font-medium">{item.tag}</span>
-                  <p className="text-white text-sm font-semibold mt-0.5 leading-tight">{item.label}</p>
+          {/* Lightbox */}
+          {lightbox && (
+            <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+              onClick={() => setLightbox(null)}>
+              <div className="max-w-3xl w-full" onClick={e => e.stopPropagation()}>
+                {lightbox.image_path && (
+                  <img src={lightbox.image_path} alt={lightbox.title}
+                    className="w-full max-h-[70vh] object-contain rounded-xl" />
+                )}
+                <div className="mt-4 text-center">
+                  <p className="text-white font-bold text-lg">{lightbox.title}</p>
+                  {lightbox.description && <p className="text-white/70 text-sm mt-1">{lightbox.description}</p>}
                 </div>
-                {/* Photo icon placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="white">
-                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                  </svg>
-                </div>
+                <button onClick={() => setLightbox(null)}
+                  className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-light leading-none">×</button>
               </div>
-            ))}
-          </div>
-          <p className="text-center text-xs text-gray-400 dark:text-gray-600 mt-4">Photo gallery — managed via HR Admin Panel</p>
-        </div>
-      </section>
+            </div>
+          )}
+        </section>
+      )}
 
       {/* ── EMPLOYEE TESTIMONIALS ── */}
       <section className="py-16 px-4 bg-white dark:bg-gray-900">

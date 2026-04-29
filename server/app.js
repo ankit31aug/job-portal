@@ -48,6 +48,13 @@ app.use('/api/job-alerts', jobAlertRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 
+// Public gallery endpoint — no auth required
+const db = require('./db');
+app.get('/api/gallery', (req, res) => {
+  const items = db.prepare('SELECT * FROM gallery WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC').all();
+  res.json(items);
+});
+
 // Serve React build whenever it exists (production always, dev as fallback if built)
 const clientBuild = path.join(__dirname, '../client/dist');
 if (fs.existsSync(clientBuild)) {
