@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 // Ensure upload directories exist on startup
 ['uploads', 'uploads/gallery', 'uploads/boards', 'uploads/resumes'].forEach(dir => {
@@ -25,6 +27,12 @@ const jobAlertRoutes = require('./routes/job-alerts');
 const app = express();
 const IS_PROD = process.env.NODE_ENV === 'production';
 
+// Security headers (disable X-Powered-By, add X-Frame-Options, X-Content-Type-Options, etc.)
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow /uploads static files
+  contentSecurityPolicy: false, // CSP managed by frontend build
+}));
+
 const allowedOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',')
   : ['http://localhost:5173', 'http://localhost:4173', 'http://localhost:3000'];
@@ -33,6 +41,40 @@ app.use(cors({ origin: IS_PROD ? true : allowedOrigins, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Rate limiters — skip in test environment
+const IS_TEST = process.env.NODE_ENV === 'test';
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: IS_TEST ? 1000 : 10,  // 10 attempts per 15 min in prod
+  message: { error: 'Too many login attempts. Please try again in 15 minutes.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => IS_TEST,
+});
+
+const otpLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 min
+  max: IS_TEST ? 1000 : 5,   // 5 OTP verifications per 10 min
+  message: { error: 'Too many OTP attempts. Please request a new OTP.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => IS_TEST,
+});
+
+const forgotPasswordLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: IS_TEST ? 1000 : 5,   // 5 reset requests per hour
+  message: { error: 'Too many password reset requests. Please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => IS_TEST,
+});
+
+app.use('/api/auth/login', loginLimiter);
+app.use('/api/auth/forgot-password', forgotPasswordLimiter);
+app.use('/api/otp/verify', otpLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);

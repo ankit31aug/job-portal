@@ -229,27 +229,27 @@ router.post('/forgot-password', async (req, res) => {
       [email.toLowerCase().trim()]
     )).rows[0];
 
-    // Always respond the same way to prevent email enumeration
-    if (!user) return res.json({ message: 'If that email is registered, a reset link has been sent.' });
+    // Always do constant-time work to prevent email enumeration via timing
+    if (user) {
+      const token = crypto.randomBytes(32).toString('hex');
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
 
-    const token = crypto.randomBytes(32).toString('hex');
-    const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+      await query('DELETE FROM password_reset_tokens WHERE email = $1', [user.email]);
+      await query(
+        'INSERT INTO password_reset_tokens (email, token, expires_at) VALUES ($1, $2, $3)',
+        [user.email, token, expiresAt]
+      );
 
-    await query('DELETE FROM password_reset_tokens WHERE email = $1', [user.email]);
-    await query(
-      'INSERT INTO password_reset_tokens (email, token, expires_at) VALUES ($1, $2, $3)',
-      [user.email, token, expiresAt]
-    );
-
-    const resetUrl = `${process.env.APP_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
-    try {
-      await sendMail({
+      const resetUrl = `${process.env.APP_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+      // Fire-and-forget so response time doesn't leak whether email exists
+      sendMail({
         to: user.email,
         subject: 'QCI Job Portal — Reset Your Password',
         html: passwordResetEmail(user.name, resetUrl),
-      });
-    } catch (_) {}
+      }).catch(() => {});
+    }
 
+    // Always respond identically — no timing or message difference for valid vs invalid email
     res.json({ message: 'If that email is registered, a reset link has been sent.' });
   } catch (err) {
     console.error('POST /auth/forgot-password error:', err);
