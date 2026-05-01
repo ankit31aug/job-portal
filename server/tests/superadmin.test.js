@@ -388,6 +388,19 @@ describe('Super Admin — Gallery', () => {
 describe('Super Admin — Board Configuration', () => {
   let boardId;
 
+  beforeAll(async () => {
+    const result = await pool.query(
+      `INSERT INTO board_config (code, name, full_name, description, color, display_order, board_type)
+       VALUES ('TEST', 'Test Board', 'Test Board Full Name', 'Seeded for tests', 'blue-600', 99, 'board')
+       RETURNING id`
+    );
+    boardId = result.rows[0].id;
+  });
+
+  afterAll(async () => {
+    if (boardId) await pool.query('DELETE FROM board_config WHERE id = $1', [boardId]);
+  });
+
   it('lists all boards', async () => {
     const res = await request(app)
       .get('/api/superadmin/boards')
@@ -395,7 +408,6 @@ describe('Super Admin — Board Configuration', () => {
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
-    boardId = res.body[0].id;
   });
 
   it('updates a board', async () => {
@@ -433,6 +445,17 @@ describe('Super Admin — Board Configuration', () => {
 // SETTINGS MANAGEMENT
 // ─────────────────────────────────────────────────────────────
 describe('Super Admin — Settings', () => {
+  beforeAll(async () => {
+    await pool.query(
+      `INSERT INTO settings (key, value, label, category) VALUES ('_seed_setting', 'seed_value', 'Seed', 'test')
+       ON CONFLICT (key) DO NOTHING`
+    );
+  });
+
+  afterAll(async () => {
+    await pool.query("DELETE FROM settings WHERE key IN ('_seed_setting', '_test_setting_key')");
+  });
+
   it('returns all settings as an array', async () => {
     const res = await request(app)
       .get('/api/superadmin/settings')
@@ -460,8 +483,6 @@ describe('Super Admin — Settings', () => {
     const found = res.body.find(s => s.key === '_test_setting_key');
     expect(found).toBeDefined();
     expect(found.value).toBe('test_value_123');
-    // Cleanup test setting
-    await pool.query("DELETE FROM settings WHERE key = '_test_setting_key'");
   });
 });
 
