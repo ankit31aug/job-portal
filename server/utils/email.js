@@ -30,6 +30,8 @@ async function getTransporter() {
 const FROM = process.env.EMAIL_FROM || '"QCI Job Portal" <noreply@qci.org>';
 
 async function sendMail({ to, subject, html }) {
+  // Skip sending in test environment to keep test output clean
+  if (process.env.NODE_ENV === 'test') return;
   try {
     const t = await getTransporter();
     const info = await t.sendMail({ from: FROM, to, subject, html });

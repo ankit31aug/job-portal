@@ -1,7 +1,9 @@
-const os = require('os');
-const path = require('path');
+// DATABASE_URL must be supplied by the environment (CI sets it; local dev uses .env).
+// Fall back to a local test database so plain `npm test` works when postgres is
+// running with default trust auth on localhost.
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = 'postgresql://postgres:postgres@localhost/qci_test';
+}
 
-// Each worker gets its own SQLite file so parallel test suites don't collide.
-process.env.DB_PATH = path.join(os.tmpdir(), `test-jobportal-${process.pid}.db`);
 process.env.JWT_SECRET = 'test_jwt_secret_for_ci';
 process.env.NODE_ENV = 'test';
