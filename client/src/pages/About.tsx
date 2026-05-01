@@ -5,10 +5,10 @@ import { ArrowRight, Award, Globe, Users, TrendingUp, Building2, Star, Quote } f
 const LEADERSHIP = [
   {
     name: 'Mr. Jaxay Shah',
-    title: 'Chairman, QCI',
+    title: 'Chairperson, QCI',
     initials: 'JS',
     gradient: 'from-brand-700 to-brand-500',
-    photo: 'https://gcc.icai.org/wp-content/uploads/2025/08/14.png',
+    photo: 'https://nbqp.qci.org.in/wp-content/uploads/elementor/thumbs/1000211985-1-qjgho34m3fmw6rhanfzmasauein06idc2joqadqxjs.jpg',
     quote: 'Quality is the foundation on which India\'s global competitiveness will be built. QCI\'s mandate is to make quality a way of life — for every organisation, every product, every service.',
   },
   {
@@ -27,6 +27,15 @@ const LEADERSHIP = [
     photo: 'https://nabh-portal-live.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/06/19164032/chairperson-1-e1758280232152.jpg',
     quote: 'We are building institutions that outlast individuals. Every accreditation QCI grants is a promise to the public that standards will be upheld.',
   },
+];
+
+const BOARD_CHAIRS = [
+  { name: 'Dr. Sandip Shah',      title: 'Chairperson, NABL',  initials: 'SS', gradient: 'from-orange-600 to-amber-500', board: 'NABL',  tag: 'Laboratories' },
+  { name: 'Mr. Deep Kapuria',     title: 'Chairman, NABCB',    initials: 'DK', gradient: 'from-blue-700 to-indigo-600',  board: 'NABCB', tag: 'Certification' },
+  { name: 'Mr. Jalaj Ashwin Dani',title: 'Chairman, NABET',    initials: 'JD', gradient: 'from-violet-700 to-purple-600',board: 'NABET', tag: 'Education & Training' },
+  { name: 'Dr. Aishvarya Raj',    title: 'CEO, NBQP',          initials: 'AR', gradient: 'from-rose-600 to-pink-500',    board: 'NBQP',  tag: 'Quality Promotion' },
+  { name: 'Mr. N. Venkateswaran', title: 'CEO, NABL',          initials: 'NV', gradient: 'from-orange-500 to-amber-400', board: 'NABL',  tag: 'Laboratories' },
+  { name: 'Mr. C K Maheshwari',   title: 'Accreditation Committee Chair, NABCB', initials: 'CM', gradient: 'from-sky-600 to-cyan-500', board: 'NABCB', tag: 'Certification' },
 ];
 
 const BOARDS = [
@@ -301,7 +310,8 @@ export default function About() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">The people who guide QCI's mission of raising quality standards across India's most critical sectors.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {/* Top 3 with photos */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-14">
             {LEADERSHIP.map(leader => (
               <div key={leader.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
@@ -327,6 +337,27 @@ export default function About() {
                       {leader.quote}
                     </p>
                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Board chairs grid */}
+          <div className="text-center mb-8">
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Board Leadership</p>
+            <h3 className="text-xl font-black text-gray-900 dark:text-white">Chairpersons Across Our Boards</h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {BOARD_CHAIRS.map(chair => (
+              <div key={chair.name}
+                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-4 flex items-center gap-3 hover:shadow-md transition-all">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${chair.gradient} flex items-center justify-center text-white text-sm font-black flex-shrink-0`}>
+                  {chair.initials}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-gray-900 dark:text-white truncate">{chair.name}</p>
+                  <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold">{chair.title}</p>
+                  <span className="inline-block mt-1 text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-1.5 py-0.5 rounded-full">{chair.tag}</span>
                 </div>
               </div>
             ))}

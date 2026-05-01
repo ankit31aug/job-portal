@@ -19,7 +19,9 @@ api.interceptors.response.use(
       const u = stored ? JSON.parse(stored) : null;
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = u?.role === 'hr' ? '/admin-login' : '/login';
+      if (u?.role === 'super_admin') window.location.href = '/superadmin-login';
+      else if (u?.role === 'hr') window.location.href = '/admin-login';
+      else window.location.href = '/login';
     }
     return Promise.reject(error);
   }

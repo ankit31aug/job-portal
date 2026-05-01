@@ -4,7 +4,7 @@ import { ShieldCheck, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function AdminLogin() {
-  const { login, user } = useAuth();
+  const { login, logout, user } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (user?.role === 'hr') navigate('/admin');
+    if (user?.role === 'hr') navigate('/admin', { replace: true });
   }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,12 +26,10 @@ export default function AdminLogin() {
       const stored = localStorage.getItem('user');
       const u = stored ? JSON.parse(stored) : null;
       if (u?.role !== 'hr') {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        logout(); // clears both React state and localStorage
         setError('Access denied. This portal is for HR admins only.');
-        return;
       }
-      navigate('/admin');
+      // Navigation handled by useEffect once setUser is committed.
     } catch (err: any) {
       setError(err.response?.data?.error || 'Invalid credentials');
     } finally {

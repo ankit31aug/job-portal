@@ -4,7 +4,7 @@ import { Crown, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function SuperAdminLogin() {
-  const { login, user } = useAuth();
+  const { login, logout, user } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,8 +12,11 @@ export default function SuperAdminLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Navigate ONLY from here — after React has committed the user state update.
+  // Calling navigate() directly after await login() is a race: ProtectedRoute
+  // still sees user=null and bounces to /login before setUser is committed.
   useEffect(() => {
-    if (user?.role === 'super_admin') navigate('/superadmin');
+    if (user?.role === 'super_admin') navigate('/superadmin', { replace: true });
   }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,15 +26,16 @@ export default function SuperAdminLogin() {
     setError('');
     try {
       await login(email.trim(), password);
+      // localStorage is always written synchronously inside login(),
+      // so we can safely check the role here.
       const stored = localStorage.getItem('user');
       const u = stored ? JSON.parse(stored) : null;
       if (u?.role !== 'super_admin') {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        logout(); // clears both React state and localStorage
         setError('Access denied. This portal is for Super Admins only.');
-        return;
       }
-      navigate('/superadmin');
+      // If role is super_admin: do NOT navigate here.
+      // The useEffect above fires once React commits setUser and handles it.
     } catch (err: any) {
       setError(err.response?.data?.error || 'Invalid credentials');
     } finally {
