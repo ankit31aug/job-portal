@@ -102,9 +102,6 @@ export default function AdminLogin() {
           </div>
         </div>
 
-        <p className="text-center text-xs text-slate-500 mt-4">
-          Default credentials: hr-admin@qci.org / HRAdmin@123
-        </p>
       </div>
     </div>
   );

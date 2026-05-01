@@ -8,7 +8,7 @@ const LEADERSHIP = [
     title: 'Chairman, QCI',
     initials: 'JS',
     gradient: 'from-brand-700 to-brand-500',
-    photo: '/uploads/gallery/qci_chairman_yqbf.jpg',
+    photo: 'https://gcc.icai.org/wp-content/uploads/2025/08/14.png',
     quote: 'Quality is the foundation on which India\'s global competitiveness will be built. QCI\'s mandate is to make quality a way of life — for every organisation, every product, every service.',
   },
   {

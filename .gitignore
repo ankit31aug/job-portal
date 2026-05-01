@@ -20,6 +20,9 @@ server/jobportal.db-wal
 server/uploads/resume_*
 server/uploads/parse_*
 
+# Credentials (keep local only — never commit)
+login-credentials.md
+
 # OS files
 .DS_Store
 Thumbs.db
