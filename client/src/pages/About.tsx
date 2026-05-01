@@ -197,6 +197,7 @@ const TESTIMONIALS = [
 export default function About() {
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
   const [lightbox, setLightbox] = useState<any | null>(null);
+  const [photoErrors, setPhotoErrors] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     fetch('/api/gallery')
@@ -306,9 +307,10 @@ export default function About() {
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
                 {/* Photo or gradient fallback */}
                 <div className={`h-64 bg-gradient-to-br ${leader.gradient} flex items-center justify-center relative overflow-hidden`}>
-                  {leader.photo ? (
+                  {leader.photo && !photoErrors[leader.name] ? (
                     <img src={leader.photo} alt={leader.name}
-                      className="w-full h-full object-cover object-center" />
+                      className="w-full h-full object-cover object-center"
+                      onError={() => setPhotoErrors(prev => ({ ...prev, [leader.name]: true }))} />
                   ) : (
                     <div className="w-24 h-24 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white text-4xl font-black">
                       {leader.initials}

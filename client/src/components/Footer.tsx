@@ -111,8 +111,8 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
                 <Briefcase size={22} className="text-white" />
               </div>
               <div className="leading-tight">
-                <p className="text-gray-900 dark:text-white font-extrabold text-base tracking-tight">Quality Council</p>
-                <p className="text-brand-500 dark:text-brand-400 text-sm font-medium">of India — Careers</p>
+                <p className="text-gray-900 dark:text-white font-extrabold text-base tracking-tight">Quality Council <span className="text-brand-500">of India</span></p>
+                <p className="text-brand-600 dark:text-brand-400 text-[10px] font-bold uppercase tracking-widest">1QCI Portal</p>
               </div>
             </Link>
 
@@ -199,7 +199,7 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
       {/* ── Bottom bar ── */}
       <div className="relative border-t border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-black/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400 dark:text-gray-500">
-          <p>© {new Date().getFullYear()} <span className="text-gray-600 dark:text-gray-400">Quality Council of India.</span> All rights reserved.</p>
+          <p>© {new Date().getFullYear()} <span className="text-gray-600 dark:text-gray-400">Quality Council of India.</span> All rights reserved. &nbsp;·&nbsp; <span className="italic">Creating an Ecosystem for Quality</span></p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <button onClick={toggleDark}
               className="inline-flex items-center gap-1.5 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
