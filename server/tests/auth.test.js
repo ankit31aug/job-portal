@@ -1,12 +1,20 @@
 const request = require('supertest');
-const fs = require('fs');
 const app = require('../app');
+const { pool } = require('../db-pg');
 
-afterAll(() => {
-  // Remove the per-worker test database
-  const dbPath = process.env.DB_PATH;
-  if (dbPath && fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
-});
+const TEST_EMAILS = [
+  'alice@example.com', 'bob@example.com', 'dupe@example.com',
+  'logintest@example.com', 'me@example.com',
+];
+
+async function cleanupTestUsers() {
+  await pool.query(`DELETE FROM applications WHERE applicant_id IN (SELECT id FROM users WHERE email = ANY($1::text[]))`, [TEST_EMAILS]);
+  await pool.query(`DELETE FROM bookmarks WHERE user_id IN (SELECT id FROM users WHERE email = ANY($1::text[]))`, [TEST_EMAILS]);
+  await pool.query(`DELETE FROM users WHERE email = ANY($1::text[])`, [TEST_EMAILS]);
+}
+
+beforeAll(cleanupTestUsers);
+afterAll(cleanupTestUsers);
 
 describe('Health', () => {
   it('GET /api/health returns OK', async () => {

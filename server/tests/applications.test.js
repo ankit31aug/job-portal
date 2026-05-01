@@ -1,12 +1,31 @@
 const request = require('supertest');
 const app = require('../app');
+const { pool } = require('../db-pg');
 
 let employerToken;
 let jobseekerToken;
 let jobId;
 let applicationId;
 
+const TEST_EMAILS = [
+  'app_employer@example.com', 'app_seeker@example.com',
+  'seeker2@example.com', 'app_emp2@example.com',
+];
+
+async function cleanupTestUsers() {
+  const userIds = (await pool.query(`SELECT id FROM users WHERE email = ANY($1::text[])`, [TEST_EMAILS])).rows.map(r => r.id);
+  if (userIds.length) {
+    await pool.query(`DELETE FROM application_status_history WHERE application_id IN (SELECT id FROM applications WHERE applicant_id = ANY($1::int[]) OR job_id IN (SELECT id FROM jobs WHERE employer_id = ANY($1::int[])))`, [userIds]);
+    await pool.query(`DELETE FROM applications WHERE applicant_id = ANY($1::int[]) OR job_id IN (SELECT id FROM jobs WHERE employer_id = ANY($1::int[]))`, [userIds]);
+    await pool.query(`DELETE FROM bookmarks WHERE user_id = ANY($1::int[])`, [userIds]);
+    await pool.query(`DELETE FROM jobs WHERE employer_id = ANY($1::int[])`, [userIds]);
+    await pool.query(`DELETE FROM users WHERE id = ANY($1::int[])`, [userIds]);
+  }
+}
+
 beforeAll(async () => {
+  await cleanupTestUsers();
+
   // Create employer and a job
   const emp = await request(app).post('/api/auth/register').send({
     name: 'App Employer',
@@ -194,3 +213,5 @@ describe('PATCH /api/applications/:id/status', () => {
     expect(res.status).toBe(403);
   });
 });
+
+afterAll(cleanupTestUsers);

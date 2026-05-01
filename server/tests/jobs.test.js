@@ -1,12 +1,27 @@
 const request = require('supertest');
 const app = require('../app');
+const { pool } = require('../db-pg');
 
 // Shared tokens
 let employerToken;
 let jobseekerToken;
 let createdJobId;
 
+const TEST_EMAILS = ['jobs_employer@example.com', 'jobs_seeker@example.com', 'other_emp@example.com'];
+
+async function cleanupTestUsers() {
+  const userIds = (await pool.query(`SELECT id FROM users WHERE email = ANY($1::text[])`, [TEST_EMAILS])).rows.map(r => r.id);
+  if (userIds.length) {
+    await pool.query(`DELETE FROM applications WHERE applicant_id = ANY($1::int[]) OR job_id IN (SELECT id FROM jobs WHERE employer_id = ANY($1::int[]))`, [userIds]);
+    await pool.query(`DELETE FROM bookmarks WHERE user_id = ANY($1::int[])`, [userIds]);
+    await pool.query(`DELETE FROM jobs WHERE employer_id = ANY($1::int[])`, [userIds]);
+    await pool.query(`DELETE FROM users WHERE id = ANY($1::int[])`, [userIds]);
+  }
+}
+
 beforeAll(async () => {
+  await cleanupTestUsers();
+
   // Create employer
   const emp = await request(app).post('/api/auth/register').send({
     name: 'Jobs Employer',
@@ -204,3 +219,5 @@ describe('GET /api/jobs/my', () => {
     expect(res.status).toBe(403);
   });
 });
+
+afterAll(cleanupTestUsers);
