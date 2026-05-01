@@ -97,7 +97,7 @@ export default function SuperAdminLogin() {
         </div>
 
         <p className="text-center text-xs text-purple-400 mt-4">
-          Default: superadmin@qci.org / SuperAdmin@123
+          Default: superadmin@qci.org / Admin@123
         </p>
       </div>
     </div>

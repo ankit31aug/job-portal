@@ -218,7 +218,11 @@ router.delete('/users/:id', authenticate, requireSuperAdmin, async (req, res) =>
     const user = (await query('SELECT role FROM users WHERE id = $1', [req.params.id])).rows[0];
     if (!user) return res.status(404).json({ error: 'User not found' });
     if (user.role === 'super_admin') return res.status(403).json({ error: 'Cannot delete super admin' });
+    // Remove all FK-referenced rows before deleting the user
+    await query('DELETE FROM job_alerts WHERE user_id = $1', [req.params.id]);
     await query('DELETE FROM bookmarks WHERE user_id = $1', [req.params.id]);
+    await query('DELETE FROM application_status_history WHERE application_id IN (SELECT id FROM applications WHERE applicant_id = $1)', [req.params.id]);
+    await query('DELETE FROM applications WHERE applicant_id = $1', [req.params.id]);
     await query('DELETE FROM users WHERE id = $1', [req.params.id]);
     res.json({ message: 'User deleted' });
   } catch (err) {
@@ -481,11 +485,21 @@ router.put('/jobs/:id', authenticate, requireSuperAdmin, async (req, res) => {
        experience_min=$7, experience_max=$8, salary_min=$9, salary_max=$10,
        description=$11, requirements=$12, skills=$13, openings=$14, is_active=$15 WHERE id=$16`,
       [
-        title, company, location, job_type, category,
-        department || job.department,
-        experience_min, experience_max, salary_min, salary_max,
-        description, requirements, skills, openings,
-        is_active ?? job.is_active,
+        title        ?? job.title,
+        company      ?? job.company,
+        location     ?? job.location,
+        job_type     ?? job.job_type,
+        category     ?? job.category,
+        department   ?? job.department,
+        experience_min ?? job.experience_min,
+        experience_max ?? job.experience_max,
+        salary_min   ?? job.salary_min,
+        salary_max   ?? job.salary_max,
+        description  ?? job.description,
+        requirements ?? job.requirements,
+        skills       ?? job.skills,
+        openings     ?? job.openings,
+        is_active    ?? job.is_active,
         req.params.id,
       ]
     );
