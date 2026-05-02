@@ -19,6 +19,14 @@ export interface SiteSettings {
   footer_twitter: string;
   footer_instagram: string;
   footer_facebook: string;
+  footer_youtube: string;
+  footer_links_who: string;       // JSON array
+  footer_links_org: string;       // JSON array
+  footer_links_work: string;      // JSON array
+  footer_links_gov: string;       // JSON array
+  footer_regional_offices: string; // JSON array
+  footer_copyright: string;
+  footer_tagline: string;
 
   // ── Contact ──────────────────────────────────────────────
   contact_address: string;
@@ -96,6 +104,44 @@ export const SETTINGS_DEFAULTS: SiteSettings = {
   footer_twitter: 'https://twitter.com/qci_india',
   footer_instagram: 'https://www.instagram.com/qualitycouncilofindia/',
   footer_facebook: 'https://www.facebook.com/QualityCouncilOfIndia/',
+  footer_youtube: 'https://www.youtube.com/@qualitycouncilofindia',
+  footer_links_who: JSON.stringify([
+    { label: 'About QCI', to: '/about' },
+    { label: 'Leadership', to: '/about#leadership' },
+    { label: 'Our Boards', to: '/about#boards' },
+    { label: 'Vision & Mission', href: 'https://www.qcin.org/who-we-are/vision-mission' },
+    { label: 'Quality Movement', href: 'https://www.qcin.org/who-we-are/quality-movement-in-india' },
+  ]),
+  footer_links_org: JSON.stringify([
+    { label: 'NABH', href: 'https://www.nabh.co/', desc: 'Healthcare' },
+    { label: 'NABL', href: 'https://www.nabl-india.org/', desc: 'Laboratories' },
+    { label: 'NABCB', href: 'https://nabcb.qcin.org/', desc: 'Certification' },
+    { label: 'NABET', href: 'https://www.nabet.org.in/', desc: 'Education' },
+    { label: 'NBQP', href: 'https://qcin.org/nbqp', desc: 'Quality Promotion' },
+  ]),
+  footer_links_work: JSON.stringify([
+    { label: 'Browse All Jobs', to: '/browse' },
+    { label: 'Career Paths', to: '/careers' },
+    { label: 'Resume Matcher', to: '/resume-match' },
+    { label: 'Create Account', to: '/register' },
+    { label: 'ZED Certification', href: 'https://zed.org.in/' },
+    { label: 'Gunvatta Gurukul', href: 'https://gunvattagurukul.qcin.org/' },
+  ]),
+  footer_links_gov: JSON.stringify([
+    { label: 'Annual Reports', href: 'https://www.qcin.org/governance-and-compliance/annual-reports' },
+    { label: 'MoU & Agreements', href: 'https://www.qcin.org/governance-and-compliance' },
+    { label: 'RTI', href: 'https://www.qcin.org/governance-and-compliance/rti' },
+    { label: 'Privacy Policy', href: '#' },
+    { label: 'Terms of Use', href: '#' },
+  ]),
+  footer_regional_offices: JSON.stringify([
+    { city: 'Delhi HQ', addr: 'J 200, Block J, Nauroji Nagar, World Trade Centre, New Delhi – 110029', phone: '011-26186680 to 83' },
+    { city: 'Ahmedabad', addr: 'B-302, Safal Profitaire, Corporate Road, Prahlad Nagar, Ahmedabad – 380015', phone: '079-29701600' },
+    { city: 'Bengaluru', addr: '111, 4th Cross, Sadashivanagar, Bengaluru – 560080', phone: '080-23617591' },
+    { city: 'Kolkata', addr: 'GN-38/2, Sector V, Salt Lake City, Kolkata – 700091', phone: '033-40630021' },
+  ]),
+  footer_copyright: 'Quality Council of India. All rights reserved.',
+  footer_tagline: 'Creating an Ecosystem for Quality',
 
   // Contact
   contact_address: 'J 200, Block J, Nauroji Nagar, World Trade Centre, New Delhi – 110029',
