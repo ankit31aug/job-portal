@@ -201,10 +201,9 @@ export default function Home() {
               <Briefcase size={14} className="text-blue-300" />
               5 Boards &amp; 4 Core Divisions
             </div>
-            <Link to="/browse"
-              className="ml-2 bg-white/15 hover:bg-white/25 border border-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full transition-colors flex items-center gap-1">
-              View All <ArrowRight size={11} />
-            </Link>
+            <span className="ml-2 bg-white/10 border border-white/20 text-white/60 text-xs px-3 py-1 rounded-full">
+              Updated daily
+            </span>
           </div>
         </div>
       )}
@@ -327,10 +326,10 @@ export default function Home() {
               </div>
             ))}
 
-            {/* Browse all card */}
-            <div className="bg-gradient-to-br from-brand-800 via-brand-700 to-brand-500 rounded-2xl p-6 text-white flex flex-col justify-between shadow-lg shadow-brand-500/20 hover:shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 transition-all duration-300">
+            {/* Browse all card — the whole card is the CTA */}
+            <Link to="/browse" className="bg-gradient-to-br from-brand-800 via-brand-700 to-brand-500 rounded-2xl p-6 text-white flex flex-col justify-between shadow-lg shadow-brand-500/20 hover:shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 transition-all duration-300 group">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mb-4 group-hover:bg-white/30 transition-colors">
                   <Layers size={24} />
                 </div>
                 <h3 className="text-2xl font-black mb-2">All Boards</h3>
@@ -338,16 +337,15 @@ export default function Home() {
                   Browse every open role across all five boards in one unified view — filter by board, division, or role type.
                 </p>
                 {stats && (
-                  <p className="text-white/60 text-xs mb-6">
+                  <p className="text-white/60 text-xs">
                     {stats.total} active roles · {stats.totalOpenings} total openings
                   </p>
                 )}
               </div>
-              <Link to="/browse"
-                className="flex items-center justify-center gap-2 bg-white text-brand-700 font-bold px-5 py-3 rounded-xl hover:bg-blue-50 active:scale-95 transition-all duration-200 text-sm">
-                Browse All Jobs <ArrowRight size={14} />
-              </Link>
-            </div>
+              <div className="mt-4 flex items-center gap-1 text-white/70 group-hover:text-white text-sm font-semibold transition-colors">
+                Explore all roles <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -444,19 +442,12 @@ export default function Home() {
                 <p className="text-brand-500 text-xs font-bold uppercase tracking-widest mb-2">Latest Openings</p>
                 <h2 className="text-2xl font-black text-gray-900 dark:text-white">Featured Opportunities</h2>
               </div>
-              <Link to="/browse"
-                className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 transition-colors">
-                View all <ArrowRight size={14} />
-              </Link>
+              <span className="hidden sm:block text-sm text-gray-400 dark:text-gray-500">
+                {featuredJobs.length} featured {featuredJobs.length === 1 ? 'role' : 'roles'}
+              </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {featuredJobs.map(job => <JobCard key={job.id} job={job} />)}
-            </div>
-            <div className="text-center mt-8">
-              <Link to="/browse"
-                className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-bold px-8 py-3.5 rounded-2xl transition-all duration-200 shadow-lg shadow-brand-500/20">
-                Browse All Jobs <ArrowRight size={16} />
-              </Link>
             </div>
           </div>
         </section>
@@ -513,7 +504,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {[
-              { icon: <Award size={22} className="text-brand-500" />, title: 'National Impact', desc: "Your work directly influences quality standards across India's hospitals, labs, and educational institutions.", link: '/browse', cta: 'See Open Roles' },
+              { icon: <Award size={22} className="text-brand-500" />, title: 'National Impact', desc: "Your work directly influences quality standards across India's hospitals, labs, and educational institutions.", link: '/about', cta: 'Our Mission' },
               { icon: <TrendingUp size={22} className="text-emerald-500" />, title: 'Clear Career Growth', desc: 'Structured 4-level career ladder — from Coordinator to Project Manager with defined salary bands.', link: '/careers', cta: 'Explore Career Paths' },
               { icon: <BookMarked size={22} className="text-purple-500" />, title: 'Domain Expertise', desc: 'Become a certified quality expert in NABH, NABET, or NABL — credentials respected across industry and government.', link: '/careers', cta: 'View Specialisations' },
               { icon: <Users size={22} className="text-orange-500" />, title: 'Collaborative Culture', desc: 'Work with multi-disciplinary teams of healthcare professionals, educators, and scientists on nationwide quality missions.', link: '/about', cta: 'About QCI' },

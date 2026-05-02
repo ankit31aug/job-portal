@@ -23,9 +23,21 @@ server/uploads/parse_*
 # Credentials (keep local only — never commit)
 login-credentials.md
 
+# E2E test auth state (contains JWT tokens — never commit)
+e2e/.auth/
+
+# Playwright test results & reports
+test-results/
+playwright-report/
+client/test-results/
+
 # OS files
 .DS_Store
 Thumbs.db
+
+# Runtime PIDs
+.client.pid
+.ngrok.pid
 
 # Logs
 *.log
