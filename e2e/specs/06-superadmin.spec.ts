@@ -137,9 +137,9 @@ test.describe('Super Admin Dashboard', () => {
 
   test('HR Roles tab can create a role', async ({ page }) => {
     await page.goto('/superadmin');
-    await page.click('button:has-text("HR Roles")');
+    await page.click('button:has-text("Roles")');
     await page.waitForTimeout(500);
-    await expect(page.locator('h3:has-text("HR Role")').first()).toBeVisible();
+    await expect(page.locator('h3:has-text("Role Hierarchy")').first()).toBeVisible();
   });
 
   test('Gallery tab loads', async ({ page }) => {
@@ -166,6 +166,6 @@ test.describe('Super Admin Dashboard', () => {
     const nameInput = page.locator('input').first();
     await nameInput.fill('Quality Council of India');
     await page.click('button:has-text("Save All Settings")');
-    await expect(page.locator('text=Settings saved successfully').first()).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('text=Saved successfully').first()).toBeVisible({ timeout: 5000 });
   });
 });

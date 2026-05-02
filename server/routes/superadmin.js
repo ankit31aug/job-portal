@@ -47,10 +47,12 @@ router.get('/stats', authenticate, requireSuperAdmin, async (req, res) => {
 router.get('/hr-roles', authenticate, requireSuperAdmin, async (req, res) => {
   try {
     const roles = (await query(`
-      SELECT r.*, u.name as created_by_name,
+      SELECT r.*, u.name as created_by_name, p.name as parent_role_name,
       (SELECT COUNT(*) FROM users WHERE hr_role_id = r.id) as assigned_count
-      FROM hr_roles r LEFT JOIN users u ON r.created_by = u.id
-      ORDER BY r.created_at DESC
+      FROM hr_roles r
+      LEFT JOIN users u ON r.created_by = u.id
+      LEFT JOIN hr_roles p ON r.parent_role_id = p.id
+      ORDER BY COALESCE(r.hierarchy_level, 1) ASC, r.created_at ASC
     `, [])).rows;
     res.json(roles.map(r => ({ ...r, permissions: JSON.parse(r.permissions || '[]') })));
   } catch (err) {
@@ -60,13 +62,21 @@ router.get('/hr-roles', authenticate, requireSuperAdmin, async (req, res) => {
 
 router.post('/hr-roles', authenticate, requireSuperAdmin, async (req, res) => {
   try {
-    const { name, description, permissions } = req.body;
+    const { name, description, permissions, parent_role_id, color } = req.body;
     if (!name) return res.status(400).json({ error: 'Role name is required' });
     const perms = Array.isArray(permissions) ? permissions : [];
+    const parentId = parent_role_id ? parseInt(parent_role_id) : null;
+    const roleColor = color || '#6366f1';
+
+    let hierarchyLevel = 1;
+    if (parentId) {
+      const parent = (await query('SELECT hierarchy_level FROM hr_roles WHERE id = $1', [parentId])).rows[0];
+      if (parent) hierarchyLevel = (parent.hierarchy_level || 1) + 1;
+    }
 
     const insertResult = (await query(
-      'INSERT INTO hr_roles (name, description, permissions, created_by) VALUES ($1, $2, $3, $4) RETURNING id',
-      [name.trim(), description || '', JSON.stringify(perms), req.user.id]
+      'INSERT INTO hr_roles (name, description, permissions, created_by, parent_role_id, hierarchy_level, color) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
+      [name.trim(), description || '', JSON.stringify(perms), req.user.id, parentId, hierarchyLevel, roleColor]
     )).rows[0];
 
     const role = (await query('SELECT * FROM hr_roles WHERE id = $1', [insertResult.id])).rows[0];
@@ -78,13 +88,22 @@ router.post('/hr-roles', authenticate, requireSuperAdmin, async (req, res) => {
 
 router.put('/hr-roles/:id', authenticate, requireSuperAdmin, async (req, res) => {
   try {
-    const { name, description, permissions } = req.body;
+    const { name, description, permissions, parent_role_id, color } = req.body;
     const role = (await query('SELECT * FROM hr_roles WHERE id = $1', [req.params.id])).rows[0];
     if (!role) return res.status(404).json({ error: 'HR role not found' });
     const perms = Array.isArray(permissions) ? permissions : JSON.parse(role.permissions || '[]');
+    const parentId = parent_role_id !== undefined ? (parent_role_id ? parseInt(parent_role_id) : null) : role.parent_role_id;
+    const roleColor = color || role.color || '#6366f1';
+
+    let hierarchyLevel = 1;
+    if (parentId) {
+      const parent = (await query('SELECT hierarchy_level FROM hr_roles WHERE id = $1', [parentId])).rows[0];
+      if (parent) hierarchyLevel = (parent.hierarchy_level || 1) + 1;
+    }
+
     await query(
-      'UPDATE hr_roles SET name=$1, description=$2, permissions=$3 WHERE id=$4',
-      [name || role.name, description ?? role.description, JSON.stringify(perms), req.params.id]
+      'UPDATE hr_roles SET name=$1, description=$2, permissions=$3, parent_role_id=$4, hierarchy_level=$5, color=$6 WHERE id=$7',
+      [name || role.name, description ?? role.description, JSON.stringify(perms), parentId, hierarchyLevel, roleColor, req.params.id]
     );
     const updated = (await query('SELECT * FROM hr_roles WHERE id = $1', [req.params.id])).rows[0];
     res.json({ ...updated, permissions: JSON.parse(updated.permissions) });

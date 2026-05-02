@@ -8,7 +8,7 @@ import {
 import { useSettings } from '../context/SettingsContext';
 import { useTheme } from '../context/ThemeContext';
 
-const COL_WHO = [
+const DEFAULT_COL_WHO = [
   { label: 'About QCI', to: '/about' },
   { label: 'Leadership', to: '/about#leadership' },
   { label: 'Our Boards', to: '/about#boards' },
@@ -16,7 +16,7 @@ const COL_WHO = [
   { label: 'Quality Movement', href: 'https://www.qcin.org/who-we-are/quality-movement-in-india' },
 ];
 
-const COL_ORG = [
+const DEFAULT_COL_ORG = [
   { label: 'NABH', href: 'https://www.nabh.co/', desc: 'Healthcare' },
   { label: 'NABL', href: 'https://www.nabl-india.org/', desc: 'Laboratories' },
   { label: 'NABCB', href: 'https://nabcb.qcin.org/', desc: 'Certification' },
@@ -24,7 +24,7 @@ const COL_ORG = [
   { label: 'NBQP', href: 'https://qcin.org/nbqp', desc: 'Quality Promotion' },
 ];
 
-const COL_WORK = [
+const DEFAULT_COL_WORK = [
   { label: 'Browse All Jobs', to: '/browse' },
   { label: 'Career Paths', to: '/careers' },
   { label: 'Resume Matcher', to: '/resume-match' },
@@ -33,7 +33,7 @@ const COL_WORK = [
   { label: 'Gunvatta Gurukul', href: 'https://gunvattagurukul.qcin.org/' },
 ];
 
-const COL_GOV = [
+const DEFAULT_COL_GOV = [
   { label: 'Annual Reports', href: 'https://www.qcin.org/governance-and-compliance/annual-reports' },
   { label: 'MoU & Agreements', href: 'https://www.qcin.org/governance-and-compliance' },
   { label: 'RTI', href: 'https://www.qcin.org/governance-and-compliance/rti' },
@@ -41,12 +41,17 @@ const COL_GOV = [
   { label: 'Terms of Use', href: '#' },
 ];
 
-const REGIONAL = [
+const DEFAULT_REGIONAL = [
   { city: 'Delhi HQ', addr: 'J 200, Block J, Nauroji Nagar, World Trade Centre, New Delhi – 110029', phone: '011-26186680 to 83' },
   { city: 'Ahmedabad', addr: 'B-302, Safal Profitaire, Corporate Road, Prahlad Nagar, Ahmedabad – 380015', phone: '079-29701600' },
   { city: 'Bengaluru', addr: '111, 4th Cross, Sadashivanagar, Bengaluru – 560080', phone: '080-23617591' },
   { city: 'Kolkata', addr: 'GN-38/2, Sector V, Salt Lake City, Kolkata – 700091', phone: '033-40630021' },
 ];
+
+function tryParseJson<T>(value: string | undefined, fallback: T): T {
+  if (!value) return fallback;
+  try { return JSON.parse(value) as T; } catch { return fallback; }
+}
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -76,8 +81,16 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
     { icon: <Twitter size={15} />,   label: 'Twitter',   hover: 'hover:bg-sky-500',   href: settings.footer_twitter   || 'https://twitter.com/qci_india' },
     { icon: <Instagram size={15} />, label: 'Instagram', hover: 'hover:bg-pink-600',  href: settings.footer_instagram || 'https://www.instagram.com/qualitycouncilofindia/' },
     { icon: <Facebook size={15} />,  label: 'Facebook',  hover: 'hover:bg-blue-700',  href: settings.footer_facebook  || 'https://www.facebook.com/QualityCouncilOfIndia/' },
-    { icon: <Youtube size={15} />,   label: 'YouTube',   hover: 'hover:bg-red-600',   href: 'https://www.youtube.com/@qualitycouncilofindia' },
+    { icon: <Youtube size={15} />,   label: 'YouTube',   hover: 'hover:bg-red-600',   href: settings.footer_youtube   || 'https://www.youtube.com/@qualitycouncilofindia' },
   ];
+
+  const colWho     = tryParseJson<typeof DEFAULT_COL_WHO>(settings.footer_links_who,   DEFAULT_COL_WHO);
+  const colOrg     = tryParseJson<typeof DEFAULT_COL_ORG>(settings.footer_links_org,   DEFAULT_COL_ORG);
+  const colWork    = tryParseJson<typeof DEFAULT_COL_WORK>(settings.footer_links_work, DEFAULT_COL_WORK);
+  const colGov     = tryParseJson<typeof DEFAULT_COL_GOV>(settings.footer_links_gov,   DEFAULT_COL_GOV);
+  const regional   = tryParseJson<typeof DEFAULT_REGIONAL>(settings.footer_regional_offices, DEFAULT_REGIONAL);
+  const copyright  = settings.footer_copyright || 'Quality Council of India. All rights reserved.';
+  const tagline    = settings.footer_tagline   || 'Creating an Ecosystem for Quality';
 
   /* ── Slim home footer ─────────────────────────────────────────── */
   if (isHome) {
@@ -147,8 +160,8 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
           <div>
             <FooterHeading>Who We Are</FooterHeading>
             <ul className="space-y-2.5">
-              {COL_WHO.map(l => (
-                <li key={l.label}><FooterLink to={l.to} href={l.href}>{l.label}</FooterLink></li>
+              {colWho.map(l => (
+                <li key={l.label}><FooterLink to={(l as any).to} href={(l as any).href}>{l.label}</FooterLink></li>
               ))}
             </ul>
           </div>
@@ -157,12 +170,12 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
           <div>
             <FooterHeading>The Organisation</FooterHeading>
             <ul className="space-y-2.5">
-              {COL_ORG.map(l => (
+              {colOrg.map(l => (
                 <li key={l.label}>
-                  <a href={l.href} target="_blank" rel="noopener noreferrer"
+                  <a href={(l as any).href} target="_blank" rel="noopener noreferrer"
                     className="group flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors">
                     <span className="font-semibold text-brand-400 group-hover:text-brand-300">{l.label}</span>
-                    <span className="text-xs text-gray-600">· {l.desc}</span>
+                    {(l as any).desc && <span className="text-xs text-gray-600">· {(l as any).desc}</span>}
                   </a>
                 </li>
               ))}
@@ -173,8 +186,8 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
           <div>
             <FooterHeading>Work With Us</FooterHeading>
             <ul className="space-y-2.5">
-              {COL_WORK.map(l => (
-                <li key={l.label}><FooterLink to={l.to} href={l.href}>{l.label}</FooterLink></li>
+              {colWork.map(l => (
+                <li key={l.label}><FooterLink to={(l as any).to} href={(l as any).href}>{l.label}</FooterLink></li>
               ))}
             </ul>
           </div>
@@ -183,8 +196,8 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
           <div>
             <FooterHeading>Governance</FooterHeading>
             <ul className="space-y-2.5">
-              {COL_GOV.map(l => (
-                <li key={l.label}><FooterLink href={l.href}>{l.label}</FooterLink></li>
+              {colGov.map(l => (
+                <li key={l.label}><FooterLink href={(l as any).href}>{l.label}</FooterLink></li>
               ))}
             </ul>
           </div>
@@ -197,7 +210,7 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
                 <Mail size={14} className="text-brand-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-xs text-gray-400">General</p>
-                  <a href="mailto:info@qcin.org" className="text-sm text-gray-300 hover:text-white transition-colors">info@qcin.org</a>
+                  <a href={`mailto:${settings.footer_email || 'info@qcin.org'}`} className="text-sm text-gray-300 hover:text-white transition-colors">{settings.footer_email || 'info@qcin.org'}</a>
                 </div>
               </div>
               <div className="flex items-start gap-2">
@@ -211,7 +224,7 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
                 <Phone size={14} className="text-brand-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-xs text-gray-400">Telephone</p>
-                  <a href="tel:01126186680" className="text-sm text-gray-300 hover:text-white transition-colors">011-26186680 to 83</a>
+                  <a href={`tel:${(settings.footer_phone || '011-26186680').replace(/[^0-9]/g, '')}`} className="text-sm text-gray-300 hover:text-white transition-colors">{settings.footer_phone || '011-26186680 to 83'}</a>
                 </div>
               </div>
               <div className="flex items-start gap-2">
@@ -233,7 +246,7 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
             <MapPin size={11} className="text-brand-400" /> Regional Offices
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {REGIONAL.map(r => (
+            {regional.map(r => (
               <div key={r.city} className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-4 hover:bg-white/[0.07] transition-colors">
                 <p className="text-white font-bold text-sm mb-1">{r.city}</p>
                 <p className="text-gray-500 text-xs leading-relaxed mb-2">{r.addr}</p>
@@ -251,8 +264,8 @@ export default function Footer({ isHome = false }: { isHome?: boolean }) {
       <div className="border-t border-white/10 bg-black/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>
-            © {new Date().getFullYear()} <span className="text-gray-400">Quality Council of India.</span> All rights reserved.
-            &nbsp;·&nbsp; <span className="italic text-gray-600">Creating an Ecosystem for Quality</span>
+            © {new Date().getFullYear()} <span className="text-gray-400">{copyright}</span>
+            &nbsp;·&nbsp; <span className="italic text-gray-600">{tagline}</span>
           </p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <button onClick={toggleDark}
