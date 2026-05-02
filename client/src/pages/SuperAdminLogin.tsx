@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Crown, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Crown, Eye, EyeOff, ArrowLeft, ShieldCheck, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function SuperAdminLogin() {
   const { login, logout, user } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const [showPw, setShowPw] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [showPw, setShowPw]     = useState(false);
+  const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState('');
+  const [focused, setFocused]   = useState<'email'|'password'|null>(null);
 
-  // Navigate ONLY from here — after React has committed the user state update.
-  // Calling navigate() directly after await login() is a race: ProtectedRoute
-  // still sees user=null and bounces to /login before setUser is committed.
   useEffect(() => {
     if (user?.role === 'super_admin') navigate('/superadmin', { replace: true });
   }, [user]);
@@ -26,16 +24,12 @@ export default function SuperAdminLogin() {
     setError('');
     try {
       await login(email.trim(), password);
-      // localStorage is always written synchronously inside login(),
-      // so we can safely check the role here.
       const stored = localStorage.getItem('user');
       const u = stored ? JSON.parse(stored) : null;
       if (u?.role !== 'super_admin') {
-        logout(); // clears both React state and localStorage
+        logout();
         setError('Access denied. This portal is for Super Admins only.');
       }
-      // If role is super_admin: do NOT navigate here.
-      // The useEffect above fires once React commits setUser and handles it.
     } catch (err: any) {
       setError(err.response?.data?.error || 'Invalid credentials');
     } finally {
@@ -44,62 +38,162 @@ export default function SuperAdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-900 via-purple-800 to-indigo-900 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' }}>
+
+      {/* Animated background orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-20 animate-pulse"
+          style={{ background: 'radial-gradient(circle, #7c3aed, transparent 70%)' }} />
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full opacity-20 animate-pulse"
+          style={{ background: 'radial-gradient(circle, #4f46e5, transparent 70%)', animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5"
+          style={{ background: 'radial-gradient(circle, #a78bfa, transparent 60%)' }} />
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
+
+        {/* Header badge */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl shadow-lg mb-4">
-            <Crown size={32} className="text-white" />
+          <div className="relative inline-block mb-5">
+            <div className="absolute inset-0 rounded-2xl blur-xl opacity-60"
+              style={{ background: 'linear-gradient(135deg, #f59e0b, #ef4444)' }} />
+            <div className="relative w-20 h-20 rounded-2xl flex items-center justify-center shadow-2xl"
+              style={{ background: 'linear-gradient(135deg, #f59e0b, #f97316)' }}>
+              <Crown size={36} className="text-white drop-shadow" />
+            </div>
+            {/* Shield badge */}
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-green-500 border-2 border-white/20 flex items-center justify-center shadow-lg">
+              <ShieldCheck size={14} className="text-white" />
+            </div>
           </div>
-          <h1 className="text-2xl font-bold text-white">Super Admin Portal</h1>
-          <p className="text-purple-300 mt-1 text-sm">Quality Council of India — System Administration</p>
+          <h1 className="text-3xl font-black text-white tracking-tight mb-1">
+            Super Admin
+          </h1>
+          <p className="text-purple-300 text-sm font-medium">
+            Quality Council of India — System Administration
+          </p>
+          <div className="inline-flex items-center gap-1.5 mt-3 bg-white/10 border border-white/10 text-white/60 text-[11px] font-semibold px-3 py-1 rounded-full backdrop-blur-sm">
+            <Lock size={10} />
+            Restricted Access · Authorised Personnel Only
+          </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{error}</div>
-          )}
+        {/* Card */}
+        <div className="rounded-3xl shadow-2xl overflow-hidden"
+          style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.12)' }}>
 
-          <form onSubmit={handleSubmit} noValidate>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Super Admin Email</label>
-              <input
-                type="email" value={email}
-                onChange={e => { setEmail(e.target.value); setError(''); }}
-                placeholder="superadmin@qci.org"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-                autoComplete="email"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-              <div className="relative">
-                <input
-                  type={showPw ? 'text' : 'password'} value={password}
-                  onChange={e => { setPassword(e.target.value); setError(''); }}
-                  placeholder="Enter your password"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-                  autoComplete="current-password"
-                />
-                <button type="button" onClick={() => setShowPw(!showPw)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
-                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
+          {/* Card top accent */}
+          <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #7c3aed, #a78bfa, #7c3aed)' }} />
+
+          <div className="p-8">
+            {error && (
+              <div className="mb-5 p-3.5 rounded-xl flex items-start gap-3"
+                style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)' }}>
+                <span className="text-red-400 mt-0.5 flex-shrink-0">⚠</span>
+                <p className="text-red-300 text-sm leading-relaxed">{error}</p>
               </div>
-            </div>
-            <button type="submit" disabled={loading}
-              className="w-full bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-all text-sm">
-              {loading ? 'Signing in...' : 'Sign In to Super Admin'}
-            </button>
-          </form>
+            )}
 
-          <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
-            <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700">
-              <ArrowLeft size={14} /> Back to main site
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+
+              {/* Email field */}
+              <div>
+                <label className="block text-sm font-semibold text-white/80 mb-2">
+                  Admin Email
+                </label>
+                <div className={`relative rounded-xl transition-all duration-200 ${focused === 'email' ? 'ring-2 ring-violet-400 ring-offset-0' : ''}`}
+                  style={{ background: 'rgba(255,255,255,0.08)', border: focused === 'email' ? '1px solid rgba(167,139,250,0.6)' : '1px solid rgba(255,255,255,0.12)' }}>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => { setEmail(e.target.value); setError(''); }}
+                    onFocus={() => setFocused('email')}
+                    onBlur={() => setFocused(null)}
+                    placeholder="superadmin@qci.org"
+                    autoComplete="email"
+                    className="w-full px-4 py-3.5 text-sm bg-transparent outline-none rounded-xl text-white placeholder-white/30"
+                    style={{ caretColor: '#a78bfa' }}
+                  />
+                </div>
+              </div>
+
+              {/* Password field */}
+              <div>
+                <label className="block text-sm font-semibold text-white/80 mb-2">
+                  Password
+                </label>
+                <div className={`relative rounded-xl transition-all duration-200 ${focused === 'password' ? 'ring-2 ring-violet-400 ring-offset-0' : ''}`}
+                  style={{ background: 'rgba(255,255,255,0.08)', border: focused === 'password' ? '1px solid rgba(167,139,250,0.6)' : '1px solid rgba(255,255,255,0.12)' }}>
+                  <input
+                    type={showPw ? 'text' : 'password'}
+                    value={password}
+                    onChange={e => { setPassword(e.target.value); setError(''); }}
+                    onFocus={() => setFocused('password')}
+                    onBlur={() => setFocused(null)}
+                    placeholder="Enter your password"
+                    autoComplete="current-password"
+                    className="w-full px-4 py-3.5 pr-12 text-sm bg-transparent outline-none rounded-xl text-white placeholder-white/30"
+                    style={{ caretColor: '#a78bfa' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPw(!showPw)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-white/40 hover:text-white/80 transition-colors">
+                    {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Submit button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="relative w-full py-4 rounded-xl font-bold text-white text-sm overflow-hidden transition-all duration-200 disabled:opacity-60 active:scale-[0.98] mt-2"
+                style={{ background: loading ? 'rgba(124,58,237,0.5)' : 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}>
+                {/* Shimmer on hover */}
+                <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' }} />
+                <span className="relative flex items-center justify-center gap-2">
+                  {loading ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Authenticating…
+                    </>
+                  ) : (
+                    <>
+                      <Crown size={15} />
+                      Sign In to Super Admin
+                    </>
+                  )}
+                </span>
+              </button>
+
+            </form>
+          </div>
+
+          {/* Card footer */}
+          <div className="px-8 py-4 flex justify-between items-center"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.15)' }}>
+            <Link to="/"
+              className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white/70 transition-colors">
+              <ArrowLeft size={13} /> Back to portal
             </Link>
-            <Link to="/admin-login" className="text-sm text-gray-500 hover:text-gray-700">HR Admin →</Link>
+            <Link to="/admin-login"
+              className="text-sm text-white/40 hover:text-white/70 transition-colors">
+              HR Admin →
+            </Link>
           </div>
         </div>
 
+        {/* Security notice */}
+        <p className="text-center text-white/25 text-xs mt-6 leading-relaxed">
+          All access attempts are logged and monitored.<br />
+          Unauthorised access is a criminal offence.
+        </p>
       </div>
     </div>
   );
