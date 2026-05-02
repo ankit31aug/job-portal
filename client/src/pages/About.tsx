@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award, Globe, Users, TrendingUp, Building2, Star, Quote } from 'lucide-react';
+import { useSettings } from '../context/SettingsContext';
 
-const LEADERSHIP = [
+const _LEADERSHIP_UNUSED = [
   {
     name: 'Mr. Jaxay Shah',
     title: 'Chairperson, QCI',
@@ -29,14 +30,7 @@ const LEADERSHIP = [
   },
 ];
 
-const BOARD_CHAIRS = [
-  { name: 'Dr. Sandip Shah',      title: 'Chairperson, NABL',  initials: 'SS', gradient: 'from-orange-600 to-amber-500', board: 'NABL',  tag: 'Laboratories' },
-  { name: 'Mr. Deep Kapuria',     title: 'Chairman, NABCB',    initials: 'DK', gradient: 'from-blue-700 to-indigo-600',  board: 'NABCB', tag: 'Certification' },
-  { name: 'Mr. Jalaj Ashwin Dani',title: 'Chairman, NABET',    initials: 'JD', gradient: 'from-violet-700 to-purple-600',board: 'NABET', tag: 'Education & Training' },
-  { name: 'Dr. Aishvarya Raj',    title: 'CEO, NBQP',          initials: 'AR', gradient: 'from-rose-600 to-pink-500',    board: 'NBQP',  tag: 'Quality Promotion' },
-  { name: 'Mr. N. Venkateswaran', title: 'CEO, NABL',          initials: 'NV', gradient: 'from-orange-500 to-amber-400', board: 'NABL',  tag: 'Laboratories' },
-  { name: 'Mr. C K Maheshwari',   title: 'Accreditation Committee Chair, NABCB', initials: 'CM', gradient: 'from-sky-600 to-cyan-500', board: 'NABCB', tag: 'Certification' },
-];
+// Replaced by settings — see about_board_chairs in SettingsContext
 
 const BOARDS = [
   {
@@ -204,9 +198,15 @@ const TESTIMONIALS = [
 
 
 export default function About() {
+  const { settings, parseJSON } = useSettings();
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
   const [lightbox, setLightbox] = useState<any | null>(null);
   const [photoErrors, setPhotoErrors] = useState<Record<string, boolean>>({});
+
+  const LEADERSHIP   = parseJSON<any[]>(settings.about_leaders,       []);
+  const BOARD_CHAIRS = parseJSON<any[]>(settings.about_board_chairs,  []);
+  const MILESTONES   = parseJSON<any[]>(settings.about_milestones,    []);
+  const TESTIMONIALS = parseJSON<any[]>(settings.about_testimonials,  []);
 
   useEffect(() => {
     fetch('/api/gallery')
@@ -225,14 +225,14 @@ export default function About() {
         <div className="relative max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-1.5 text-sm font-medium mb-6">
             <Globe size={14} className="text-blue-400" />
-            Established 1997 · Ministry of Commerce & Industry, Government of India
+            {settings.about_hero_badge}
           </div>
           <h1 className="text-4xl md:text-6xl font-black mb-5 leading-tight">
-            Quality Council<br />
+            {settings.about_hero_title}<br />
             <span className="text-blue-400">of India</span>
           </h1>
           <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-10">
-            India's apex body for quality standards — operating through NABCB, NABH, NABET, NABL, and NBQP to accredit hospitals, laboratories, educational institutions, and certification bodies. A Government of India Public-Private Partnership ensuring every Indian has access to quality services that meet international benchmarks.
+            {settings.about_hero_subtitle}
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/browse"
@@ -251,10 +251,10 @@ export default function About() {
       <section className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-5xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { value: '27+', label: 'Years of Excellence', icon: <Award size={22} className="text-blue-500" /> },
-            { value: '5', label: 'National Boards', icon: <Building2 size={22} className="text-teal-500" /> },
-            { value: '10,000+', label: 'Accredited Entities', icon: <Globe size={22} className="text-purple-500" /> },
-            { value: '39', label: 'Council Members', icon: <Users size={22} className="text-orange-500" /> },
+            { value: settings.about_stat1_value, label: settings.about_stat1_label, icon: <Award size={22} className="text-blue-500" /> },
+            { value: settings.about_stat2_value, label: settings.about_stat2_label, icon: <Building2 size={22} className="text-teal-500" /> },
+            { value: settings.about_stat3_value, label: settings.about_stat3_label, icon: <Globe size={22} className="text-purple-500" /> },
+            { value: settings.about_stat4_value, label: settings.about_stat4_label, icon: <Users size={22} className="text-orange-500" /> },
           ].map(s => (
             <div key={s.label} className="flex flex-col items-center gap-1.5">
               {s.icon}
@@ -279,24 +279,18 @@ export default function About() {
                 <TrendingUp size={24} className="text-white" />
               </div>
               <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3">Our Mission</h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                To create a Quality Mindset across all sectors and ensure quality across products and services that touch every citizen — developing accreditation standards, improving processes, and ensuring compliance to quality benchmarks for inclusive and sustainable development.
-              </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{settings.about_mission}</p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-8">
               <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-5">
                 <Globe size={24} className="text-white" />
               </div>
               <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3">Our Vision</h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                To enhance quality across all sectors for inclusive and sustainable development — building <strong className="text-gray-800 dark:text-white">"Quality for National Wellbeing"</strong> as a way of life for every Indian organisation, product, and service.
-              </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{settings.about_vision}</p>
             </div>
           </div>
           <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center leading-relaxed">
-              QCI is a non-profit autonomous body established through a Cabinet decision in 1996 under the <strong className="text-gray-700 dark:text-gray-300">Ministry of Commerce & Industry, Government of India</strong>, and registered under the Societies Registration Act. It operates on a unique Public-Private Partnership model with equal representation from Government, Industry, and Stakeholders across 39 council members.
-            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center leading-relaxed">{settings.about_ppp_note}</p>
           </div>
         </div>
       </section>
@@ -310,8 +304,8 @@ export default function About() {
             <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">The people who guide QCI's mission of raising quality standards across India's most critical sectors.</p>
           </div>
 
-          {/* Top 3 with photos */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-14">
+          {/* Top leaders with photos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
             {LEADERSHIP.map(leader => (
               <div key={leader.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
@@ -348,11 +342,14 @@ export default function About() {
             <h3 className="text-xl font-black text-gray-900 dark:text-white">Chairpersons Across Our Boards</h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {BOARD_CHAIRS.map(chair => (
+            {BOARD_CHAIRS.map((chair: any) => (
               <div key={chair.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-4 flex items-center gap-3 hover:shadow-md transition-all">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${chair.gradient} flex items-center justify-center text-white text-sm font-black flex-shrink-0`}>
-                  {chair.initials}
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${chair.gradient} flex items-center justify-center text-white text-sm font-black flex-shrink-0 overflow-hidden`}>
+                  {chair.photo && !photoErrors[chair.name] ? (
+                    <img src={chair.photo} alt={chair.name} className="w-full h-full object-cover object-top"
+                      onError={() => setPhotoErrors(p => ({ ...p, [chair.name]: true }))} />
+                  ) : chair.initials}
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-bold text-gray-900 dark:text-white truncate">{chair.name}</p>
@@ -439,7 +436,7 @@ export default function About() {
             <div className="absolute left-16 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700" />
 
             <div className="space-y-8">
-              {MILESTONES.map((m, idx) => (
+              {MILESTONES.map((m: any, idx: number) => (
                 <div key={m.year}
                   className={`relative flex gap-6 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                   {/* Year badge */}
@@ -528,7 +525,7 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {TESTIMONIALS.map(t => (
+            {TESTIMONIALS.map((t: any) => (
               <div key={t.name}
                 className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-all">
                 <Quote size={24} className="text-blue-100 dark:text-blue-900 mb-3" />

@@ -78,6 +78,7 @@ export default function SuperAdminDashboard() {
   const [siteSettings, setSiteSettings] = useState<any[]>([]);
   const [settingsEdits, setSettingsEdits] = useState<Record<string, string>>({});
   const [settingsSaving, setSettingsSaving] = useState(false);
+  const [settingsPage, setSettingsPage] = useState<'general' | 'home' | 'about' | 'contact'>('general');
 
   // Messages
   const [msg, setMsg] = useState('');
@@ -252,7 +253,18 @@ export default function SuperAdminDashboard() {
     }
   };
 
-  const CATEGORIES = [...new Set(siteSettings.map(s => s.category))];
+  const formatJsonSetting = (key: string) => {
+    try {
+      const parsed = JSON.parse(settingsEdits[key] || '[]');
+      setSettingsEdits(prev => ({ ...prev, [key]: JSON.stringify(parsed, null, 2) }));
+      flash('JSON formatted');
+    } catch { flash('Invalid JSON — cannot format', true); }
+  };
+
+  const validateJsonSetting = (key: string) => {
+    try { JSON.parse(settingsEdits[key] || ''); flash('Valid JSON ✓'); }
+    catch (e: any) { flash(`Invalid JSON: ${e.message}`, true); }
+  };
 
   // ── Shared class helpers ────────────────────────────────────────────────
   const card   = 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl';
@@ -732,36 +744,244 @@ export default function SuperAdminDashboard() {
           )}
 
           {/* ── SETTINGS ─────────────────────────────────────────────────── */}
-          {tab === 'settings' && (
-            <div>
-              {siteSettings.length === 0 && (
-                <p className={`${muted} text-sm mb-4`}>Loading settings…</p>
-              )}
-              {CATEGORIES.map(cat => (
-                <div key={cat} className={`${card} p-5 mb-4`}>
-                  <h3 className={`${title} mb-4 capitalize`}>{cat}</h3>
-                  <div className="space-y-3">
-                    {siteSettings.filter(s => s.category === cat).map(s => (
-                      <div key={s.key}>
-                        <label className={label}>{s.label || s.key}</label>
-                        {(s.value?.length > 80 || s.key.includes('about') || s.key.includes('subtitle')) ? (
-                          <textarea value={settingsEdits[s.key] ?? ''} onChange={e => setSettingsEdits(p => ({ ...p, [s.key]: e.target.value }))} rows={3} className={`w-full resize-none ${input}`} />
-                        ) : (
-                          <input value={settingsEdits[s.key] ?? ''} onChange={e => setSettingsEdits(p => ({ ...p, [s.key]: e.target.value }))} className={`w-full ${input}`} />
-                        )}
-                      </div>
-                    ))}
-                  </div>
+          {tab === 'settings' && (() => {
+            const sf = (key: string, fieldLabel: string, type: 'text' | 'url' | 'color' | 'textarea' | 'json', hint?: string) => (
+              <div key={key} className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <label className={label}>{fieldLabel}</label>
+                  {type === 'json' && (
+                    <div className="flex gap-1">
+                      <button type="button" onClick={() => formatJsonSetting(key)} className="text-xs text-violet-500 hover:text-violet-400 px-2 py-0.5 rounded border border-violet-300 dark:border-violet-700 transition-colors">Format</button>
+                      <button type="button" onClick={() => validateJsonSetting(key)} className="text-xs text-green-600 hover:text-green-500 px-2 py-0.5 rounded border border-green-300 dark:border-green-700 transition-colors">Validate</button>
+                    </div>
+                  )}
                 </div>
-              ))}
-              {siteSettings.length > 0 && (
-                <button onClick={saveSettings} disabled={settingsSaving}
-                  className="bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
-                  {settingsSaving ? 'Saving…' : 'Save All Settings'}
-                </button>
-              )}
-            </div>
-          )}
+                {type === 'json' ? (
+                  <textarea value={settingsEdits[key] ?? ''} onChange={e => setSettingsEdits(p => ({ ...p, [key]: e.target.value }))} rows={14} className={`w-full resize-y font-mono text-xs leading-relaxed ${input}`} />
+                ) : type === 'textarea' ? (
+                  <textarea value={settingsEdits[key] ?? ''} onChange={e => setSettingsEdits(p => ({ ...p, [key]: e.target.value }))} rows={3} className={`w-full resize-none ${input}`} />
+                ) : type === 'color' ? (
+                  <div className="flex gap-2 items-center">
+                    <input type="color" value={settingsEdits[key] || '#3791E5'} onChange={e => setSettingsEdits(p => ({ ...p, [key]: e.target.value }))} className="w-10 h-9 rounded cursor-pointer border border-gray-300 dark:border-gray-700 p-0.5 bg-transparent" />
+                    <input value={settingsEdits[key] ?? ''} onChange={e => setSettingsEdits(p => ({ ...p, [key]: e.target.value }))} className={`flex-1 ${input}`} placeholder="#xxxxxx" />
+                  </div>
+                ) : (
+                  <input value={settingsEdits[key] ?? ''} onChange={e => setSettingsEdits(p => ({ ...p, [key]: e.target.value }))} className={`w-full ${input}`} />
+                )}
+                {hint && <p className="text-xs text-gray-400 mt-0.5">{hint}</p>}
+              </div>
+            );
+
+            return (
+              <div>
+                {/* Page tabs */}
+                <div className="flex gap-1 mb-6 bg-white dark:bg-gray-900 p-1.5 rounded-xl border border-gray-200 dark:border-gray-700 w-fit flex-wrap">
+                  {([
+                    { id: 'general', label: 'General' },
+                    { id: 'home',    label: 'Home Page' },
+                    { id: 'about',   label: 'About Page' },
+                    { id: 'contact', label: 'Contact' },
+                  ] as const).map(p => (
+                    <button key={p.id} onClick={() => setSettingsPage(p.id)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${settingsPage === p.id ? 'bg-violet-600 text-white shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+
+                {siteSettings.length === 0 && (
+                  <div className={`${card} p-5`}><p className={`${muted} text-sm`}>Loading settings…</p></div>
+                )}
+
+                {siteSettings.length > 0 && (
+                  <>
+                    {/* ── GENERAL ── */}
+                    {settingsPage === 'general' && (
+                      <div className="space-y-5">
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Site Identity</h3>
+                          <div className="grid grid-cols-2 gap-4">
+                            {sf('site_name',       'Site Name',        'text')}
+                            {sf('site_tagline',    'Site Tagline',     'text')}
+                            {sf('default_company', 'Default Company',  'text')}
+                            {sf('default_location','Default Location', 'text')}
+                            {sf('currency_symbol', 'Currency Symbol',  'text')}
+                            {sf('primary_color',   'Primary Colour',   'color')}
+                          </div>
+                        </div>
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Footer Content</h3>
+                          <div className="space-y-3">
+                            {sf('footer_about',   'Footer About Text', 'textarea')}
+                            <div className="grid grid-cols-2 gap-4">
+                              {sf('footer_email',   'Footer Email',   'text')}
+                              {sf('footer_phone',   'Footer Phone',   'text')}
+                            </div>
+                            {sf('footer_address', 'Footer Address', 'textarea')}
+                          </div>
+                        </div>
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Social Links</h3>
+                          <div className="grid grid-cols-2 gap-4">
+                            {sf('footer_linkedin',  'LinkedIn URL',  'url')}
+                            {sf('footer_twitter',   'Twitter URL',   'url')}
+                            {sf('footer_instagram', 'Instagram URL', 'url')}
+                            {sf('footer_facebook',  'Facebook URL',  'url')}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── HOME ── */}
+                    {settingsPage === 'home' && (
+                      <div className="space-y-5">
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Hero Section</h3>
+                          <div className="space-y-3">
+                            {sf('home_hero_badge',        'Hero Badge',        'text', 'Short banner above the main headline')}
+                            <div className="grid grid-cols-2 gap-4">
+                              {sf('home_hero_title_1', 'Headline Line 1', 'text')}
+                              {sf('home_hero_title_2', 'Headline Line 2', 'text')}
+                            </div>
+                            {sf('home_hero_subtitle',     'Hero Subtitle',     'textarea')}
+                            {sf('home_search_placeholder','Search Placeholder','text')}
+                          </div>
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Impact Stats</h3>
+                          <div className="space-y-4">
+                            {([1, 2, 3, 4] as const).map(n => (
+                              <div key={n}>
+                                <p className="text-xs text-violet-500 font-semibold mb-2 uppercase tracking-wider">Stat {n}</p>
+                                <div className="grid grid-cols-3 gap-3">
+                                  {sf(`home_stat${n}_value`, 'Value',    'text')}
+                                  {sf(`home_stat${n}_label`, 'Label',    'text')}
+                                  {sf(`home_stat${n}_sub`,   'Sub-text', 'text')}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Announcements</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: tag, date, title, desc, color, href</p>
+                          {sf('home_announcements', 'Announcements JSON', 'json')}
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Events</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: emoji, type, month, year, title, location, desc</p>
+                          {sf('home_events', 'Events JSON', 'json')}
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Nation Building Initiatives</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: emoji, tag, title, desc, badges (array), gradient, href</p>
+                          {sf('home_initiatives', 'Initiatives JSON', 'json')}
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Call To Action</h3>
+                          <div className="space-y-3">
+                            {sf('home_cta_title',    'CTA Title',    'text')}
+                            {sf('home_cta_subtitle', 'CTA Subtitle', 'textarea')}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── ABOUT ── */}
+                    {settingsPage === 'about' && (
+                      <div className="space-y-5">
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Hero Section</h3>
+                          <div className="space-y-3">
+                            {sf('about_hero_badge',    'Hero Badge',    'text')}
+                            {sf('about_hero_title',    'Hero Title',    'text')}
+                            {sf('about_hero_subtitle', 'Hero Subtitle', 'textarea')}
+                          </div>
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>About Stats</h3>
+                          <div className="space-y-4">
+                            {([1, 2, 3, 4] as const).map(n => (
+                              <div key={n}>
+                                <p className="text-xs text-violet-500 font-semibold mb-2 uppercase tracking-wider">Stat {n}</p>
+                                <div className="grid grid-cols-2 gap-3">
+                                  {sf(`about_stat${n}_value`, 'Value', 'text')}
+                                  {sf(`about_stat${n}_label`, 'Label', 'text')}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-4`}>Mission, Vision & PPP</h3>
+                          <div className="space-y-3">
+                            {sf('about_mission',  'Mission Statement', 'textarea')}
+                            {sf('about_vision',   'Vision Statement',  'textarea')}
+                            {sf('about_ppp_note', 'PPP Note',          'textarea')}
+                          </div>
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Leadership Team</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: name, title, initials, gradient, photo (URL), quote</p>
+                          {sf('about_leaders', 'Leadership JSON', 'json')}
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Board Chairs</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: name, title, initials, gradient, board, tag, photo (URL)</p>
+                          {sf('about_board_chairs', 'Board Chairs JSON', 'json')}
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Milestones</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: year, event</p>
+                          {sf('about_milestones', 'Milestones JSON', 'json')}
+                        </div>
+
+                        <div className={`${card} p-5`}>
+                          <h3 className={`${title} mb-1`}>Employee Testimonials</h3>
+                          <p className={`${muted} text-xs mb-3`}>JSON array — each item: name, role, tenure, initials, gradient, quote</p>
+                          {sf('about_testimonials', 'Testimonials JSON', 'json')}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── CONTACT ── */}
+                    {settingsPage === 'contact' && (
+                      <div className={`${card} p-5`}>
+                        <h3 className={`${title} mb-4`}>Contact Details</h3>
+                        <div className="space-y-3">
+                          {sf('contact_address',       'Office Address',  'textarea')}
+                          <div className="grid grid-cols-2 gap-4">
+                            {sf('contact_phone',         'Phone',          'text')}
+                            {sf('contact_hours',         'Office Hours',   'text')}
+                            {sf('contact_email_general', 'General Email',  'text')}
+                            {sf('contact_email_hr',      'HR / Careers Email', 'text')}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="mt-6 flex items-center gap-4">
+                      <button onClick={saveSettings} disabled={settingsSaving}
+                        className="bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
+                        {settingsSaving ? 'Saving…' : 'Save All Settings'}
+                      </button>
+                      <p className={`${muted} text-xs`}>Saves every tab. Changes apply site-wide immediately.</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })()}
 
         </div>
       </div>

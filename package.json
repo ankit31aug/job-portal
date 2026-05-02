@@ -8,5 +8,22 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "description": "A complete job portal built with React + Node.js + SQLite featuring resume upload, auto-fill, job matching, and full validation.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankit31aug/Job-Portal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ankit31aug/Job-Portal/issues"
+  },
+  "homepage": "https://github.com/ankit31aug/Job-Portal#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
   }
 }

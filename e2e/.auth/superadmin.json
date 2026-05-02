@@ -1,0 +1,22 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:3001",
+      "localStorage": [
+        {
+          "name": "qci_theme",
+          "value": "light"
+        },
+        {
+          "name": "token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJzdXBlcmFkbWluQHFjaS5vcmciLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJpYXQiOjE3Nzc3MDgxOTYsImV4cCI6MTc3ODMxMjk5Nn0.rC0iu_wXXaoM-7uWswFmLv0fQs5WyzTFMtsqByDJtMk"
+        },
+        {
+          "name": "user",
+          "value": "{\"id\":6,\"name\":\"QCI Super Admin\",\"email\":\"superadmin@qci.org\",\"phone\":\"9876500001\",\"pincode\":\"110001\",\"city\":\"New Delhi\",\"state\":\"Delhi\",\"role\":\"super_admin\",\"company_name\":\"Quality Council of India\",\"hr_role_id\":null,\"is_verified\":1,\"bio\":null,\"skills\":null,\"experience_years\":0,\"current_company\":null,\"profile_resume_path\":null,\"created_at\":\"2026-04-28T08:03:27.000Z\"}"
+        }
+      ]
+    }
+  ]
+}

@@ -23,6 +23,7 @@ import ResetPassword from './pages/ResetPassword';
 import Profile from './pages/Profile';
 import { SettingsProvider } from './context/SettingsContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -90,11 +91,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
+        <LanguageProvider>
         <SettingsProvider>
           <AuthProvider>
             <AppRoutes />
           </AuthProvider>
         </SettingsProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </BrowserRouter>
   );
